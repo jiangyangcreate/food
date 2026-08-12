@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>食物计算器</title>
+    <style>
+        /* ---------- 全局重置 & 变量 ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #f5f7fc;
+            --card: #ffffff;
+            --card-hover: #fafbff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #000000;
+            --text-muted: #636363;
+            --border: #e2e6f0;
+            --shadow: 0 8px 30px rgba(60, 60, 120, 0.08);
+            --shadow-hover: 0 12px 40px rgba(60, 60, 120, 0.14);
+            --radius: 18px;
+            --radius-sm: 12px;
+            --radius-xs: 8px;
+            --accent: #211c46;
+            --accent-light: #a29bfe;
+            --accent-dark: #000000;
+            --accent-gradient: linear-gradient(135deg, #1a1636, #242338);
+            --color-cal: #f77f3a;
+            --color-protein: #ff6b6b;
+            --color-carbo: #20c997;
+            --color-fat: #ffc107;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --danger: #ff6b6b;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 24px 16px;
+            line-height: 1.5;
+        }
+
+        .app {
+            max-width: 1200px;
+            width: 100%;
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 32px 32px 40px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .app:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* ---------- 头部 ---------- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-left .icon {
+            font-size: 32px;
+            line-height: 1;
+        }
+
+        .header-left h1 {
+            font-size: 26px;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.4px;
+        }
+
+        .header-left .sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 500;
+            -webkit-text-fill-color: var(--text-muted);
+            background: none;
+            margin-left: 4px;
+        }
+
+        .header-right {
+            font-size: 13px;
+            color: var(--text-muted);
+            background: var(--bg);
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        /* ---------- 身体数据卡片 ---------- */
+        .body-card {
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            padding: 20px 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            align-items: center;
+            gap: 16px 20px;
+        }
+
+        .body-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        .body-item .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .body-item .unit {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .body-item select,
+        .body-item input[type="number"] {
+            padding: 8px 10px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-xs);
+            font-size: 16px;
+            font-weight: 600;
+            background: var(--card);
+            color: var(--text-primary);
+            outline: none;
+            transition: var(--transition);
+            width: auto;
+            min-width: 60px;
+        }
+
+        .body-item select:focus,
+        .body-item input[type="number"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.10);
+        }
+
+        .body-item input[type="number"] {
+            width: 80px;
+        }
+
+        .body-card .body-note {
+            grid-column: 1 / -1;
+            font-size: 13px;
+            color: var(--text-muted);
+            padding-top: 12px;
+            margin-top: 4px;
+            border-top: 1px solid var(--border);
+        }
+
+        .body-card .body-note strong {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* ---------- 选择器区域 ---------- */
+        .selector-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 500px) {
+            .selector-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .selector-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .selector-group label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .selector-group select {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border);
+            background: var(--card);
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a4a6a' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 44px;
+        }
+
+        .selector-group select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.10);
+        }
+
+        .selector-group select:hover {
+            border-color: var(--accent-light);
+        }
+
+        .selector-group .hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            padding-left: 4px;
+        }
+
+        /* ---------- 结果区域 ---------- */
+        .result-section {
+            margin-top: 0;
+        }
+
+        .result-section .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .result-section .section-title .badge {
+            font-size: 12px;
+            font-weight: 600;
+            background: var(--accent-light);
+            color: #fff;
+            padding: 2px 14px;
+            border-radius: 40px;
+            opacity: 0.8;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 580px) {
+            .result-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .result-card {
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            padding: 20px 18px 18px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .result-card .card-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .result-card .card-value {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 2px 6px;
+        }
+
+        .result-card .card-value .unit {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .result-card .card-value .sep {
+            color: var(--text-muted);
+            font-size: 0.7em;
+            margin: 0 2px;
+        }
+
+        .result-card .card-sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .result-card .card-bar {
+            margin-top: 10px;
+            height: 4px;
+            border-radius: 10px;
+            background: var(--border);
+            overflow: hidden;
+        }
+
+        .result-card .card-bar .fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        /* 各卡片颜色 */
+        .result-card.cal .card-value {
+            color: var(--color-cal);
+        }
+        .result-card.cal .card-bar .fill {
+            background: var(--color-cal);
+        }
+
+        .result-card.protein .card-value {
+            color: var(--color-protein);
+        }
+        .result-card.protein .card-bar .fill {
+            background: var(--color-protein);
+        }
+
+        .result-card.carbo .card-value {
+            color: var(--color-carbo);
+        }
+        .result-card.carbo .card-bar .fill {
+            background: var(--color-carbo);
+        }
+
+        .result-card.fat .card-value {
+            color: var(--color-fat);
+        }
+        .result-card.fat .card-bar .fill {
+            background: var(--color-fat);
+        }
+
+        /* ---------- 辅助信息 ---------- */
+        .extra-info {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px 20px;
+        }
+
+        .extra-info .info-item {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .extra-info .info-item strong {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .extra-info .status-tag {
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            background: var(--accent-light);
+            color: #fff;
+        }
+
+        .extra-info .status-tag.deficit {
+            background: #ff6b6b;
+        }
+        .extra-info .status-tag.surplus {
+            background: #20c997;
+        }
+        .extra-info .status-tag.maintain {
+            background: #ffc107;
+            color: #1a1a2e;
+        }
+
+        /* ---------- 公式区域 ---------- */
+        .formula-section {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .formula-section .formula-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .formula-section .formula-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 24px;
+        }
+
+        @media (max-width: 500px) {
+            .formula-section .formula-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .formula-section .formula-item {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .formula-section .formula-item .tag {
+            font-weight: 600;
+            color: var(--text-secondary);
+            min-width: 60px;
+        }
+
+        .formula-section .formula-item .expr {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            background: var(--bg);
+            padding: 0 8px;
+            border-radius: 4px;
+            color: var(--text-primary);
+            font-size: 12.5px;
+            word-break: break-all;
+        }
+
+        .formula-section .formula-item .note {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .formula-section .footnote {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+            opacity: 0.8;
+            border-top: 1px solid var(--border);
+            padding-top: 10px;
+        }
+
+        /* ---------- 食物追踪器 ---------- */
+        .tracker-section {
+            margin-top: 28px;
+            padding-top: 24px;
+            border-top: 2px solid var(--border);
+        }
+
+        .tracker-section .tracker-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tracker-section .tracker-title .left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tracker-section .tracker-title .sub {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        .tracker-section .tracker-title .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tracker-section .tracker-title .clear-btn,
+        .tracker-section .tracker-title .add-btn {
+            padding: 4px 16px;
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tracker-section .tracker-title .clear-btn:hover {
+            background: var(--danger);
+            color: #fff;
+            border-color: var(--danger);
+        }
+
+        .tracker-section .tracker-title .add-btn:hover {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        .tracker-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 16px;
+            overflow-x: auto;
+        }
+
+        /* 列顺序：拖拽手柄, 食物, 热量, 蛋白, 脂肪, 碳水, 每份重量(g), 价格, 份数, 每份营养, 删除 */
+        .tracker-row {
+            display: grid;
+            grid-template-columns: repeat(9, 72px) 180px 72px;
+            gap: 4px;
+            align-items: center;
+            background: var(--bg);
+            padding: 2px 6px;
+            border-radius: var(--radius-xs);
+            border: 1px solid var(--border);
+            font-size: 13px;
+            min-width: 940px;
+            cursor: grab;
+            transition: background 0.2s;
+        }
+
+        .tracker-row.dragging {
+            opacity: 0.5;
+            background: var(--accent-light);
+        }
+
+        .tracker-row.drag-over {
+            border-color: var(--accent);
+            background: #e8e4ff;
+        }
+
+        /* 份数为 0 的行：整体深灰色 */
+        .tracker-row.zero-serving {
+            background: #3d3d42;
+            border-color: #3d3d42;
+        }
+        .tracker-row.zero-serving .drag-handle,
+        .tracker-row.zero-serving .delete-btn {
+            color: #9a9a9f;
+        }
+        .tracker-row.zero-serving input {
+            background: #4a4a50;
+            border-color: #55555c;
+            color: #cfcfcf;
+        }
+        .tracker-row.zero-serving .subtotal,
+        .tracker-row.zero-serving .subtotal .nutr-item {
+            color: #9a9a9f !important;
+        }
+
+        .tracker-row.header-row {
+            background: var(--accent);
+            border: none;
+            font-weight: 600;
+            color: #fff;
+            font-size: 12px;
+            padding: 6px 8px;
+            cursor: default;
+        }
+
+        .tracker-row .drag-handle {
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: grab;
+            user-select: none;
+            text-align: center;
+        }
+
+        .tracker-row .food-name-input {
+            width: 100%;
+            padding: 2px 4px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 12px;
+            background: var(--card);
+            color: var(--text-primary);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .tracker-row .food-name-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.15);
+        }
+
+        .tracker-row .nutr-input,
+        .tracker-row .price-input,
+        .tracker-row .weight-input {
+            width: 100%;
+            padding: 2px 2px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: var(--card);
+            color: var(--text-primary);
+            font-size: 12px;
+            text-align: center;
+            outline: none;
+            transition: var(--transition);
+        }
+        .tracker-row .nutr-input:focus,
+        .tracker-row .price-input:focus,
+        .tracker-row .weight-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.15);
+        }
+
+        /* 份数输入框 - 单独样式，无按钮 */
+        .tracker-row .serving-input {
+            width: 100%;
+            padding: 2px 4px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 13px;
+            text-align: center;
+            background: var(--card);
+            color: var(--text-primary);
+            outline: none;
+            transition: var(--transition);
+            min-width: 40px;
+        }
+        .tracker-row .serving-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.15);
+        }
+
+        .tracker-row .subtotal {
+            font-weight: 600;
+            text-align: left;
+            font-size: 12px;
+            color: var(--text-primary);
+            line-height: 1.5;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px 6px;
+            justify-content: flex-start;
+        }
+        .tracker-row .subtotal .nutr-item {
+            white-space: nowrap;
+        }
+        .tracker-row .subtotal .nutr-item .val {
+            font-weight: 700;
+        }
+        /* 数值占位：右对齐固定宽度（相当于 Python f"{x:>3}"），不补零 */
+        .tracker-row .subtotal .sub-val {
+            display: inline-block;
+            width: 3ch;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .tracker-row .delete-btn {
+            background: transparent;
+            border: none;
+            color: var(--danger);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 2px;
+            border-radius: 30px;
+            transition: var(--transition);
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tracker-row .delete-btn:hover {
+            background: var(--danger);
+            color: #fff;
+            transform: scale(1.1);
+        }
+
+        /* 汇总 */
+        .tracker-summary {
+            background: var(--bg);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            border: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .tracker-summary .summary-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .tracker-summary .summary-item .label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .tracker-summary .summary-item .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .tracker-summary .summary-item .value .unit {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .tracker-summary .summary-item .diff {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .tracker-summary .summary-item .diff.positive {
+            color: #20c997;
+        }
+        .tracker-summary .summary-item .diff.negative {
+            color: #ff6b6b;
+        }
+        .tracker-summary .summary-item .diff.zero {
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 900px) {
+            .tracker-row {
+                grid-template-columns: repeat(9, 60px) 144px 60px;
+                font-size: 11px;
+                padding: 4px 6px;
+            }
+            .tracker-row .nutr-input,
+            .tracker-row .price-input,
+            .tracker-row .weight-input,
+            .tracker-row .food-name-input,
+            .tracker-row .serving-input {
+                font-size: 10px;
+                padding: 1px;
+            }
+            .tracker-summary {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .tracker-row {
+                grid-template-columns: repeat(9, 40px) 108px 40px;
+                font-size: 10px;
+                padding: 2px 4px;
+                gap: 2px;
+            }
+            .tracker-row .nutr-input,
+            .tracker-row .price-input,
+            .tracker-row .weight-input,
+            .tracker-row .food-name-input,
+            .tracker-row .serving-input {
+                font-size: 9px;
+                padding: 1px;
+            }
+            .tracker-summary {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* ---------- 响应式 ---------- */
+        @media (max-width: 640px) {
+            .app {
+                padding: 20px 16px 28px;
+            }
+            .header-left h1 {
+                font-size: 20px;
+            }
+            .header-left .sub {
+                font-size: 12px;
+            }
+            .body-card {
+                padding: 16px;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px 16px;
+            }
+            .body-card .body-note {
+                grid-column: 1 / -1;
+            }
+            .body-item input[type="number"] {
+                width: 70px;
+            }
+            .result-card .card-value {
+                font-size: 22px;
+            }
+            .extra-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .formula-section .formula-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .body-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ---------- 工具类 ---------- */
+        .fade-in {
+            animation: fadeUp 0.4s ease;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pal-optimized {
+            background: #d4edda;
+            color: #155724;
+            font-size: 11px;
+            padding: 1px 10px;
+            border-radius: 40px;
+            margin-left: 6px;
+            font-weight: 600;
+        }
+        [data-theme="dark"] .pal-optimized {
+            background: #1e3a2a;
+            color: #8fdfb0;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text-primary);
+            color: var(--card);
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 999;
+        }
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app" id="app">
+        <!-- 头部 -->
+        <div class="header">
+            <div class="header-left">
+                <h1>食物计算器</h1>
+            </div>
+        </div>
+
+        <!-- 身体数据（可编辑） -->
+        <div class="body-card" id="bodyCard">
+            <div class="body-item">
+                <span class="label">性别</span>
+                <select id="genderSelect">
+                    <option value="male">男</option>
+                    <option value="female">女</option>
+                </select>
+            </div>
+            <div class="body-item">
+                <span class="label">身高</span>
+                <input type="number" id="heightInput" value="187" min="100" max="250" step="0.5" />
+                <span class="unit">cm</span>
+            </div>
+            <div class="body-item">
+                <span class="label">年龄</span>
+                <input type="number" id="ageInput" value="30" min="10" max="100" step="1" />
+                <span class="unit">岁</span>
+            </div>
+            <div class="body-item">
+                <span class="label">体重</span>
+                <input type="number" id="weightInput" min="30" max="150" step="0.1" value="78" />
+                <span class="unit">kg</span>
+            </div>
+            <div class="body-item">
+                <span class="label">体脂</span>
+                <input type="number" id="fatInput" min="5" max="45" step="0.5" value="17" />
+                <span class="unit">%</span>
+            </div>
+            <div class="body-note">
+                去脂体重 (FFM) = <strong id="ffmDisplay">0.0</strong> kg
+            </div>
+        </div>
+
+        <!-- 选择器 -->
+        <div class="selector-grid">
+            <div class="selector-group">
+                <label for="goalSelect">🎯 训练方向</label>
+                <select id="goalSelect">
+                    <option value="cut">🔥 减脂 — 掉体重，尽量只掉脂肪</option>
+                    <option value="maintain" selected>⚖️ 塑形 — 维持体重，减脂增肌</option>
+                    <option value="bulk">💪 增肌 — 增加体重，尽量只增肌肉</option>
+                </select>
+            </div>
+            <div class="selector-group">
+                <label for="daySelect">📆 训练类型</label>
+                <select id="daySelect">
+                    <option value="cardio">🏃 有氧日</option>
+                    <option value="strength" selected>🏋️ 力量日</option>
+                    <option value="rest">🧘 休息日</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 结果 -->
+        <div class="result-section">
+            <div class="result-grid" id="resultGrid">
+                <div class="result-card cal">
+                    <div class="card-label">🔥 热量</div>
+                    <div class="card-value">
+                        <span id="calValue">0</span><span class="unit"> kcal</span>
+                        <span class="sep">|</span>
+                        <span id="calKjValue">0</span><span class="unit"> kJ</span>
+                    </div>
+                    <div class="card-sub" id="calSub">基础代谢 + 活动</div>
+                    <div class="card-bar"><div class="fill" id="calBar" style="width:0%;"></div></div>
+                </div>
+                <div class="result-card protein">
+                    <div class="card-label">🥚 蛋白质</div>
+                    <div class="card-value"><span id="proteinValue">0</span><span class="unit">g</span></div>
+                    <div class="card-sub" id="proteinSub">基于去脂体重</div>
+                    <div class="card-bar"><div class="fill" id="proteinBar" style="width:0%;"></div></div>
+                </div>
+                <div class="result-card carbo">
+                    <div class="card-label">🍚 碳水</div>
+                    <div class="card-value"><span id="carboValue">0</span><span class="unit">g</span></div>
+                    <div class="card-sub" id="carboSub">——</div>
+                    <div class="card-bar"><div class="fill" id="carboBar" style="width:0%;"></div></div>
+                </div>
+                <div class="result-card fat">
+                    <div class="card-label">🥩 脂肪</div>
+                    <div class="card-value"><span id="fatValue">0</span><span class="unit">g</span></div>
+                    <div class="card-sub" id="fatSub">——</div>
+                    <div class="card-bar"><div class="fill" id="fatBar" style="width:0%;"></div></div>
+                </div>
+            </div>
+
+            <div class="extra-info">
+                <div class="info-item">
+                    <span>🧬 BMR（基础代谢率）</span>
+                    <strong id="bmrDisplay">0</strong><span> kcal</span>
+                </div>
+                <div class="info-item">
+                    <span>⚡ TDEE（每日总消耗）</span>
+                    <strong id="tdeeDisplay">0</strong><span> kcal</span>
+                </div>
+                <span class="status-tag" id="statusTag">⚖️ 维持期</span>
+            </div>
+        </div>
+
+
+        <div class="formula-section">
+            <div class="formula-title">计算公式</div>
+            <div class="formula-grid">
+                <div class="formula-item">
+                    <span class="tag">BMR</span>
+                    <span class="expr">10×体重(kg) + 6.25×身高(cm) − 5×年龄(岁) + 性比系数 (男 +5 / 女 −161)</span>
+                    <span class="note">(Mifflin‑St Jeor)</span>
+                </div>
+                <div class="formula-item">
+                    <span class="tag">TDEE</span>
+                    <span class="expr">BMR × PAL</span>
+                    <span class="note">(有氧 1.50 / 力量 1.60 / 休息 1.40)</span>
+                </div>
+                <div class="formula-item">
+                    <span class="tag">目标调整</span>
+                    <span class="expr">减脂 −400 / 塑形 0 / 增肌 +400 kcal</span>
+                </div>
+                <div class="formula-item">
+                    <span class="tag">去脂体重</span>
+                    <span class="expr">体重 × (1 − 体脂%)</span>
+                </div>
+                <div class="formula-item">
+                    <span class="tag">蛋白质</span>
+                    <span class="expr">系数 × 去脂体重</span>
+                    <span class="note">(减脂 2.6 / 塑形 2.0 / 增肌 2.2 g/kg FFM)</span>
+                </div>
+                <div class="formula-item">
+                    <span class="tag">脂肪</span>
+                    <span class="expr">总热量 × 脂肪比 ÷ 9</span>
+                    <span class="note">(1g 脂肪 ≈ 9 kcal)</span>
+                </div>
+                <div class="formula-item">
+                    <span class="tag">碳水</span>
+                    <span class="expr">(总热量 − 蛋白质×4 − 脂肪×9) ÷ 4</span>
+                </div>
+                <div class="formula-item">
+                    <span class="tag">热量转换</span>
+                    <span class="expr">kcal = KJ × 4.184</span>
+                </div>
+            </div>
+            <div class="footnote">
+                ⚠️ PAL 系数设定：久坐办公的休息日1.40、有氧日1.50、力量日1.60 <br/>
+                💡 脂肪占比根据目标动态调整：减脂 22% / 塑形 27% / 增肌 27%，更贴合体脂管理需求。
+            </div>
+        </div>
+
+
+        <div class="tracker-section" id="foodTracker">
+            <div class="tracker-title">
+                <div class="left">
+                    食物营养分配
+                    <span class="sub">— 拖拽排序 · 增删改</span>
+                </div>
+                <div class="actions">
+                    <button class="add-btn" id="addFoodBtn">➕ 添加食物</button>
+                    <button class="add-btn" id="exportBtn">📤 导出</button>
+                    <button class="add-btn" id="importBtn">📥 导入</button>
+                    <button class="clear-btn" id="clearServingsBtn">🗑️ 清空份数</button>
+                </div>
+            </div>
+
+            <div class="tracker-grid" id="trackerGrid">
+                <!-- 表头 -->
+                <div class="tracker-row header-row">
+                    <span style="text-align:center;">排序</span>
+                    <span>食物名称</span>
+                    <span>千焦(100g)</span>
+                    <span>蛋白(100g)</span>
+                    <span>脂肪(100g)</span>
+                    <span>碳水(100g)</span>
+                    <span>每份克重</span>
+                    <span>价格(元/份)</span>
+                    <span>份数</span>
+                    <span>每份营养</span>
+                    <span style="text-align:center;"></span>
+                </div>
+                <div id="trackerRows"></div>
+            </div>
+
+            <!-- 汇总 -->
+            <div class="tracker-summary" id="trackerSummary">
+                <div class="summary-item">
+                    <span class="label">🔥 摄入热量</span>
+                    <span class="value" id="sumCal">0 <span class="unit">kcal</span></span>
+                    <span class="diff" id="diffCal">目标 0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">🥚 蛋白质</span>
+                    <span class="value" id="sumProtein">0 <span class="unit">g</span></span>
+                    <span class="diff" id="diffProtein">目标 0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">🍚 碳水</span>
+                    <span class="value" id="sumCarbo">0 <span class="unit">g</span></span>
+                    <span class="diff" id="diffCarbo">目标 0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">🥩 脂肪</span>
+                    <span class="value" id="sumFat">0 <span class="unit">g</span></span>
+                    <span class="diff" id="diffFat">目标 0</span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">💰 总花费</span>
+                    <span class="value" id="sumPrice">0 <span class="unit">元</span></span>
+                    <span class="diff" id="diffPrice" style="font-size:12px; color:var(--text-muted);">今日开销</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast 提示 -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- DOM 引用 ----------
+            const genderSelect = document.getElementById('genderSelect');
+            const heightInput = document.getElementById('heightInput');
+            const ageInput = document.getElementById('ageInput');
+            const weightInput = document.getElementById('weightInput');
+            const fatInput = document.getElementById('fatInput');
+            const ffmDisplay = document.getElementById('ffmDisplay');
+
+            const goalSelect = document.getElementById('goalSelect');
+            const daySelect = document.getElementById('daySelect');
+
+            const calValue = document.getElementById('calValue');
+            const calKjValue = document.getElementById('calKjValue');
+            const proteinValue = document.getElementById('proteinValue');
+            const carboValue = document.getElementById('carboValue');
+            const fatValue = document.getElementById('fatValue');
+            const calSub = document.getElementById('calSub');
+            const proteinSub = document.getElementById('proteinSub');
+            const carboSub = document.getElementById('carboSub');
+            const fatSub = document.getElementById('fatSub');
+            const calBar = document.getElementById('calBar');
+            const proteinBar = document.getElementById('proteinBar');
+            const carboBar = document.getElementById('carboBar');
+            const fatBar = document.getElementById('fatBar');
+
+            const bmrDisplay = document.getElementById('bmrDisplay');
+            const tdeeDisplay = document.getElementById('tdeeDisplay');
+            const statusTag = document.getElementById('statusTag');
+            const statusBadge = document.getElementById('statusBadge');
+
+            const trackerRows = document.getElementById('trackerRows');
+            const addFoodBtn = document.getElementById('addFoodBtn');
+            const clearServingsBtn = document.getElementById('clearServingsBtn');
+            const toast = document.getElementById('toast');
+
+            // ---------- 初始食物数据 ----------
+            const defaultFoods = [
+                { id: 'frozen_shrimp', name: '冻虾仁', weight: 150, servings: 0,
+                    proteinPer100: 17.4, carbsPer100: 0, fatPer100: 0,
+                    caloriesPer100gKJ: 290.1, price: 9.9 },
+                { id: 'basafish', name: '巴沙鱼', weight: 250, servings: 0,
+                    proteinPer100: 9.6, carbsPer100: 1.8, fatPer100: 4.2,
+                    caloriesPer100gKJ: 349.8, price: 9.8 },
+                { id: 'snapper', name: '鲷鱼片', weight: 200, servings: 0,
+                    proteinPer100: 11, carbsPer100: 0, fatPer100: 3.9,
+                    caloriesPer100gKJ: 330.5, price: 10.93 },
+                { id: 'squid', name: '鱿鱼花', weight: 200, servings: 0,
+                    proteinPer100: 7.6, carbsPer100: 0, fatPer100: 0,
+                    caloriesPer100gKJ: 127.6, price: 9.9 },
+                { id: 'egg', name: '鸡蛋', weight: 50, servings: 0,
+                    proteinPer100: 13.1, carbsPer100: 2.4, fatPer100: 8.6,
+                    caloriesPer100gKJ: 581.6, price: 1.0 },
+                { id: 'milk', name: '牛奶', weight: 220, servings: 0,
+                    proteinPer100: 3, carbsPer100: 5, fatPer100: 1.3,
+                    caloriesPer100gKJ: 182.6, price: 3.32 },
+                { id: 'qianzhang', name: '千张', weight: 200, servings: 0,
+                    proteinPer100: 20, carbsPer100: 4, fatPer100: 10,
+                    caloriesPer100gKJ: 778, price: 3.69 },
+                { id: 'maodou', name: '毛豆粒', weight: 200, servings: 0,
+                    proteinPer100: 10, carbsPer100: 10, fatPer100: 5,
+                    caloriesPer100gKJ: 523, price: 5.9 },
+                { id: 'tofu', name: '老豆腐', weight: 380, servings: 0,
+                    proteinPer100: 8, carbsPer100: 3, fatPer100: 4,
+                    caloriesPer100gKJ: 335, price: 3.89 },
+                { id: 'veggie', name: '时蔬', weight: 400, servings: 0,
+                    proteinPer100: 2, carbsPer100: 6, fatPer100: 0.5,
+                    caloriesPer100gKJ: 134, price: 5.38 },
+                { id: 'coriander', name: '香菜', weight: 100, servings: 0,
+                    proteinPer100: 2.1, carbsPer100: 3.7, fatPer100: 0.5,
+                    caloriesPer100gKJ: 96.2, price: 0 },
+                { id: 'soft_tofu', name: '嫩豆腐', weight: 350, servings: 0,
+                    proteinPer100: 3.8, carbsPer100: 2.9, fatPer100: 1.9,
+                    caloriesPer100gKJ: 189, price: 2.39 },
+                { id: 'fresh_shrimp', name: '鲜虾仁', weight: 180, servings: 0,
+                    proteinPer100: 12.7, carbsPer100: 0, fatPer100: 0.6,
+                    caloriesPer100gKJ: 238, price: 17.5 },
+                { id: 'grain_bun', name: '小馒头', weight: 33, servings: 0,
+                    proteinPer100: 8.1, carbsPer100: 56.4, fatPer100: 2.2,
+                    caloriesPer100gKJ: 1178, price: 0.75 },
+            ];
+
+            // 当前食物数组
+            let foodItems = [];
+
+            let targetCal = 0,
+                targetProtein = 0,
+                targetCarbo = 0,
+                targetFat = 0;
+
+            let toastTimer = null;
+
+            // ---------- 工具函数 ----------
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                clearTimeout(toastTimer);
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+
+            function genId() {
+                return Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+            }
+
+            // ---------- 计算函数 ----------
+            function getPAL(day) {
+                switch (day) {
+                    case 'cardio': return 1.50;
+                    case 'strength': return 1.60;
+                    case 'rest': default: return 1.40;
+                }
+            }
+
+            function getFatRatio(goal) {
+                switch (goal) {
+                    case 'cut': return 0.22;
+                    case 'maintain': return 0.27;
+                    case 'bulk': return 0.27;
+                    default: return 0.25;
+                }
+            }
+
+            function computeBMR(gender, weight, height, age) {
+                if (gender === 'male') {
+                    return 10 * weight + 6.25 * height - 5 * age + 5;
+                } else {
+                    return 10 * weight + 6.25 * height - 5 * age - 161;
+                }
+            }
+
+            function compute(weight, bodyfat, goal, day, gender, height, age) {
+                const ffm = weight * (1 - bodyfat / 100);
+                const bmr = computeBMR(gender, weight, height, age);
+                const pal = getPAL(day);
+                const tdee = bmr * pal;
+
+                let adjust, proteinCoeff, label;
+                switch (goal) {
+                    case 'cut':
+                        adjust = -400;
+                        proteinCoeff = 2.6;
+                        label = '减脂';
+                        break;
+                    case 'bulk':
+                        adjust = 400;
+                        proteinCoeff = 2.2;
+                        label = '增肌';
+                        break;
+                    case 'maintain':
+                    default:
+                        adjust = 0;
+                        proteinCoeff = 2.0;
+                        label = '塑形';
+                        break;
+                }
+
+                const totalCal = Math.round(tdee + adjust);
+                const protein = Math.round(proteinCoeff * ffm * 10) / 10;
+                const fatRatio = getFatRatio(goal);
+                const fat = Math.round((totalCal * fatRatio / 9) * 10) / 10;
+                const proteinCal = protein * 4;
+                const fatCal = fat * 9;
+                const carboCal = totalCal - proteinCal - fatCal;
+                const carbo = Math.round((carboCal / 4) * 10) / 10;
+                const finalCarbo = carbo > 0 ? carbo : 0;
+
+                const totalMacroCal = proteinCal + fatCal + finalCarbo * 4;
+                const pRatio = totalMacroCal > 0 ? (proteinCal / totalMacroCal) * 100 : 0;
+                const fRatio = totalMacroCal > 0 ? (fatCal / totalMacroCal) * 100 : 0;
+                const cRatio = totalMacroCal > 0 ? ((finalCarbo * 4) / totalMacroCal) * 100 : 0;
+
+                return {
+                    bmr: Math.round(bmr),
+                    tdee: Math.round(tdee),
+                    totalCal,
+                    protein,
+                    carbo: finalCarbo,
+                    fat,
+                    adjust,
+                    label,
+                    pRatio,
+                    fRatio,
+                    cRatio,
+                    proteinCoeff,
+                    fatRatio,
+                    ffm: Math.round(ffm * 10) / 10,
+                    pal,
+                };
+            }
+
+            // ---------- 更新主结果 ----------
+            function updateMain() {
+                const gender = genderSelect.value;
+                const height = parseFloat(heightInput.value) || 187;
+                const age = parseFloat(ageInput.value) || 30;
+                const weight = parseFloat(weightInput.value) || 78;
+                const bodyfat = parseFloat(fatInput.value) || 17;
+                const goal = goalSelect.value;
+                const day = daySelect.value;
+
+                const result = compute(weight, bodyfat, goal, day, gender, height, age);
+
+                ffmDisplay.textContent = result.ffm.toFixed(1);
+                calValue.textContent = result.totalCal;
+                const totalKj = Math.round(result.totalCal * 4.184);
+                calKjValue.textContent = totalKj;
+                proteinValue.textContent = result.protein.toFixed(1);
+                carboValue.textContent = result.carbo.toFixed(1);
+                fatValue.textContent = result.fat.toFixed(1);
+
+                const goalMap = { cut: '🔥 减脂期', maintain: '⚖️ 塑形期', bulk: '💪 增肌期' };
+                const dayMap = { cardio: '🏃 有氧日', strength: '🏋️ 力量日', rest: '🧘 休息日' };
+                calSub.textContent = `${goalMap[goal]} · ${dayMap[day]} · PAL ${result.pal.toFixed(2)}`;
+                proteinSub.textContent = `${result.proteinCoeff}g/kg FFM · 基于去脂体重`;
+                carboSub.textContent = `剩余热量 · ${Math.round(result.cRatio)}%`;
+                fatSub.textContent = `${Math.round(result.fatRatio * 100)}% 总热量`;
+
+                calBar.style.width = '100%';
+                proteinBar.style.width = Math.min(result.pRatio, 100) + '%';
+                carboBar.style.width = Math.min(result.cRatio, 100) + '%';
+                fatBar.style.width = Math.min(result.fRatio, 100) + '%';
+
+                bmrDisplay.textContent = result.bmr;
+                tdeeDisplay.textContent = result.tdee;
+
+                let statusText, statusClass;
+                if (result.adjust < 0) {
+                    statusText = `🔻 减脂 · 缺口 ${Math.abs(result.adjust)}kcal`;
+                    statusClass = 'deficit';
+                } else if (result.adjust > 0) {
+                    statusText = `🔺 增肌 · 盈余 ${result.adjust}kcal`;
+                    statusClass = 'surplus';
+                } else {
+                    statusText = `⚖️ 维持 · TDEE`;
+                    statusClass = 'maintain';
+                }
+                statusTag.textContent = statusText;
+                statusTag.className = 'status-tag ' + statusClass;
+
+                const badgeMap = { cut: '🔥 减脂', maintain: '⚖️ 塑形', bulk: '💪 增肌' };
+                if (statusBadge) statusBadge.textContent = badgeMap[goal];
+
+                updateTracker(result.totalCal, result.protein, result.carbo, result.fat);
+            }
+
+            // ---------- 食物追踪器 ----------
+            function initFoods() {
+                foodItems = defaultFoods.map(f => ({
+                    id: f.id + '_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                    name: f.name,
+                    weight: f.weight,
+                    servings: f.servings,
+                    proteinPer100: f.proteinPer100,
+                    carbsPer100: f.carbsPer100,
+                    fatPer100: f.fatPer100,
+                    caloriesPer100gKJ: f.caloriesPer100gKJ,
+                    price: f.price,
+                }));
+                renderTracker();
+            }
+
+            // 添加食物
+            function addFood() {
+                const newFood = {
+                    id: genId(),
+                    name: '新食物',
+                    weight: 100,
+                    servings: 0,
+                    proteinPer100: 0,
+                    carbsPer100: 0,
+                    fatPer100: 0,
+                    caloriesPer100gKJ: 0,
+                    price: 0,
+                };
+                foodItems.push(newFood);
+                renderTracker();
+                showToast('✅ 已添加新食物');
+                const rows = document.querySelectorAll('.tracker-row:not(.header-row)');
+                const lastRow = rows[rows.length - 1];
+                if (lastRow) {
+                    const nameInput = lastRow.querySelector('.food-name-input');
+                    if (nameInput) nameInput.focus();
+                }
+            }
+
+            // 删除食物（通过ID）
+            function deleteFood(id) {
+                if (foodItems.length <= 1) {
+                    showToast('⚠️ 至少保留一种食物');
+                    return;
+                }
+                const item = foodItems.find(f => f.id === id);
+                if (!item) return;
+                if (confirm(`确定要删除「${item.name}」吗？`)) {
+                    foodItems = foodItems.filter(f => f.id !== id);
+                    renderTracker();
+                    showToast('🗑️ 已删除');
+                }
+            }
+
+            // 清空份数
+            function clearAllServings() {
+                foodItems.forEach(item => item.servings = 0);
+                renderTracker();
+                showToast('🗑️ 所有份数已清零');
+            }
+
+            // 导出食物清单（下载 JSON 文件）
+            function exportFoods() {
+                const data = { version: 1, foods: foodItems };
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = '食物清单.json';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast('📤 已导出 ' + foodItems.length + ' 项');
+            }
+
+            // 导入食物清单（替换当前列表）
+            function importFoods() {
+                const input = document.createElement('input');
+                input.type = 'file';
+                input.accept = '.json,application/json';
+                input.style.display = 'none';
+                document.body.appendChild(input);
+                input.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            try {
+                                const parsed = JSON.parse(e.target.result);
+                                const list = Array.isArray(parsed) ? parsed : (parsed && parsed.foods);
+                                if (!Array.isArray(list) || list.length === 0) throw new Error('bad');
+                                foodItems = list.map(function(f) {
+                                    return {
+                                        id: (f && typeof f.id === 'string' && f.id) ? f.id : genId(),
+                                        name: String(f.name || '未命名'),
+                                        weight: Number(f.weight) || 0,
+                                        servings: Math.max(0, Number(f.servings) || 0),
+                                        proteinPer100: Number(f.proteinPer100) || 0,
+                                        carbsPer100: Number(f.carbsPer100) || 0,
+                                        fatPer100: Number(f.fatPer100) || 0,
+                                        caloriesPer100gKJ: Number(f.caloriesPer100gKJ) || 0,
+                                        price: Number(f.price) || 0,
+                                    };
+                                });
+                                renderTracker();
+                                updateSummary();
+                                showToast('📥 已导入 ' + foodItems.length + ' 项');
+                            } catch (err) {
+                                showToast('❌ 导入失败：文件格式不正确');
+                            }
+                        };
+                        reader.readAsText(file);
+                    }
+                    document.body.removeChild(input);
+                });
+                input.click();
+            }
+
+            // 更新小计显示
+            function updateSubtotalDisplay(el, item) {
+                const weight = item.weight;
+                const protein = (weight / 100) * item.proteinPer100;
+                const carbs = (weight / 100) * item.carbsPer100;
+                const fat = (weight / 100) * item.fatPer100;
+                const kcal = (item.caloriesPer100gKJ / 4.184) * (weight / 100);
+                // 相当于 Python 的 f"{x:>5}"：右对齐占 5 字符宽，不补零
+                const num = (n, d) => `<span class="sub-val">${n.toFixed(d)}</span>`;
+                el.innerHTML = `
+                    <span class="nutr-item" style="color:var(--color-protein);">蛋 ${num(protein, 1)}</span>
+                    <span class="nutr-item" style="color:var(--color-carbo);">碳 ${num(carbs, 1)}</span>
+                    <span class="nutr-item" style="color:var(--color-fat);">脂 ${num(fat, 1)}</span>
+                    <span class="nutr-item" style="color:var(--color-cal);">热 ${num(kcal, 0)}</span>
+                `;
+            }
+
+            // 更新汇总
+            function updateSummary() {
+                let totalProtein = 0,
+                    totalCarbs = 0,
+                    totalFat = 0,
+                    totalCal = 0,
+                    totalPrice = 0;
+                foodItems.forEach(item => {
+                    const servings = item.servings;
+                    if (servings <= 0) return;
+                    const weight = item.weight;
+                    const proteinPerServing = (weight / 100) * item.proteinPer100;
+                    const carbsPerServing = (weight / 100) * item.carbsPer100;
+                    const fatPerServing = (weight / 100) * item.fatPer100;
+                    const calPerServing = (item.caloriesPer100gKJ / 4.184) * (weight / 100);
+                    totalProtein += proteinPerServing * servings;
+                    totalCarbs += carbsPerServing * servings;
+                    totalFat += fatPerServing * servings;
+                    totalCal += calPerServing * servings;
+                    totalPrice += item.price * servings;
+                });
+
+                document.getElementById('sumCal').innerHTML = `${totalCal.toFixed(0)} <span class="unit">kcal</span>`;
+                document.getElementById('sumProtein').innerHTML = `${totalProtein.toFixed(1)} <span class="unit">g</span>`;
+                document.getElementById('sumCarbo').innerHTML = `${totalCarbs.toFixed(1)} <span class="unit">g</span>`;
+                document.getElementById('sumFat').innerHTML = `${totalFat.toFixed(1)} <span class="unit">g</span>`;
+                document.getElementById('sumPrice').innerHTML = `${totalPrice.toFixed(2)} <span class="unit">元</span>`;
+
+                updateDiff('diffCal', totalCal, targetCal, 'kcal');
+                updateDiff('diffProtein', totalProtein, targetProtein, 'g');
+                updateDiff('diffCarbo', totalCarbs, targetCarbo, 'g');
+                updateDiff('diffFat', totalFat, targetFat, 'g');
+            }
+
+            function updateDiff(elementId, current, target, unit) {
+                const el = document.getElementById(elementId);
+                if (!target || target <= 0) {
+                    el.textContent = '请先设置目标';
+                    el.className = 'diff zero';
+                    return;
+                }
+                const diff = target - current;
+                let text = '';
+                let cls = '';
+                if (Math.abs(diff) < 0.1) {
+                    text = `✅ 已达目标`;
+                    cls = 'zero';
+                } else if (diff > 0) {
+                    text = `还差 ${diff.toFixed(1)} ${unit}`;
+                    cls = 'negative';
+                } else {
+                    text = `超出 ${Math.abs(diff).toFixed(1)} ${unit}`;
+                    cls = 'positive';
+                }
+                el.textContent = text;
+                el.className = 'diff ' + cls;
+            }
+
+            function updateTracker(cal, protein, carbo, fat) {
+                targetCal = cal;
+                targetProtein = protein;
+                targetCarbo = carbo;
+                targetFat = fat;
+                updateSummary();
+            }
+
+            // 渲染追踪器
+            function renderTracker() {
+                const container = trackerRows;
+                container.innerHTML = '';
+                foodItems.forEach((item) => {
+                    const row = document.createElement('div');
+                    row.className = 'tracker-row' + (item.servings <= 0 ? ' zero-serving' : '');
+                    row.draggable = true;
+                    row.dataset.id = item.id;
+
+                    // 拖拽手柄
+                    const handle = document.createElement('span');
+                    handle.className = 'drag-handle';
+                    handle.textContent = '☰';
+
+                    // 食物名称
+                    const nameInput = document.createElement('input');
+                    nameInput.type = 'text';
+                    nameInput.className = 'food-name-input';
+                    nameInput.value = item.name;
+                    nameInput.dataset.id = item.id;
+                    nameInput.addEventListener('input', function(e) {
+                        const id = this.dataset.id;
+                        const found = foodItems.find(f => f.id === id);
+                        if (found) {
+                            found.name = this.value;
+                            updateSummary();
+                        }
+                    });
+
+                    // 热量
+                    const calInput = createNutrInput('caloriesPer100gKJ', item.caloriesPer100gKJ, item.id);
+                    // 蛋白
+                    const proteinInput = createNutrInput('proteinPer100', item.proteinPer100, item.id);
+                    // 脂肪
+                    const fatInput = createNutrInput('fatPer100', item.fatPer100, item.id);
+                    // 碳水
+                    const carbsInput = createNutrInput('carbsPer100', item.carbsPer100, item.id);
+
+                    // 每份重量
+                    const weightInput = document.createElement('input');
+                    weightInput.type = 'number';
+                    weightInput.className = 'weight-input';
+                    weightInput.value = item.weight;
+                    weightInput.step = '0.1';
+                    weightInput.min = '0';
+                    weightInput.dataset.id = item.id;
+                    weightInput.addEventListener('input', function() {
+                        const id = this.dataset.id;
+                        const found = foodItems.find(f => f.id === id);
+                        if (found) {
+                            const val = parseFloat(this.value);
+                            if (!isNaN(val) && val >= 0) {
+                                found.weight = val;
+                                updateRowSubtotal(id);
+                                updateSummary();
+                            }
+                        }
+                    });
+
+                    // 价格
+                    const priceInput = document.createElement('input');
+                    priceInput.type = 'number';
+                    priceInput.className = 'price-input';
+                    priceInput.value = item.price;
+                    priceInput.step = '0.01';
+                    priceInput.min = '0';
+                    priceInput.dataset.id = item.id;
+                    priceInput.addEventListener('input', function() {
+                        const id = this.dataset.id;
+                        const found = foodItems.find(f => f.id === id);
+                        if (found) {
+                            const val = parseFloat(this.value);
+                            if (!isNaN(val) && val >= 0) {
+                                found.price = val;
+                                updateSummary();
+                            }
+                        }
+                    });
+
+                    // 份数：仅输入框（无 +/- 按钮）
+                    const servingInput = document.createElement('input');
+                    servingInput.type = 'number';
+                    servingInput.className = 'serving-input';
+                    servingInput.value = item.servings.toFixed(1);
+                    servingInput.step = '0.5';
+                    servingInput.min = '0';
+                    servingInput.dataset.id = item.id;
+                    servingInput.addEventListener('input', function() {
+                        const id = this.dataset.id;
+                        const found = foodItems.find(f => f.id === id);
+                        if (found) {
+                            const val = parseFloat(this.value);
+                            if (!isNaN(val) && val >= 0) {
+                                found.servings = Math.round(val * 10) / 10;
+                                row.classList.toggle('zero-serving', found.servings <= 0);
+                                updateSummary();
+                            }
+                        }
+                    });
+                    servingInput.addEventListener('blur', function() {
+                        const id = this.dataset.id;
+                        const found = foodItems.find(f => f.id === id);
+                        if (found) {
+                            this.value = found.servings.toFixed(1);
+                        }
+                    });
+
+                    // 每份营养
+                    const subtotal = document.createElement('span');
+                    subtotal.className = 'subtotal';
+                    updateSubtotalDisplay(subtotal, item);
+
+                    // 删除按钮
+                    const delBtn = document.createElement('button');
+                    delBtn.className = 'delete-btn';
+                    delBtn.textContent = 'x';
+                    delBtn.type = 'button';
+                    delBtn.addEventListener('click', function() {
+                        deleteFood(item.id);
+                    });
+
+                    row.appendChild(handle);
+                    row.appendChild(nameInput);
+                    row.appendChild(calInput);
+                    row.appendChild(proteinInput);
+                    row.appendChild(fatInput);
+                    row.appendChild(carbsInput);
+                    row.appendChild(weightInput);
+                    row.appendChild(priceInput);
+                    row.appendChild(servingInput);
+                    row.appendChild(subtotal);
+                    row.appendChild(delBtn);
+
+                    container.appendChild(row);
+
+                    // 拖拽事件
+                    row.addEventListener('dragstart', function(e) {
+                        e.dataTransfer.setData('text/plain', this.dataset.id);
+                        this.classList.add('dragging');
+                    });
+                    row.addEventListener('dragend', function(e) {
+                        this.classList.remove('dragging');
+                        document.querySelectorAll('.tracker-row.drag-over').forEach(el => el.classList.remove(
+                        'drag-over'));
+                    });
+                    row.addEventListener('dragover', function(e) {
+                        e.preventDefault();
+                        document.querySelectorAll('.tracker-row.drag-over').forEach(el => el.classList.remove(
+                            'drag-over'));
+                        this.classList.add('drag-over');
+                    });
+                    row.addEventListener('dragleave', function(e) {
+                        this.classList.remove('drag-over');
+                    });
+                    row.addEventListener('drop', function(e) {
+                        e.preventDefault();
+                        this.classList.remove('drag-over');
+                        const fromId = e.dataTransfer.getData('text/plain');
+                        const toId = this.dataset.id;
+                        if (fromId && toId && fromId !== toId) {
+                            const fromIndex = foodItems.findIndex(f => f.id === fromId);
+                            const toIndex = foodItems.findIndex(f => f.id === toId);
+                            if (fromIndex !== -1 && toIndex !== -1) {
+                                const [removed] = foodItems.splice(fromIndex, 1);
+                                foodItems.splice(toIndex, 0, removed);
+                                renderTracker();
+                                showToast('↕️ 顺序已调整');
+                            }
+                        }
+                    });
+                });
+
+                updateSummary();
+            }
+
+            // 创建营养输入框
+            function createNutrInput(field, value, id) {
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.className = 'nutr-input';
+                input.value = value;
+                input.step = '0.1';
+                input.min = '0';
+                input.dataset.id = id;
+                input.dataset.field = field;
+                input.addEventListener('input', function() {
+                    const id = this.dataset.id;
+                    const field = this.dataset.field;
+                    const found = foodItems.find(f => f.id === id);
+                    if (found) {
+                        const val = parseFloat(this.value);
+                        if (!isNaN(val) && val >= 0) {
+                            found[field] = val;
+                            updateRowSubtotal(id);
+                            updateSummary();
+                        }
+                    }
+                });
+                return input;
+            }
+
+            // 更新某行小计
+            function updateRowSubtotal(id) {
+                const row = document.querySelector(`.tracker-row[data-id="${id}"]`);
+                if (!row) return;
+                const item = foodItems.find(f => f.id === id);
+                if (!item) return;
+                const subtotal = row.querySelector('.subtotal');
+                if (subtotal) updateSubtotalDisplay(subtotal, item);
+            }
+
+            // ---------- 绑定事件 ----------
+            function bindNumberInput(input, updateFn) {
+                input.addEventListener('input', updateFn);
+                input.addEventListener('change', function() {
+                    let val = parseFloat(this.value);
+                    if (isNaN(val)) {
+                        val = parseFloat(this.min) || 0;
+                    }
+                    const min = parseFloat(this.min);
+                    const max = parseFloat(this.max);
+                    if (val < min) val = min;
+                    if (val > max) val = max;
+                    this.value = val.toFixed(1);
+                    updateFn();
+                });
+            }
+
+            bindNumberInput(weightInput, updateMain);
+            bindNumberInput(fatInput, updateMain);
+
+            genderSelect.addEventListener('change', updateMain);
+            heightInput.addEventListener('input', updateMain);
+            ageInput.addEventListener('input', updateMain);
+            goalSelect.addEventListener('change', updateMain);
+            daySelect.addEventListener('change', updateMain);
+
+            clearServingsBtn.addEventListener('click', clearAllServings);
+            addFoodBtn.addEventListener('click', addFood);
+            document.getElementById('exportBtn').addEventListener('click', exportFoods);
+            document.getElementById('importBtn').addEventListener('click', importFoods);
+
+            // ---------- 初始化 ----------
+            initFoods();
+            updateMain();
+        })();
+    </script>
+
+</body>
+</html>
