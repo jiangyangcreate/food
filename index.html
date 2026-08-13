@@ -937,7 +937,7 @@
         <div class="body-card" id="bodyCard">
             <div class="body-item">
                 <span class="label">体重</span>
-                <input type="number" id="weightInput" min="30" max="150" step="0.1" value="78.5" />
+                <input type="number" id="weightInput" min="30" max="150" step="0.1" value="78" />
                 <span class="unit">kg</span>
             </div>
             <div class="body-item">
@@ -970,13 +970,15 @@
                 <div class="hint" id="intensityHint">热量缺口：保守 −10% / 标准 −15% / 激进 −20%</div>
             </div>
             <div class="selector-group">
-                <label for="palSelect">💼 职业活动量</label>
-                <select id="palSelect">
-                    <option value="sedentary" selected>🪑 久坐的程序员 PAL 1.30</option>
-                    <option value="light">🚶 爱串门的产品经理 PAL 1.45</option>
-                    <option value="moderate">🛵 送外卖的程序员 PAL 1.60</option>
+                <label for="palSelect">💼 日常活动量</label>
+                <select id="palSelect"> 
+                    <option value="sedentary">🛏️ 整日卧床/几乎不动（小于5000步） PAL 1.30</option>
+                    <option value="light"  selected>🪑 整日久坐，几乎无运动（8000步） PAL 1.40</option>
+                    <option value="moderate">🚶 整日可自由活动，但无明显运动（17000步） PAL 1.65</option>
+                    <option value="active">🏃 整日长时间站立、频繁移动（25000步） PAL 1.85</option>
+                    <option value="very_active">💪 整日重体力劳动或高运动量（37000步） PAL 2.2</option>
                 </select>
-                <div class="hint">按职业日常活动量，训练消耗另行叠加</div>
+                <div class="hint">高强度运动（如跑步、跳绳）会产生较多步数，需避免重复计算可摘下运动手表</div>
             </div>
             <div class="selector-group">
                 <label for="exerciseSelect">🏋️ 训练（额外热量）</label>
@@ -1048,7 +1050,7 @@
                 <div class="formula-item">
                     <span class="tag">TDEE</span>
                     <span class="expr">BMR × PAL + 训练额外热量</span>
-                    <span class="note">(久坐程序员 1.30 / 产品经理 1.45 / 外卖程序员 1.60)</span>
+                    <span class="note">(根据日常活动量和训练消耗计算)</span>
                 </div>
                 <div class="formula-item">
                     <span class="tag">目标调整</span>
@@ -1080,7 +1082,7 @@
                 </div>
             </div>
             <div class="footnote">
-                ⚠️ PAL 为日常活动量系数（久坐的程序员 1.30 / 爱串门的产品经理 1.45 / 送外卖的程序员 1.60），训练消耗在 TDEE 基础上单独叠加。 <br/>
+                ⚠️ PAL 为日常活动量系数（根据日常活动量计算），训练消耗在 TDEE 基础上单独叠加。 <br/>
                 💡 热量盈亏按 TDEE 百分比计算：减脂 保守−10% / 标准−15% / 激进−20%；增肌 保守+5% / 标准+10% / 激进+15%。
             </div>
         </div>
@@ -1263,9 +1265,11 @@
             // ---------- 计算函数 ----------
             function getPAL(palKey) {
                 switch (palKey) {
-                    case 'light': return 1.45;
-                    case 'moderate': return 1.60;
-                    case 'sedentary': default: return 1.30;
+                    case 'sedentary': default: return 1.2;
+                    case 'light': return 1.40;
+                    case 'moderate': return 1.65;
+                    case 'active': return 1.85;
+                    case 'very_active': return 2.2;
                 }
             }
 
@@ -1358,7 +1362,7 @@
 
             // ---------- 更新主结果 ----------
             function updateMain() {
-                const weight = parseFloat(weightInput.value) || 78.5;
+                const weight = parseFloat(weightInput.value) || 78;
                 const bodyfat = parseFloat(fatInput.value) || 17;
                 const goal = goalSelect.value;
                 const palKey = palSelect.value;
@@ -1375,7 +1379,7 @@
                 fatValue.textContent = result.fat.toFixed(1);
 
                 const goalMap = { cut: '🔥 减脂期', maintain: '⚖️ 塑形期', bulk: '💪 增肌期' };
-                const palMap = { sedentary: '久坐的程序员', light: '爱串门的产品经理', moderate: '送外卖的程序员' };
+                const palMap = { sedentary: '卧床/几乎不动', light: '久坐，几乎无运动', moderate: '可自由活动，但无明显运动', active: '长时间站立、频繁移动', very_active: '重体力劳动或高运动量' };
                 const exerciseMap = { rest: '休息', run30: '慢跑30分', strength60: '力量60分', strength90: '力量90分' };
                 const exText = result.exercise > 0 ? ` +${result.exercise}kcal` : '';
                 calSub.textContent = `${goalMap[goal]} · ${palMap[palKey]} PAL ${result.pal.toFixed(2)} · ${exerciseMap[exerciseKey]}${exText}`;
