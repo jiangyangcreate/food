@@ -1007,7 +1007,7 @@
             <div class="selector-group full-row">
                 <label for="adjustSlider">🎯 热量调整</label>
                 <div class="adjust-slider-row">
-                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-15" />
+                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-10" />
                     <span class="adjust-value" id="adjustValueLabel">−15% 缺口（减脂）</span>
                 </div>
                 <div class="hint">左移为热量缺口（减脂），右移为热量盈余（增肌），0 为维持</div>
@@ -1292,9 +1292,15 @@
                 { id: 'chicken_dumpling', name: '鸡肉蒸饺', weight: 20, servings: 0,
                     proteinPer100: 6.6, carbsPer100: 17, fatPer100: 1.9,
                     caloriesPer100gKJ: 427, price: 0.59 },
-                { id: 'veggie', name: '时蔬', weight: 400, servings: 0,
-                    proteinPer100: 2, carbsPer100: 6, fatPer100: 0.5,
-                    caloriesPer100gKJ: 134, price: 5.38 },
+                { id: 'leafy_green', name: '时蔬·叶菜', weight: 100, servings: 0,
+                    proteinPer100: 2, carbsPer100: 3, fatPer100: 0.3,
+                    caloriesPer100gKJ: 90, price: 0 },
+                { id: 'mushroom', name: '时蔬·菌菇', weight: 100, servings: 0,
+                    proteinPer100: 2.5, carbsPer100: 4, fatPer100: 0.5,
+                    caloriesPer100gKJ: 120, price: 0 },
+                { id: 'sprout', name: '时蔬·芽苗', weight: 100, servings: 0,
+                    proteinPer100: 3, carbsPer100: 4, fatPer100: 0.2,
+                    caloriesPer100gKJ: 120, price: 0 },
             ];
 
             // 当前食物数组
