@@ -989,12 +989,12 @@
         <div class="body-card" id="bodyCard">
             <div class="body-item">
                 <span class="label">体重</span>
-                <input type="number" id="weightInput" min="30" max="150" step="0.1" value="77.4" />
+                <input type="number" id="weightInput" min="30" max="150" step="0.1" value="77.0" />
                 <span class="unit">kg</span>
             </div>
             <div class="body-item">
                 <span class="label">体脂</span>
-                <input type="number" id="fatInput" min="5" max="45" step="0.1" value="17.0" />
+                <input type="number" id="fatInput" min="5" max="45" step="0.1" value="16.0" />
                 <span class="unit">%</span>
             </div>
             <div class="body-note">
@@ -1007,16 +1007,16 @@
             <div class="selector-group full-row">
                 <label for="adjustSlider">🎯 热量调整</label>
                 <div class="adjust-slider-row">
-                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-10" />
-                    <span class="adjust-value" id="adjustValueLabel">−15% 缺口（减脂）</span>
+                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-20" />
+                    <span class="adjust-value" id="adjustValueLabel">−20% 缺口（减脂）</span>
                 </div>
                 <div class="hint">左移为热量缺口（减脂），右移为热量盈余（增肌），0 为维持</div>
             </div>
             <div class="selector-group">
                 <label for="palSelect">💼 日常活动量</label>
                 <select id="palSelect"> 
-                    <option value="sedentary">🛏️ 整日卧床/几乎不动（小于5000步） PAL 1.30</option>
-                    <option value="light"  selected>🪑 整日久坐，几乎无运动（8000步） PAL 1.40</option>
+                    <option value="sedentary" selected>🛏️ 整日卧床/几乎不动（小于5000步） PAL 1.30</option>
+                    <option value="light">🪑 整日久坐，几乎无运动（8000步） PAL 1.40</option>
                     <option value="moderate">🚶 整日可自由活动，但无明显运动（17000步） PAL 1.65</option>
                     <option value="active">🏃 整日长时间站立、频繁移动（25000步） PAL 1.85</option>
                 </select>
