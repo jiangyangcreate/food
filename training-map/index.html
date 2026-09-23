@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>训练图谱</title>
+<style>
+/* ===== 重置 ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ===== CSS 变量 ===== */
+:root {
+  --bg:     #f3efe7;
+  --ink:    #1f1c18;
+  --muted:  #6b645c;
+  --line:   #cfc6b8;
+  --card:   #fffcf7;
+  --accent: #9a3b2f;
+  --select: #c0392b;
+  --s1: #9a9590;
+  --s2: #e0b84a;
+  --s3: #d4a017;
+  --s4: #5c9a3c;
+  --s5: #2d7a3a;
+}
+
+body {
+  font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 0 0 60px;
+  line-height: 1.55;
+}
+
+/* ===== 模式切换栏 ===== */
+.mode-bar {
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+  gap: 4px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.mode-btn {
+  display: inline-block;
+  padding: 6px 28px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  transition: background .18s, color .18s;
+  border: 1px solid transparent;
+}
+.mode-btn:hover { color: var(--ink); background: var(--bg); }
+.mode-btn.active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* ===== 主容器 ===== */
+.wrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 0; }
+
+/* ===== 页头 ===== */
+h1.page-title {
+  font-size: 22px; font-weight: 800; letter-spacing: -.3px; color: var(--ink);
+}
+.page-sub {
+  font-size: 13px; color: var(--muted); margin-top: 3px; margin-bottom: 16px;
+}
+
+/* ===== 图例 ===== */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 8px 16px;
+  align-items: center; margin-bottom: 14px;
+  font-size: 12px; color: var(--muted);
+}
+.legend-item { display: flex; align-items: center; gap: 5px; }
+.legend-dot {
+  width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0;
+}
+
+/* ===== 图谱区域 ===== */
+.atlas {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.stage-wrap {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f3efe7;
+  min-height: 500px;
+}
+#stage { position: absolute; inset: 0; }
+
+#loading {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  background: rgba(243,239,231,.9);
+  font-size: 13px; color: var(--muted);
+  gap: 10px; z-index: 5;
+}
+.loading-bar-wrap {
+  width: 160px; height: 4px;
+  background: var(--line); border-radius: 2px; overflow: hidden;
+}
+.loading-bar {
+  height: 100%; width: 0%; background: var(--accent); border-radius: 2px;
+  transition: width .15s;
+}
+
+.tools {
+  position: absolute; top: 10px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; gap: 6px; z-index: 10;
+}
+.tool-btn {
+  background: rgba(255,252,247,.88); border: 1px solid var(--line);
+  border-radius: 6px; padding: 5px 12px; font-size: 12px;
+  cursor: pointer; color: var(--ink); white-space: nowrap;
+  transition: background .15s;
+}
+.tool-btn:hover { background: var(--card); }
+
+/* ===== 侧栏 Inspector ===== */
+#inspector {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 12px;
+  overflow-y: auto;
+  max-height: 560px;
+  font-size: 13px;
+}
+
+.goal-card {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 12px; color: var(--muted);
+  line-height: 1.6;
+}
+.goal-card strong { color: var(--ink); font-weight: 700; }
+
+#muscle-q {
+  width: 100%; padding: 6px 10px;
+  border: 1px solid var(--line); border-radius: 6px;
+  background: var(--bg); font-size: 13px; color: var(--ink);
+  outline: none; margin-bottom: 10px;
+}
+#muscle-q:focus { border-color: var(--accent); }
+
+.insp-section-hd {
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .05em;
+  margin: 10px 0 5px; padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.restore-btn {
+  width: 100%; padding: 6px; margin-top: 10px;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; font-size: 12px; color: var(--muted);
+  cursor: pointer; transition: background .15s;
+}
+.restore-btn:hover { background: var(--line); color: var(--ink); }
+
+.muscle-item {
+  display: flex; align-items: center; gap: 7px;
+  padding: 5px 6px; border-radius: 6px; cursor: pointer;
+  transition: background .13s;
+}
+.muscle-item:hover { background: var(--bg); }
+.muscle-item.selected { background: #fde8e6; }
+.muscle-badge {
+  width: 22px; height: 22px; border-radius: 4px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: #fff;
+}
+.muscle-badge.s1 { background: var(--s1); color: var(--ink); }
+.muscle-badge.s2 { background: var(--s2); color: var(--ink); }
+.muscle-badge.s3 { background: var(--s3); color: var(--ink); }
+.muscle-badge.s4 { background: var(--s4); }
+.muscle-badge.s5 { background: var(--s5); }
+.muscle-name { flex: 1; font-size: 12px; color: var(--ink); }
+.muscle-region { font-size: 10px; color: var(--muted); }
+
+/* 选中详情 */
+.detail-hd {
+  font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 4px;
+}
+.detail-meta { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.stars { display: flex; gap: 4px; margin-bottom: 10px; }
+.star {
+  width: 16px; height: 16px; border-radius: 3px;
+  background: var(--line); border: none; cursor: pointer;
+  transition: background .12s;
+}
+.star.on-1,.star.on-2,.star.on-3 { background: var(--s3); }
+.star.on-4 { background: var(--s4); }
+.star.on-5 { background: var(--s5); }
+.star.sel-1,.star.sel-2 { background: var(--s2); }
+.star.sel-cur { outline: 2px solid var(--select); }
+
+.why-text { font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+.ex-list { list-style: none; font-size: 12px; }
+.ex-list li { padding: 2px 0; }
+.ex-have::before { content: "✓ "; color: var(--s5); }
+.ex-miss::before { content: "○ "; color: var(--muted); }
+.back-btn {
+  width: 100%; padding: 6px; margin-top: 12px;
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 6px; font-size: 12px; color: var(--muted);
+  cursor: pointer; transition: background .15s;
+}
+.back-btn:hover { background: var(--line); color: var(--ink); }
+
+/* ===== Hover Tip ===== */
+#tip {
+  position: fixed; display: none;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 8px; padding: 10px 12px;
+  max-width: 220px; font-size: 12px; color: var(--ink);
+  box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  z-index: 999; pointer-events: auto;
+  line-height: 1.55;
+}
+#tip .tip-name { font-weight: 700; font-size: 13px; margin-bottom: 3px; }
+#tip .tip-why  { color: var(--muted); margin-bottom: 6px; }
+#tip .tip-stars { display: flex; gap: 3px; margin-bottom: 5px; }
+#tip .tip-star {
+  width: 14px; height: 14px; border-radius: 2px;
+  background: var(--line); border: none; cursor: pointer;
+}
+#tip .tip-star.on { background: var(--s3); }
+#tip .tip-star.on-4 { background: var(--s4); }
+#tip .tip-star.on-5 { background: var(--s5); }
+#tip .tip-other { color: var(--muted); font-style: italic; }
+
+/* ===== 训练记录 ===== */
+.log-section { margin-top: 0; }
+.log-hd {
+  font-size: 18px; font-weight: 700; color: var(--ink);
+  margin-bottom: 12px; padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+#today-bar {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.today-hd {
+  font-size: 13px; font-weight: 700; color: var(--ink);
+  margin-bottom: 10px;
+}
+.today-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+.today-item {
+  background: var(--bg); border: 1px solid var(--line);
+  border-radius: 7px; padding: 8px 10px;
+  font-size: 12px;
+}
+.today-item-name { font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.today-item-meta { color: var(--muted); margin-bottom: 6px; }
+.today-item-check {
+  display: flex; align-items: center; gap: 5px; cursor: pointer;
+  font-size: 11px; color: var(--muted);
+}
+.today-item-check input[type=checkbox] { cursor: pointer; }
+.today-item.is-done .today-item-name { text-decoration: line-through; color: var(--muted); }
+.today-locate-btn {
+  margin-top: 6px; font-size: 11px; color: var(--accent);
+  background: none; border: none; cursor: pointer; padding: 0;
+}
+.today-empty { font-size: 13px; color: var(--muted); font-style: italic; }
+
+/* ===== 课表 ===== */
+.week-plan {
+  width: 100%; border-collapse: collapse; table-layout: fixed;
+  font-size: 12px; background: var(--card);
+  border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  word-break: break-all;
+}
+.week-plan thead th {
+  background: var(--bg); padding: 8px 6px;
+  border-bottom: 1px solid var(--line); font-size: 11px;
+  font-weight: 700; color: var(--muted); text-align: center;
+}
+.week-plan colgroup col:first-child { width: 7%; }
+.week-plan td {
+  border: 1px solid var(--line); padding: 8px 8px;
+  vertical-align: top; line-height: 1.5;
+}
+.week-plan td.week {
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  text-align: center; vertical-align: middle; cursor: pointer;
+  user-select: none; background: var(--bg);
+  white-space: nowrap;
+}
+.week-plan td.week .arrow { margin-left: 3px; }
+.week-plan td.rest { text-align: center; color: var(--line); vertical-align: middle; }
+.day-hd {
+  font-size: 11px; font-weight: 700; color: var(--accent);
+  margin-bottom: 5px; text-transform: uppercase;
+}
+article.ex {
+  padding: 4px 0; border-bottom: 1px dashed var(--line); cursor: pointer;
+}
+article.ex:last-child { border-bottom: none; }
+article.ex:hover { background: rgba(154,59,47,.04); }
+.ex .n { font-weight: 600; color: var(--ink); }
+.ex .meta { font-size: 11px; color: var(--muted); margin-left: 4px; }
+.ex .feel { font-size: 11px; color: var(--muted); font-style: italic; }
+.ex.is-done .n { text-decoration: line-through; color: var(--muted); }
+.ex.is-done .n::after { content: " ✓"; color: var(--s5); font-style: normal; }
+
+td.is-today {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  background: rgba(154,59,47,.04);
+}
+
+/* 折叠 */
+tr.week-fold td:not(.week) { padding: 2px 6px; }
+tr.week-fold article.ex,
+tr.week-fold .ex .feel,
+tr.week-fold .ex .meta { display: none; }
+tr.week-fold .day-hd { margin: 0; }
+
+/* 行内编辑器 */
+.inline-editor {
+  margin-top: 6px; background: var(--bg);
+  border: 1px solid var(--line); border-radius: 6px;
+  padding: 8px; display: none;
+}
+.inline-editor.open { display: block; }
+.inline-editor label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 2px; }
+.inline-editor input[type=text], .inline-editor input[type=number] {
+  width: 100%; padding: 4px 6px;
+  border: 1px solid var(--line); border-radius: 4px;
+  font-size: 12px; background: var(--card);
+  margin-bottom: 5px;
+}
+.inline-editor .editor-btns { display: flex; gap: 5px; }
+.editor-save, .editor-cancel {
+  flex: 1; padding: 4px; border-radius: 4px; font-size: 11px;
+  cursor: pointer; border: 1px solid var(--line);
+}
+.editor-save { background: var(--accent); color: #fff; border-color: var(--accent); }
+.editor-cancel { background: var(--bg); color: var(--muted); }
+
+/* ===== Credits ===== */
+.credit {
+  margin-top: 32px; padding-top: 16px;
+  border-top: 1px solid var(--line);
+  font-size: 11px; color: var(--muted); line-height: 1.8;
+}
+.credit a { color: var(--accent); }
+
+/* ===== 响应式 ===== */
+@media (max-width: 900px) {
+  .atlas { grid-template-columns: 1fr; }
+  #inspector { max-height: 300px; }
+  .stage-wrap { min-height: 340px; }
+  .today-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .today-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+<!-- importmap: 把 "three" 映射到本地 vendor 文件 -->
+<script type="importmap">
+{
+  "imports": {
+    "three":          "./vendor/z-anatomy/libs/three.module.js",
+    "three/addons/":  "./vendor/z-anatomy/libs/"
+  }
+}
+</script>
+</head>
+
+<body>
+
+<!-- 模式切换栏 -->
+<nav class="mode-bar">
+  <a href="../index.html" class="mode-btn" id="btn-diet" onclick="localStorage.setItem('app-mode','diet')">饮食</a>
+  <a href="./index.html"  class="mode-btn active" id="btn-train">训练</a>
+</nav>
+<script>localStorage.setItem('app-mode','training');</script>
+
+<div class="wrap">
+
+  <!-- 页头 -->
+  <h1 class="page-title">肌群评分图</h1>
+  <p class="page-sub">基于第 36–41 周训练日志 · 目标：187cm / 80kg / 体脂 15% 古典健美 · 点击肌群查看评分与推荐</p>
+
+  <!-- 图例 -->
+  <div class="legend">
+    <span>评分：</span>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--s1)"></div>1 需优先补</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--s2)"></div>2 有练过</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--s3)"></div>3 适中</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--s4)"></div>4 较好</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--s5)"></div>5 充分</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#c4b4a4"></div>未评分肌</div>
+  </div>
+
+  <!-- 图谱：3D + 侧栏 -->
+  <div class="atlas">
+    <div class="stage-wrap" id="stageWrap">
+      <canvas id="stage"></canvas>
+      <div id="loading">
+        <div>正在加载解剖模型…</div>
+        <div class="loading-bar-wrap"><div class="loading-bar" id="loadingBar"></div></div>
+        <div id="loadingNote" style="font-size:11px"></div>
+      </div>
+      <div class="tools">
+        <button class="tool-btn" id="btnFront">正面</button>
+        <button class="tool-btn" id="btnBack">背面</button>
+        <button class="tool-btn" id="btnReset">复位</button>
+      </div>
+    </div>
+    <div id="inspector">
+      <div style="font-size:12px;color:var(--muted);text-align:center;padding:40px 0">
+        加载中…
+      </div>
+    </div>
+  </div>
+
+  <!-- 悬停 Tip -->
+  <div id="tip"></div>
+
+  <!-- 训练记录 -->
+  <div class="log-section">
+    <div class="log-hd">训练记录</div>
+
+    <!-- 今日快捷栏 -->
+    <div id="today-bar"></div>
+
+    <!-- 课表 -->
+    <table class="week-plan" id="weekPlan">
+      <colgroup>
+        <col style="width:7%">
+        <col style="width:18.6%">
+        <col style="width:18.6%">
+        <col style="width:18.6%">
+        <col style="width:18.6%">
+        <col style="width:18.6%">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>周次</th>
+          <th>周一</th>
+          <th>周二</th>
+          <th>周三</th>
+          <th>周四</th>
+          <th>周五</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- W36 -->
+        <tr>
+          <td class="week">第 36 周<span class="arrow">▾</span></td>
+          <td>
+            <div class="day-hd">推</div>
+            <article class="ex"><div class="n">平板卧推<span class="meta">70kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">16kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索夹胸<span class="meta">20kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃肩推<span class="meta">14kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">哑铃侧平举<span class="meta">10kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">拉</div>
+            <article class="ex"><div class="n">高位下拉<span class="meta">55kg · 10 · 4</span></div><div class="feel">背部感受好</div></article>
+            <article class="ex"><div class="n">坐姿绳索划船<span class="meta">50kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">28kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">面拉<span class="meta">25kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃弯举<span class="meta">16kg · 10 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">腿</div>
+            <article class="ex"><div class="n">深蹲<span class="meta">80kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">腿举<span class="meta">120kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">腿弯举<span class="meta">40kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">60kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">肩臂</div>
+            <article class="ex"><div class="n">颈前推<span class="meta">50kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">绳索侧平举<span class="meta">10kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">锤式弯举<span class="meta">16kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索下压<span class="meta">25kg · 15 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">有氧</div>
+            <article class="ex"><div class="n">椭圆机<span class="meta">— · 30min · 1</span></div></article>
+            <article class="ex"><div class="n">平板支撑<span class="meta">— · 60s · 3</span></div></article>
+          </td>
+        </tr>
+        <!-- W37 -->
+        <tr>
+          <td class="week">第 37 周<span class="arrow">▾</span></td>
+          <td>
+            <div class="day-hd">推</div>
+            <article class="ex"><div class="n">平板卧推<span class="meta">72.5kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">18kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索夹胸<span class="meta">22kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃肩推<span class="meta">15kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">哑铃侧平举<span class="meta">10kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">拉</div>
+            <article class="ex"><div class="n">高位下拉<span class="meta">57.5kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">坐姿绳索划船<span class="meta">52.5kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">30kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">面拉<span class="meta">27.5kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">锤式弯举<span class="meta">17.5kg · 10 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">腿</div>
+            <article class="ex"><div class="n">深蹲<span class="meta">82.5kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">腿举<span class="meta">125kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">腿弯举<span class="meta">42.5kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">60kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">肩臂</div>
+            <article class="ex"><div class="n">颈前推<span class="meta">52.5kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">绳索侧平举<span class="meta">10kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">锤式弯举<span class="meta">16kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索下压<span class="meta">27.5kg · 15 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">有氧</div>
+            <article class="ex"><div class="n">跑步机快走<span class="meta">— · 35min · 1</span></div></article>
+            <article class="ex"><div class="n">卷腹<span class="meta">— · 25次 · 3</span></div></article>
+          </td>
+        </tr>
+        <!-- W38 -->
+        <tr>
+          <td class="week">第 38 周<span class="arrow">▾</span></td>
+          <td>
+            <div class="day-hd">推</div>
+            <article class="ex"><div class="n">平板卧推<span class="meta">75kg · 7 · 4</span></div><div class="feel">顶点发力差，下周加控制</div></article>
+            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">18kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索夹胸<span class="meta">22kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃肩推<span class="meta">16kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">哑铃侧平举<span class="meta">12kg · 12 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">拉</div>
+            <article class="ex"><div class="n">高位下拉<span class="meta">60kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">T杠划船<span class="meta">50kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">面拉<span class="meta">30kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">32kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃弯举<span class="meta">18kg · 10 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">腿</div>
+            <article class="ex"><div class="n">深蹲<span class="meta">85kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">腿举<span class="meta">130kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">腿弯举<span class="meta">45kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">65kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">肩臂</div>
+            <article class="ex"><div class="n">颈前推<span class="meta">55kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">绳索侧平举<span class="meta">12kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">锤式弯举<span class="meta">18kg · 8 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索下压<span class="meta">30kg · 15 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">有氧</div>
+            <article class="ex"><div class="n">椭圆机<span class="meta">— · 40min · 1</span></div></article>
+            <article class="ex"><div class="n">悬挂举腿<span class="meta">— · 15次 · 3</span></div></article>
+          </td>
+        </tr>
+        <!-- W39 进行中 -->
+        <tr>
+          <td class="week">第 39 周<span class="arrow">▾</span><br><small style="font-weight:400;font-size:9px;color:var(--accent)">进行中</small></td>
+          <td>
+            <div class="day-hd">推</div>
+            <article class="ex"><div class="n">平板卧推<span class="meta">75kg · 8 · 4</span></div><div class="feel">比上周稳了</div></article>
+            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">18kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索夹胸<span class="meta">25kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃肩推<span class="meta">16kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">哑铃侧平举<span class="meta">12kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">拉</div>
+            <article class="ex"><div class="n">高位下拉<span class="meta">60kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">T杠划船<span class="meta">52.5kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">面拉<span class="meta">30kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">32kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃弯举<span class="meta">18kg · 10 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">腿</div>
+            <article class="ex"><div class="n">深蹲<span class="meta">87.5kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">腿举<span class="meta">135kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">腿弯举<span class="meta">47.5kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">65kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">肩臂</div>
+            <article class="ex"><div class="n">颈前推<span class="meta">57.5kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">绳索侧平举<span class="meta">12kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">锤式弯举<span class="meta">18kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索下压<span class="meta">32.5kg · 15 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">有氧</div>
+            <article class="ex"><div class="n">椭圆机<span class="meta">— · 40min · 1</span></div></article>
+            <article class="ex"><div class="n">核心训练<span class="meta">— · 15min · 1</span></div></article>
+          </td>
+        </tr>
+        <!-- W40 -->
+        <tr>
+          <td class="week">第 40 周<span class="arrow">▾</span></td>
+          <td>
+            <div class="day-hd">推</div>
+            <article class="ex"><div class="n">平板卧推<span class="meta">77.5kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">20kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索夹胸<span class="meta">25kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃肩推<span class="meta">17kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">哑铃侧平举<span class="meta">12kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">拉</div>
+            <article class="ex"><div class="n">高位下拉<span class="meta">62.5kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">T杠划船<span class="meta">55kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">面拉<span class="meta">32.5kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">34kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃弯举<span class="meta">19kg · 10 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">腿</div>
+            <article class="ex"><div class="n">深蹲<span class="meta">90kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">腿举<span class="meta">140kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">腿弯举<span class="meta">50kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">70kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">肩臂</div>
+            <article class="ex"><div class="n">颈前推<span class="meta">57.5kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">绳索侧平举<span class="meta">12kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">锤式弯举<span class="meta">19kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索下压<span class="meta">32.5kg · 15 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">有氧</div>
+            <article class="ex"><div class="n">椭圆机<span class="meta">— · 40min · 1</span></div></article>
+            <article class="ex"><div class="n">核心训练<span class="meta">— · 15min · 1</span></div></article>
+          </td>
+        </tr>
+        <!-- W41 -->
+        <tr>
+          <td class="week">第 41 周<span class="arrow">▾</span></td>
+          <td>
+            <div class="day-hd">推</div>
+            <article class="ex"><div class="n">平板卧推<span class="meta">80kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">20kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索夹胸<span class="meta">27.5kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃肩推<span class="meta">18kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">哑铃侧平举<span class="meta">12kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">拉</div>
+            <article class="ex"><div class="n">高位下拉<span class="meta">65kg · 10 · 4</span></div></article>
+            <article class="ex"><div class="n">T杠划船<span class="meta">57.5kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">面拉<span class="meta">32.5kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">34kg · 10 · 3</span></div></article>
+            <article class="ex"><div class="n">哑铃弯举<span class="meta">19kg · 10 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">腿</div>
+            <article class="ex"><div class="n">深蹲<span class="meta">92.5kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">腿举<span class="meta">145kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">腿弯举<span class="meta">52.5kg · 12 · 3</span></div></article>
+            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">72.5kg · 15 · 4</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">肩臂</div>
+            <article class="ex"><div class="n">颈前推<span class="meta">60kg · 8 · 4</span></div></article>
+            <article class="ex"><div class="n">绳索侧平举<span class="meta">12kg · 15 · 3</span></div></article>
+            <article class="ex"><div class="n">锤式弯举<span class="meta">20kg · 8 · 3</span></div></article>
+            <article class="ex"><div class="n">绳索下压<span class="meta">35kg · 15 · 3</span></div></article>
+          </td>
+          <td>
+            <div class="day-hd">有氧</div>
+            <article class="ex"><div class="n">椭圆机<span class="meta">— · 45min · 1</span></div></article>
+            <article class="ex"><div class="n">核心训练<span class="meta">— · 20min · 1</span></div></article>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 版权与归因 -->
+  <div class="credit">
+    <strong>数据来源与归因：</strong><br>
+    3D 解剖模型 <em>body.glb</em> 来自 <a href="https://www.z-anatomy.com/" target="_blank" rel="noopener">Z-Anatomy</a>（CC BY-SA 4.0）。
+    浏览器可用的 GLB + Draco 管线来自
+    <a href="https://github.com/hpfrei/body-anatomy-3d-viewer" target="_blank" rel="noopener">hpfrei/body-anatomy-3d-viewer</a>（CC BY-SA 4.0）。
+    本项目修改了着色与交互方式（肌群评分、拨层动画、Inspector 侧栏）；骨骼默认隐藏且不参与拾取与爆炸。
+    渲染引擎 <a href="https://threejs.org" target="_blank" rel="noopener">Three.js</a>（MIT），
+    压缩解码器 <a href="https://github.com/google/draco" target="_blank" rel="noopener">Google Draco</a>（Apache 2.0）。<br>
+    课表内容为个人训练记录，仅供参考。
+  </div>
+
+</div><!-- .wrap -->
+
+<script type="module" src="./app.js"></script>
+</body>
+</html>
