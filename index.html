@@ -12,6 +12,37 @@
             box-sizing: border-box;
         }
 
+        /* ---------- 模式切换栏 ---------- */
+        .mode-bar {
+            background: #ffffff;
+            border-bottom: 1px solid #e2e6f0;
+            display: flex;
+            justify-content: center;
+            padding: 8px 0;
+            gap: 4px;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .mode-btn {
+            display: inline-block;
+            padding: 6px 28px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #636363;
+            text-decoration: none;
+            transition: background .18s, color .18s;
+            border: 1px solid transparent;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        .mode-btn:hover { color: #1a1a2e; background: #f5f7fc; }
+        .mode-btn.active {
+            background: #211c46;
+            color: #fff;
+            border-color: #211c46;
+        }
+
         :root {
             --bg: #f5f7fc;
             --card: #ffffff;
@@ -43,10 +74,17 @@
             color: var(--text-primary);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            padding: 0;
+            line-height: 1.5;
+        }
+        .app-wrap {
+            display: flex;
             justify-content: center;
             align-items: flex-start;
             padding: 24px 16px;
-            line-height: 1.5;
+            flex: 1;
         }
 
         .app {
@@ -977,6 +1015,14 @@
 </head>
 <body>
 
+<!-- 模式切换栏 -->
+<nav class="mode-bar">
+    <a href="./index.html" class="mode-btn active">饮食</a>
+    <a href="./training-map/index.html" class="mode-btn" onclick="localStorage.setItem('app-mode','training')">训练</a>
+</nav>
+<script>localStorage.setItem('app-mode','diet');</script>
+
+<div class="app-wrap">
     <div class="app" id="app">
         <!-- 头部 -->
         <div class="header">
@@ -1920,5 +1966,6 @@
         })();
     </script>
 
+</div><!-- .app-wrap -->
 </body>
 </html>

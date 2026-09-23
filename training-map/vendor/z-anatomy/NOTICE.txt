@@ -1,0 +1,20 @@
+NOTICE — body.glb and Three.js/Draco vendor files
+===================================================
+
+body.glb
+  Anatomical 3D model derived from Z-Anatomy (https://www.z-anatomy.com/)
+  Browser-ready GLB assembled by hpfrei/body-anatomy-3d-viewer
+  (https://github.com/hpfrei/body-anatomy-3d-viewer)
+  License: CC BY-SA 4.0
+
+Three.js (three.module.js, OrbitControls.js, GLTFLoader.js, DRACOLoader.js)
+  Copyright 2010-2023 Three.js Authors
+  License: MIT  — https://github.com/mrdoob/three.js/blob/master/LICENSE
+
+Draco (draco_decoder.js, draco_decoder.wasm, draco_wasm_wrapper.js)
+  Copyright 2017 The Draco Authors
+  License: Apache 2.0 — https://github.com/google/draco/blob/master/LICENSE
+
+This project modifies the coloring and interaction scheme of the viewer
+(muscle scoring, explode/peel animation, inspector sidebar).
+Bones are hidden and do not participate in picking or animation.
