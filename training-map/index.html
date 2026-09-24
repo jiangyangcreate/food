@@ -364,6 +364,29 @@ tr.week-fold .day-hd { margin: 0; }
 .editor-save { background: var(--accent); color: #fff; border-color: var(--accent); }
 .editor-cancel { background: var(--bg); color: var(--muted); }
 
+/* ===== 训练数据工具栏 ===== */
+.train-io-bar {
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+}
+.io-btn {
+  background: rgba(255,252,247,.88);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: background .15s;
+}
+.io-btn:hover { background: var(--bg); }
+
 /* ===== Credits ===== */
 .credit {
   margin-top: 32px; padding-top: 16px;
@@ -403,6 +426,14 @@ tr.week-fold .day-hd { margin: 0; }
   <a href="./index.html"  class="mode-btn active" id="btn-train">训练</a>
 </nav>
 <script>localStorage.setItem('app-mode','training');</script>
+
+<!-- 训练数据工具栏 -->
+<div class="train-io-bar">
+  <button class="io-btn" id="btnExport">导出</button>
+  <button class="io-btn" id="btnImport">导入</button>
+  <button class="io-btn" id="btnRestoreDefault">恢复默认</button>
+  <input type="file" id="importFileInput" accept=".json" style="display:none">
+</div>
 
 <div class="wrap">
 
@@ -474,240 +505,7 @@ tr.week-fold .day-hd { margin: 0; }
         </tr>
       </thead>
       <tbody>
-        <!-- W36 -->
-        <tr>
-          <td class="week">第 36 周<span class="arrow">▾</span></td>
-          <td>
-            <div class="day-hd">推</div>
-            <article class="ex"><div class="n">平板卧推<span class="meta">70kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">16kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索夹胸<span class="meta">20kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃肩推<span class="meta">14kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">哑铃侧平举<span class="meta">10kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">拉</div>
-            <article class="ex"><div class="n">高位下拉<span class="meta">55kg · 10 · 4</span></div><div class="feel">背部感受好</div></article>
-            <article class="ex"><div class="n">坐姿绳索划船<span class="meta">50kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">28kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">面拉<span class="meta">25kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃弯举<span class="meta">16kg · 10 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">腿</div>
-            <article class="ex"><div class="n">深蹲<span class="meta">80kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">腿举<span class="meta">120kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">腿弯举<span class="meta">40kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">60kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">肩臂</div>
-            <article class="ex"><div class="n">颈前推<span class="meta">50kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">绳索侧平举<span class="meta">10kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">锤式弯举<span class="meta">16kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索下压<span class="meta">25kg · 15 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">有氧</div>
-            <article class="ex"><div class="n">椭圆机<span class="meta">— · 30min · 1</span></div></article>
-            <article class="ex"><div class="n">平板支撑<span class="meta">— · 60s · 3</span></div></article>
-          </td>
-        </tr>
-        <!-- W37 -->
-        <tr>
-          <td class="week">第 37 周<span class="arrow">▾</span></td>
-          <td>
-            <div class="day-hd">推</div>
-            <article class="ex"><div class="n">平板卧推<span class="meta">72.5kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">18kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索夹胸<span class="meta">22kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃肩推<span class="meta">15kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">哑铃侧平举<span class="meta">10kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">拉</div>
-            <article class="ex"><div class="n">高位下拉<span class="meta">57.5kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">坐姿绳索划船<span class="meta">52.5kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">30kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">面拉<span class="meta">27.5kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">锤式弯举<span class="meta">17.5kg · 10 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">腿</div>
-            <article class="ex"><div class="n">深蹲<span class="meta">82.5kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">腿举<span class="meta">125kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">腿弯举<span class="meta">42.5kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">60kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">肩臂</div>
-            <article class="ex"><div class="n">颈前推<span class="meta">52.5kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">绳索侧平举<span class="meta">10kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">锤式弯举<span class="meta">16kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索下压<span class="meta">27.5kg · 15 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">有氧</div>
-            <article class="ex"><div class="n">跑步机快走<span class="meta">— · 35min · 1</span></div></article>
-            <article class="ex"><div class="n">卷腹<span class="meta">— · 25次 · 3</span></div></article>
-          </td>
-        </tr>
-        <!-- W38 -->
-        <tr>
-          <td class="week">第 38 周<span class="arrow">▾</span></td>
-          <td>
-            <div class="day-hd">推</div>
-            <article class="ex"><div class="n">平板卧推<span class="meta">75kg · 7 · 4</span></div><div class="feel">顶点发力差，下周加控制</div></article>
-            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">18kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索夹胸<span class="meta">22kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃肩推<span class="meta">16kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">哑铃侧平举<span class="meta">12kg · 12 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">拉</div>
-            <article class="ex"><div class="n">高位下拉<span class="meta">60kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">T杠划船<span class="meta">50kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">面拉<span class="meta">30kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">32kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃弯举<span class="meta">18kg · 10 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">腿</div>
-            <article class="ex"><div class="n">深蹲<span class="meta">85kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">腿举<span class="meta">130kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">腿弯举<span class="meta">45kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">65kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">肩臂</div>
-            <article class="ex"><div class="n">颈前推<span class="meta">55kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">绳索侧平举<span class="meta">12kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">锤式弯举<span class="meta">18kg · 8 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索下压<span class="meta">30kg · 15 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">有氧</div>
-            <article class="ex"><div class="n">椭圆机<span class="meta">— · 40min · 1</span></div></article>
-            <article class="ex"><div class="n">悬挂举腿<span class="meta">— · 15次 · 3</span></div></article>
-          </td>
-        </tr>
-        <!-- W39 进行中 -->
-        <tr>
-          <td class="week">第 39 周<span class="arrow">▾</span><br><small style="font-weight:400;font-size:9px;color:var(--accent)">进行中</small></td>
-          <td>
-            <div class="day-hd">推</div>
-            <article class="ex"><div class="n">平板卧推<span class="meta">75kg · 8 · 4</span></div><div class="feel">比上周稳了</div></article>
-            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">18kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索夹胸<span class="meta">25kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃肩推<span class="meta">16kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">哑铃侧平举<span class="meta">12kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">拉</div>
-            <article class="ex"><div class="n">高位下拉<span class="meta">60kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">T杠划船<span class="meta">52.5kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">面拉<span class="meta">30kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">32kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃弯举<span class="meta">18kg · 10 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">腿</div>
-            <article class="ex"><div class="n">深蹲<span class="meta">87.5kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">腿举<span class="meta">135kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">腿弯举<span class="meta">47.5kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">65kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">肩臂</div>
-            <article class="ex"><div class="n">颈前推<span class="meta">57.5kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">绳索侧平举<span class="meta">12kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">锤式弯举<span class="meta">18kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索下压<span class="meta">32.5kg · 15 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">有氧</div>
-            <article class="ex"><div class="n">椭圆机<span class="meta">— · 40min · 1</span></div></article>
-            <article class="ex"><div class="n">核心训练<span class="meta">— · 15min · 1</span></div></article>
-          </td>
-        </tr>
-        <!-- W40 -->
-        <tr>
-          <td class="week">第 40 周<span class="arrow">▾</span></td>
-          <td>
-            <div class="day-hd">推</div>
-            <article class="ex"><div class="n">平板卧推<span class="meta">77.5kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">20kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索夹胸<span class="meta">25kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃肩推<span class="meta">17kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">哑铃侧平举<span class="meta">12kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">拉</div>
-            <article class="ex"><div class="n">高位下拉<span class="meta">62.5kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">T杠划船<span class="meta">55kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">面拉<span class="meta">32.5kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">34kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃弯举<span class="meta">19kg · 10 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">腿</div>
-            <article class="ex"><div class="n">深蹲<span class="meta">90kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">腿举<span class="meta">140kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">腿弯举<span class="meta">50kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">70kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">肩臂</div>
-            <article class="ex"><div class="n">颈前推<span class="meta">57.5kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">绳索侧平举<span class="meta">12kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">锤式弯举<span class="meta">19kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索下压<span class="meta">32.5kg · 15 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">有氧</div>
-            <article class="ex"><div class="n">椭圆机<span class="meta">— · 40min · 1</span></div></article>
-            <article class="ex"><div class="n">核心训练<span class="meta">— · 15min · 1</span></div></article>
-          </td>
-        </tr>
-        <!-- W41 -->
-        <tr>
-          <td class="week">第 41 周<span class="arrow">▾</span></td>
-          <td>
-            <div class="day-hd">推</div>
-            <article class="ex"><div class="n">平板卧推<span class="meta">80kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">上斜哑铃飞鸟<span class="meta">20kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索夹胸<span class="meta">27.5kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃肩推<span class="meta">18kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">哑铃侧平举<span class="meta">12kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">拉</div>
-            <article class="ex"><div class="n">高位下拉<span class="meta">65kg · 10 · 4</span></div></article>
-            <article class="ex"><div class="n">T杠划船<span class="meta">57.5kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">面拉<span class="meta">32.5kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">单臂哑铃划船<span class="meta">34kg · 10 · 3</span></div></article>
-            <article class="ex"><div class="n">哑铃弯举<span class="meta">19kg · 10 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">腿</div>
-            <article class="ex"><div class="n">深蹲<span class="meta">92.5kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">腿举<span class="meta">145kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">腿弯举<span class="meta">52.5kg · 12 · 3</span></div></article>
-            <article class="ex"><div class="n">蹬腿机屈膝提踵<span class="meta">72.5kg · 15 · 4</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">肩臂</div>
-            <article class="ex"><div class="n">颈前推<span class="meta">60kg · 8 · 4</span></div></article>
-            <article class="ex"><div class="n">绳索侧平举<span class="meta">12kg · 15 · 3</span></div></article>
-            <article class="ex"><div class="n">锤式弯举<span class="meta">20kg · 8 · 3</span></div></article>
-            <article class="ex"><div class="n">绳索下压<span class="meta">35kg · 15 · 3</span></div></article>
-          </td>
-          <td>
-            <div class="day-hd">有氧</div>
-            <article class="ex"><div class="n">椭圆机<span class="meta">— · 45min · 1</span></div></article>
-            <article class="ex"><div class="n">核心训练<span class="meta">— · 20min · 1</span></div></article>
-          </td>
-        </tr>
+        <!-- rows rendered dynamically by app.js from activePlan -->
       </tbody>
     </table>
   </div>
