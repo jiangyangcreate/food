@@ -5,7 +5,7 @@
 export const DEFAULT_BACKUP = {
   format: "training-map-backup",
   version: 1,
-  exportedAt: "2026-09-24T01:11:59.111Z",
+  exportedAt: "2026-09-24T12:00:00.000Z",
   goal: {
     heightCm: 187,
     weightKg: 80,
@@ -18,14 +18,14 @@ export const DEFAULT_BACKUP = {
     ant_delt: 2, mid_delt: 2, rear_delt: 2,
     pec_u: 2, pec_s: 2, pec_l: 3, pec_min: 2,
     serr: 2, supra: 2, infra: 2, teres_min: 2,
-    teres_maj: 2, subscap: 1, bi: 2, brachialis: 2,
+    teres_maj: 2, subscap: 1, bi: 3, brachialis: 2,
     tri_long: 3, tri_lat: 3, tri_med: 3,
     fore_flex: 3, fore_ext: 2,
     trap_u: 1, trap_m: 1, trap_l: 1,
-    lats: 2, rhomb: 1, lev_scap: 1,
-    erector: 2, ql: 1, abs: 2, obl: 1, obl_int: 1, tva: 1,
+    lats: 3, rhomb: 1, lev_scap: 1,
+    erector: 2, ql: 1, abs: 3, obl: 2, obl_int: 1, tva: 2,
     hip: 1, quads: 3, sartorius: 1, add: 3,
-    gmax: 2, gmed: 1, semi: 4, bf: 4,
+    gmax: 2, gmed: 2, semi: 4, bf: 4,
     gastroc_m: 3, gastroc_l: 3, soleus: 1, ta: 2
   },
   logEdits: {
@@ -33,7 +33,12 @@ export const DEFAULT_BACKUP = {
     "2026-09-23#1": { w: "25kg",  r: "10", s: "4", feel: "还好，不是很累",             done: true },
     "2026-09-23#2": { w: "4kg",   r: "12", s: "4", feel: "没有5kg，只有4/6",           done: true },
     "2026-09-23#3": { w: "15kg",  r: "10", s: "4", feel: "肌肉力竭，下次15kg冲12次",   done: true },
-    "2026-09-23#4": { w: "自重",  r: "10", s: "3", feel: "肌肉体力都力竭",             done: true }
+    "2026-09-23#4": { w: "自重",  r: "10", s: "3", feel: "肌肉体力都力竭",             done: true },
+    "2026-09-24#0": { w: "52.5kg", r: "15", s: "4", feel: "这是器材的最大重量；正好肌肉力竭；再进步一点可能这个器械就不适用了", done: true },
+    "2026-09-24#1": { w: "40kg",   r: "15", s: "4", feel: "第3组开始最后几个需要手部辅助", done: true },
+    "2026-09-24#2": { w: "—",      r: "75秒", s: "4", feel: "75秒*1 + 40秒*3", done: true },
+    "2026-09-24#3": { w: "42.5kg", r: "12", s: "3", feel: "", done: true },
+    "2026-09-24#4": { w: "自重",   r: "1",   s: "3", feel: "验证背部；目前能做一个标准引体。双臂下拉可以拉动80kg（自重）1次，所以想要尝试", done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05"],
@@ -183,13 +188,13 @@ export const DEFAULT_BACKUP = {
             ]
           },
           {
-            theme: "腿", kind: "normal",
+            theme: "腿/核心", kind: "normal",
             exercises: [
-              { name: "腿弯举",     w: "50kg",     r: "10", s: "4", feel: "", done: false },
-              { name: "腿屈伸",     w: "45kg",     r: "12", s: "4", feel: "", done: false },
-              { name: "站姿提踵",   w: "40kg",     r: "12", s: "4", feel: "", done: false },
-              { name: "髋外展",     w: "力竭重量", r: "12", s: "4", feel: "", done: false },
-              { name: "反向山羊挺身", w: "自重",   r: "15", s: "4", feel: "", done: false }
+              { name: "大腿外展", w: "52.5kg", r: "15", s: "4", feel: "这是器材的最大重量；正好肌肉力竭；再进步一点可能这个器械就不适用了", done: true },
+              { name: "大腿内收", w: "40kg",   r: "15", s: "4", feel: "第3组开始最后几个需要手部辅助", done: true },
+              { name: "平板支撑", w: "—",      r: "75秒", s: "4", feel: "75秒*1 + 40秒*3", done: true },
+              { name: "坐姿收腹", w: "42.5kg", r: "12", s: "3", feel: "", done: true },
+              { name: "引体向上", w: "自重",   r: "1",   s: "3", feel: "验证背部；目前能做一个标准引体。双臂下拉可以拉动80kg（自重）1次，所以想要尝试", done: true }
             ]
           },
           {
