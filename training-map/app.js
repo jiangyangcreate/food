@@ -7,10 +7,12 @@ import * as THREE from "three";
 import { OrbitControls }  from "three/addons/OrbitControls.js";
 import { GLTFLoader }     from "three/addons/GLTFLoader.js";
 import { DRACOLoader }    from "three/addons/DRACOLoader.js";
+import { DEFAULT_BACKUP } from "./default-backup.js";
 
 // ── localStorage keys ─────────────────────────────────────────────
 const SCORE_KEY = "muscle-scores-goal-v2";
 const LOG_KEY   = "training-log-edits-v1";
+const PLAN_KEY  = "training-plan-v1";
 
 // ── Target body stats ─────────────────────────────────────────────
 const GOAL = {
@@ -366,6 +368,12 @@ function loadScores() {
       Object.entries(saved).forEach(([id, val]) => {
         if (scores[id] !== undefined && val >= 1 && val <= 5) scores[id] = val;
       });
+    } else {
+      // First load – seed from bundled defaults instead of auto scores
+      const defaults = DEFAULT_BACKUP.scores || {};
+      Object.entries(defaults).forEach(([id, val]) => {
+        if (scores[id] !== undefined && val >= 1 && val <= 5) scores[id] = val;
+      });
     }
   } catch {}
 }
@@ -373,8 +381,25 @@ function saveScores() {
   try { localStorage.setItem(SCORE_KEY, JSON.stringify(scores)); } catch {}
 }
 function restoreAuto() {
+  // Reset to mathematically calculated scores and persist them so they survive reload
   GROUPS.forEach(g => scores[g.id] = g.auto);
-  try { localStorage.removeItem(SCORE_KEY); } catch {}
+  saveScores();
+}
+
+// ── Plan storage ──────────────────────────────────────────────────
+let activePlan = null;
+
+function loadPlan() {
+  try {
+    const raw = localStorage.getItem(PLAN_KEY);
+    if (raw) { activePlan = JSON.parse(raw); return; }
+  } catch {}
+  activePlan = DEFAULT_BACKUP.plan;
+}
+
+function savePlan(plan) {
+  activePlan = plan;
+  try { localStorage.setItem(PLAN_KEY, JSON.stringify(plan)); } catch {}
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -1015,18 +1040,8 @@ function renderDetail(g) {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// COURSE TABLE
+// COURSE TABLE – dynamic rendering from activePlan
 // ─────────────────────────────────────────────────────────────────
-const WEEK_MON = [
-  "2026-08-31", // W36
-  "2026-09-07", // W37
-  "2026-09-14", // W38
-  "2026-09-21", // W39
-  "2026-09-28", // W40
-  "2026-10-05", // W41
-];
-const WEEK_NOS = [36, 37, 38, 39, 40, 41];
-
 function localDateStr(d) {
   const y  = d.getFullYear();
   const m  = String(d.getMonth() + 1).padStart(2, "0");
@@ -1044,7 +1059,41 @@ function addDays(str, n) {
   return localDateStr(d);
 }
 
-function initTable() {
+function renderWeekRowHtml(week, weekMonday) {
+  const noteHtml = week.note
+    ? `<br><small style="font-weight:400;font-size:9px;color:var(--accent)">${esc(week.note)}</small>`
+    : "";
+  const weekTd = `<td class="week">第 ${week.week} 周<span class="arrow">▾</span>${noteHtml}</td>`;
+
+  const dayTds = week.days.map(day => {
+    if (day.kind === "rest") return `<td class="rest">休</td>`;
+    if (day.kind === "deload") {
+      const label = (day.theme && day.theme !== "—") ? esc(day.theme) : "减量";
+      return `<td class="rest">${label}</td>`;
+    }
+    const hdHtml = (day.theme && day.theme !== "—")
+      ? `<div class="day-hd">${esc(day.theme)}</div>` : "";
+    const exHtml = day.exercises.map(ex => {
+      const meta = [ex.w, ex.r, ex.s].filter(v => v !== "" && v != null).join(" · ");
+      const feelHtml = ex.feel ? `<div class="feel">${esc(ex.feel)}</div>` : "";
+      const doneClass = ex.done ? " is-done" : "";
+      return `<article class="ex${doneClass}"><div class="n">${esc(ex.name)}<span class="meta">${esc(meta)}</span></div>${feelHtml}</article>`;
+    }).join("");
+    return `<td>${hdHtml}${exHtml}</td>`;
+  }).join("");
+
+  return `<tr>${weekTd}${dayTds}</tr>`;
+}
+
+function renderPlanTable() {
+  const tbody = document.querySelector("#weekPlan tbody");
+  tbody.innerHTML = activePlan.weeks.map((week, wi) =>
+    renderWeekRowHtml(week, activePlan.weekMondays[wi])
+  ).join("");
+  setupTableInteractivity();
+}
+
+function setupTableInteractivity() {
   const today = todayStr();
   const tbody = document.querySelector("#weekPlan tbody");
   const rows  = [...tbody.querySelectorAll("tr")];
@@ -1052,23 +1101,19 @@ function initTable() {
   // detect current week row
   let curRowIdx = -1;
   rows.forEach((row, ri) => {
-    // check if today is in this row's date range
-    const mon = WEEK_MON[ri];
+    const mon = activePlan.weekMondays[ri];
     if (!mon) return;
     const fri = addDays(mon, 4);
-    if (today >= mon && today <= fri) { curRowIdx = ri; return; }
+    if (today >= mon && today <= fri) curRowIdx = ri;
   });
   if (curRowIdx === -1) {
-    // fallback: find "进行中" row
-    rows.forEach((row, ri) => {
-      if (row.querySelector(".week")?.textContent.includes("进行中")) curRowIdx = ri;
-    });
+    curRowIdx = activePlan.weeks.findIndex(w => w.note === "进行中");
   }
-  if (curRowIdx === -1) curRowIdx = 3; // default W39 index
+  if (curRowIdx === -1) curRowIdx = Math.max(0, activePlan.weeks.length - 2);
 
   // attach dates and today class
   rows.forEach((row, ri) => {
-    const mon = WEEK_MON[ri];
+    const mon = activePlan.weekMondays[ri];
     if (!mon) return;
     const dateCells = [...row.querySelectorAll("td:not(.week)")];
     dateCells.forEach((td, di) => {
@@ -1092,15 +1137,12 @@ function initTable() {
       const arrow = weekTd.querySelector(".arrow");
       if (arrow) arrow.textContent = row.classList.contains("week-fold") ? "▸" : "▾";
     });
-    // set initial arrow
     const arrow = weekTd.querySelector(".arrow");
     if (arrow) arrow.textContent = row.classList.contains("week-fold") ? "▸" : "▾";
   });
 
-  // assign edit keys and apply stored edits
+  // assign edit keys, apply stored edits, attach inline editors
   loadLogEdits();
-
-  // inline editors
   document.querySelectorAll("article.ex").forEach(art => {
     art.addEventListener("click", () => toggleEditor(art));
   });
@@ -1108,12 +1150,23 @@ function initTable() {
   renderTodayBar();
 }
 
+function initTable() {
+  loadPlan();
+  renderPlanTable();
+  setupExportImportUI();
+}
+
 // ── Training log edits ────────────────────────────────────────────
 function loadLogEdits() {
   let edits = {};
   try {
     const raw = localStorage.getItem(LOG_KEY);
-    if (raw) edits = JSON.parse(raw);
+    if (raw) {
+      edits = JSON.parse(raw);
+    } else {
+      // First load – seed from bundled defaults
+      edits = DEFAULT_BACKUP.logEdits || {};
+    }
   } catch {}
 
   const allTds = [...document.querySelectorAll("#weekPlan td[data-date]")];
@@ -1302,6 +1355,113 @@ function toggleDone(key, done) {
   if (art) {
     if (done) art.classList.add("is-done");
     else art.classList.remove("is-done");
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────
+// EXPORT / IMPORT / RESTORE DEFAULT
+// ─────────────────────────────────────────────────────────────────
+function exportBackup() {
+  let logEdits = {};
+  try {
+    const raw = localStorage.getItem(LOG_KEY);
+    if (raw) logEdits = JSON.parse(raw);
+    else logEdits = DEFAULT_BACKUP.logEdits || {};
+  } catch {}
+
+  const backup = {
+    format: "training-map-backup",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    goal: DEFAULT_BACKUP.goal,
+    scores: { ...scores },
+    logEdits,
+    plan: activePlan,
+  };
+
+  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = `training-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function applyBackup(data) {
+  // Apply logEdits to localStorage first so renderPlanTable picks them up immediately
+  if (data.logEdits) {
+    try { localStorage.setItem(LOG_KEY, JSON.stringify(data.logEdits)); } catch {}
+  }
+
+  if (data.plan) {
+    savePlan(data.plan);
+    renderPlanTable(); // calls setupTableInteractivity → loadLogEdits → renderTodayBar
+  } else if (data.logEdits) {
+    // Plan unchanged, but log edits changed: re-apply to existing table
+    loadLogEdits();
+    renderTodayBar();
+  }
+
+  if (data.scores) {
+    GROUPS.forEach(g => {
+      const v = data.scores[g.id];
+      if (v !== undefined && v >= 1 && v <= 5) scores[g.id] = v;
+    });
+    saveScores();
+    applyColors();
+    if (selectedId) renderDetail(GROUPS.find(x => x.id === selectedId));
+    else renderInspector();
+  }
+}
+
+function importFromFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    let data;
+    try { data = JSON.parse(e.target.result); }
+    catch { alert("❌ 文件解析失败：不是有效的 JSON 文件。"); return; }
+
+    if (data.format !== "training-map-backup") {
+      alert("❌ 格式错误：不是训练图谱备份文件（format 字段不匹配）。");
+      return;
+    }
+    if (data.version !== 1) {
+      alert(`❌ 版本不支持：期望 version 1，实际 version ${data.version}。`);
+      return;
+    }
+    if (!confirm("导入将覆盖当前训练计划和肌群评分，确定继续？")) return;
+
+    applyBackup(data);
+    alert("✅ 导入成功！");
+  };
+  reader.readAsText(file);
+}
+
+function restoreDefault() {
+  if (!confirm("恢复默认将覆盖当前训练计划、肌群评分和训练日志，确定？")) return;
+  try { localStorage.removeItem(PLAN_KEY); } catch {}
+  applyBackup(DEFAULT_BACKUP);
+}
+
+function setupExportImportUI() {
+  const btnExport  = document.getElementById("btnExport");
+  const btnImport  = document.getElementById("btnImport");
+  const btnRestore = document.getElementById("btnRestoreDefault");
+  const fileInput  = document.getElementById("importFileInput");
+
+  if (btnExport)  btnExport.addEventListener("click", exportBackup);
+  if (btnImport)  btnImport.addEventListener("click", () => fileInput && fileInput.click());
+  if (btnRestore) btnRestore.addEventListener("click", restoreDefault);
+  if (fileInput) {
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files.length > 0) {
+        importFromFile(fileInput.files[0]);
+        fileInput.value = "";
+      }
+    });
   }
 }
 
