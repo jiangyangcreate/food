@@ -5,7 +5,7 @@
 export const DEFAULT_BACKUP = {
   format: "training-map-backup",
   version: 1,
-  exportedAt: "2026-09-24T12:00:00.000Z",
+  exportedAt: "2026-09-25T12:00:00.000Z",
   goal: {
     heightCm: 187,
     weightKg: 80,
@@ -18,11 +18,11 @@ export const DEFAULT_BACKUP = {
     ant_delt: 2, mid_delt: 2, rear_delt: 2,
     pec_u: 2, pec_s: 2, pec_l: 3, pec_min: 2,
     serr: 2, supra: 2, infra: 2, teres_min: 2,
-    teres_maj: 2, subscap: 1, bi: 3, brachialis: 2,
+    teres_maj: 3, subscap: 1, bi: 3, brachialis: 3,
     tri_long: 3, tri_lat: 3, tri_med: 3,
     fore_flex: 3, fore_ext: 2,
-    trap_u: 1, trap_m: 1, trap_l: 1,
-    lats: 3, rhomb: 1, lev_scap: 1,
+    trap_u: 1, trap_m: 2, trap_l: 1,
+    lats: 3, rhomb: 2, lev_scap: 1,
     erector: 2, ql: 1, abs: 3, obl: 2, obl_int: 1, tva: 2,
     hip: 1, quads: 3, sartorius: 1, add: 3,
     gmax: 2, gmed: 2, semi: 4, bf: 4,
@@ -38,7 +38,12 @@ export const DEFAULT_BACKUP = {
     "2026-09-24#1": { w: "40kg",   r: "15", s: "4", feel: "第3组开始最后几个需要手部辅助", done: true },
     "2026-09-24#2": { w: "—",      r: "75秒", s: "4", feel: "75秒*1 + 40秒*3", done: true },
     "2026-09-24#3": { w: "42.5kg", r: "12", s: "3", feel: "", done: true },
-    "2026-09-24#4": { w: "自重",   r: "1",   s: "3", feel: "验证背部；目前能做一个标准引体。双臂下拉可以拉动80kg（自重）1次，所以想要尝试", done: true }
+    "2026-09-24#4": { w: "自重",   r: "1",   s: "3", feel: "验证背部；目前能做一个标准引体。双臂下拉可以拉动80kg（自重）1次，所以想要尝试", done: true },
+    "2026-09-25#0": { w: "40kg",  r: "10", s: "4", feel: "顶峰停1-2秒", done: true },
+    "2026-09-25#1": { w: "65kg",  r: "6",  s: "4", feel: "顶峰收缩停1-2秒", done: true },
+    "2026-09-25#2": { w: "20kg",  r: "10", s: "4", feel: "张开角度控制在90-135度，后续维持20kg，尝试放下角度在135度到180度", done: true },
+    "2026-09-25#3": { w: "3kg",   r: "12", s: "3", feel: "我的肩太弱，后续稳定在5kg争取做到12个*4；另加5kg×8×1组", done: true },
+    "2026-09-25#4": { w: "—",     r: "30分钟", s: "1", feel: "cardio", done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05"],
@@ -200,11 +205,11 @@ export const DEFAULT_BACKUP = {
           {
             theme: "拉", kind: "normal",
             exercises: [
-              { name: "坐姿划船", w: "30kg",  r: "10",  s: "4", feel: "", done: false },
-              { name: "反向飞鸟", w: "10kg",  r: "12",  s: "4", feel: "", done: false },
-              { name: "二头弯举", w: "17.5kg",r: "8",   s: "4", feel: "", done: false },
-              { name: "双臂下拉", w: "65kg",  r: "6",   s: "3", feel: "", done: false },
-              { name: "悬垂",     w: "自重",  r: "40秒", s: "3", feel: "", done: false }
+              { name: "坐姿划船",       w: "40kg", r: "10",    s: "4", feel: "顶峰停1-2秒",                                                            done: true },
+              { name: "双臂下拉",       w: "65kg", r: "6",     s: "4", feel: "顶峰收缩停1-2秒",                                                        done: true },
+              { name: "二头弯举（EZ杆）", w: "20kg", r: "10",  s: "4", feel: "张开角度控制在90-135度，后续维持20kg，尝试放下角度在135度到180度",       done: true },
+              { name: "反向飞鸟",       w: "3kg",  r: "12",    s: "3", feel: "我的肩太弱，后续稳定在5kg争取做到12个*4；另加5kg×8×1组",               done: true },
+              { name: "慢跑",           w: "—",    r: "30分钟", s: "1", feel: "cardio",                                                                done: true }
             ]
           }
         ]
