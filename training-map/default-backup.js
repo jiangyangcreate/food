@@ -224,7 +224,7 @@ export const DEFAULT_BACKUP = {
               { name: "坐式蹬腿", w: "125kg", r: "10", s: "4", feel: "", done: false },
               { name: "腿屈伸",   w: "45kg",  r: "12", s: "4", feel: "", done: false },
               { name: "腿弯举",   w: "50kg",  r: "12", s: "3", feel: "", done: false },
-              { name: "内收",     w: "30kg",  r: "10", s: "3", feel: "", done: false },
+              { name: "内收",     w: "40kg",  r: "12", s: "4", feel: "", done: false },
               { name: "站姿提踵", w: "40kg",  r: "15", s: "4", feel: "", done: false }
             ]
           },
@@ -241,7 +241,7 @@ export const DEFAULT_BACKUP = {
           {
             theme: "拉", kind: "normal",
             exercises: [
-              { name: "坐姿划船", w: "35kg",     r: "10",  s: "4", feel: "", done: false },
+              { name: "坐姿划船", w: "40kg",     r: "10",  s: "4", feel: "", done: false },
               { name: "高位下拉", w: "35kg",     r: "10",  s: "4", feel: "", done: false },
               { name: "面拉",     w: "力竭重量", r: "12",  s: "4", feel: "", done: false },
               { name: "锤式弯举", w: "15kg",     r: "12",  s: "4", feel: "", done: false },
@@ -252,7 +252,7 @@ export const DEFAULT_BACKUP = {
             theme: "腿", kind: "normal",
             exercises: [
               { name: "腿弯举",       w: "55kg",     r: "8",  s: "4", feel: "", done: false },
-              { name: "髋外展",       w: "加重",     r: "12", s: "4", feel: "", done: false },
+              { name: "髋外展",       w: "52.5kg",   r: "15", s: "4", feel: "", done: false },
               { name: "蹬腿机屈膝提踵", w: "力竭重量", r: "12", s: "4", feel: "", done: false },
               { name: "反向山羊挺身", w: "自重",     r: "15", s: "4", feel: "", done: false },
               { name: "坐姿收腹",     w: "45kg",     r: "8",  s: "3", feel: "", done: false }
@@ -262,9 +262,9 @@ export const DEFAULT_BACKUP = {
             theme: "肩臂", kind: "normal",
             exercises: [
               { name: "双臂下拉",     w: "65kg",   r: "8",  s: "4", feel: "", done: false },
-              { name: "反向飞鸟",     w: "12kg",   r: "12", s: "4", feel: "", done: false },
+              { name: "绳索侧平举",   w: "5kg",    r: "12", s: "3", feel: "", done: false },
               { name: "过头臂屈伸",   w: "12.5kg", r: "12", s: "3", feel: "", done: false },
-              { name: "二头弯举",     w: "17.5kg", r: "8",  s: "4", feel: "", done: false },
+              { name: "二头弯举",     w: "20kg",   r: "10", s: "4", feel: "", done: false },
               { name: "悬垂举腿",     w: "自重",   r: "8",  s: "3", feel: "", done: false }
             ]
           }
@@ -279,7 +279,7 @@ export const DEFAULT_BACKUP = {
             exercises: [
               { name: "坐式蹬腿",   w: "130kg", r: "8",  s: "4", feel: "", done: false },
               { name: "腿屈伸",     w: "50kg",  r: "10", s: "4", feel: "", done: false },
-              { name: "内收",       w: "30kg",  r: "12", s: "3", feel: "", done: false },
+              { name: "内收",       w: "40kg",  r: "15", s: "4", feel: "", done: false },
               { name: "站姿提踵",   w: "45kg",  r: "12", s: "4", feel: "", done: false },
               { name: "反向山羊挺身", w: "自重", r: "12", s: "4", feel: "", done: false }
             ]
@@ -287,10 +287,10 @@ export const DEFAULT_BACKUP = {
           {
             theme: "拉", kind: "normal",
             exercises: [
-              { name: "坐姿划船", w: "40kg",   r: "8",   s: "4", feel: "", done: false },
+              { name: "坐姿划船", w: "42.5kg", r: "8",   s: "4", feel: "", done: false },
               { name: "高位下拉", w: "37.5kg", r: "10",  s: "4", feel: "", done: false },
-              { name: "反向飞鸟", w: "12kg",   r: "12",  s: "4", feel: "", done: false },
-              { name: "二头弯举", w: "20kg",   r: "8",   s: "4", feel: "", done: false },
+              { name: "绳索侧平举", w: "5kg",  r: "15",  s: "4", feel: "", done: false },
+              { name: "二头弯举", w: "20kg",   r: "10",  s: "4", feel: "", done: false },
               { name: "悬垂",     w: "自重",   r: "50秒", s: "3", feel: "", done: false }
             ]
           },
@@ -309,7 +309,7 @@ export const DEFAULT_BACKUP = {
             exercises: [
               { name: "腿弯举",       w: "55kg",     r: "10", s: "4", feel: "", done: false },
               { name: "腿屈伸",       w: "50kg",     r: "12", s: "3", feel: "", done: false },
-              { name: "髋外展",       w: "力竭重量", r: "12", s: "4", feel: "", done: false },
+              { name: "髋外展",       w: "52.5kg",   r: "15", s: "4", feel: "", done: false },
               { name: "蹬腿机屈膝提踵", w: "力竭重量", r: "15", s: "4", feel: "", done: false },
               { name: "坐姿收腹",     w: "50kg",     r: "8",  s: "3", feel: "", done: false }
             ]
