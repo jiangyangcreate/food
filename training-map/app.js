@@ -78,7 +78,7 @@ const GROUPS = [
     match:{ name:"Pectoralis Major", detail:"Clavicular" },
     evidence:{ ratio:.72, sessions:5 },
     why:"上斜哑铃飞鸟+上斜卧推专项覆盖，负荷接近 70% 目标。",
-    exercises:[{name:"上斜哑铃飞鸟",have:true},{name:"上斜杠铃卧推",have:false}]
+    exercises:[{name:"上斜哑铃飞鸟",have:true},{name:"上斜机械推胸",have:true},{name:"上斜杠铃卧推",have:false}]
   },
   { id:"pec_s", name:"胸大肌胸肋头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Sternocostal" },
@@ -89,38 +89,38 @@ const GROUPS = [
   { id:"pec_l", name:"胸大肌腹头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Abdominal" },
     evidence:{ ratio:.55, sessions:4, gap:true },
-    why:"腹头需低位飞鸟专项，现有动作欠缺；有明确缺口。",
-    exercises:[{name:"低位绳索飞鸟",have:false},{name:"哑铃下斜卧推",have:false}]
+    why:"腹头需低位飞鸟专项，现有动作欠缺；哑铃仰卧上拉提供离心拉伸刺激。",
+    exercises:[{name:"哑铃仰卧上拉",have:true},{name:"低位绳索飞鸟",have:false},{name:"哑铃下斜卧推",have:false}]
   },
   { id:"pec_min", name:"胸小肌", region:"胸与肩",
     match:{ nameAny:["Pectoralis Minor"] },
     evidence:{ ratio:.4, sessions:3 },
-    why:"推日训练间接激活，无专项；间接练量尚可。",
-    exercises:[{name:"双杠臂屈伸",have:false},{name:"前锯肌激活",have:false}]
+    why:"推日训练间接激活；哑铃仰卧上拉的肩胛前伸动作专项激活胸小肌。",
+    exercises:[{name:"哑铃仰卧上拉",have:true},{name:"双杠臂屈伸",have:false},{name:"前锯肌激活",have:false}]
   },
   { id:"serr", name:"前锯肌", region:"胸与肩",
     match:{ nameAny:["Serratus Anterior"] },
     evidence:{ ratio:.3, sessions:2, gap:true },
-    why:"前锯肌训练量不足，肩胛稳定性有待改善。",
-    exercises:[{name:"前锯肌俯卧撑",have:false},{name:"哑铃仰卧上拉",have:false}]
+    why:"前锯肌训练量不足，肩胛稳定性有待改善；哑铃仰卧上拉涉及肩胛前伸。",
+    exercises:[{name:"哑铃仰卧上拉",have:true},{name:"前锯肌俯卧撑",have:false}]
   },
   { id:"supra", name:"冈上肌", region:"胸与肩",
     match:{ nameAny:["Supraspinatus"] },
     evidence:{ ratio:.25, sessions:1, gap:true },
-    why:"旋转袖深层肌，现有训练几乎无专项；有明确缺口。",
-    exercises:[{name:"空罐式哑铃上举",have:false},{name:"弹力带外旋",have:false}]
+    why:"旋转袖深层肌，冈上肌负责肩外展起始 15-30°，侧平举即可激活。",
+    exercises:[{name:"哑铃侧平举",have:true},{name:"空罐式哑铃上举",have:false},{name:"弹力带外旋",have:false}]
   },
   { id:"infra", name:"冈下肌", region:"胸与肩",
     match:{ nameAny:["Infraspinatus"] },
     evidence:{ ratio:.25, sessions:1, gap:true },
-    why:"旋转袖外旋肌，现有面拉间接激活但量少；需专项补。",
+    why:"旋转袖外旋肌；面拉的外旋分量可直接激活冈下肌。",
     exercises:[{name:"面拉",have:true},{name:"弹力带外旋",have:false},{name:"哑铃俯卧外旋",have:false}]
   },
   { id:"teres_min", name:"小圆肌", region:"胸与肩",
     match:{ nameAny:["Teres Minor"] },
     evidence:{ ratio:.22, sessions:1, gap:true },
-    why:"旋转袖小圆肌，外旋动作量极少；明确缺口。",
-    exercises:[{name:"绳索外旋",have:false},{name:"弹力带外旋",have:false}]
+    why:"旋转袖小圆肌；面拉的外旋分量同时激活小圆肌。",
+    exercises:[{name:"面拉",have:true},{name:"绳索外旋",have:false},{name:"弹力带外旋",have:false}]
   },
   { id:"teres_maj", name:"大圆肌", region:"胸与肩",
     match:{ nameAny:["Teres Major"] },
@@ -131,8 +131,8 @@ const GROUPS = [
   { id:"subscap", name:"肩胛下肌", region:"胸与肩",
     match:{ nameAny:["Subscapularis"] },
     evidence:{ ratio:.2, sessions:1, gap:true },
-    why:"旋转袖内旋肌，内旋专项几乎为零；明确缺口。",
-    exercises:[{name:"弹力带内旋",have:false},{name:"哑铃内旋",have:false}]
+    why:"旋转袖内旋肌；绳索内旋专项激活肩胛下肌。",
+    exercises:[{name:"绳索内旋",have:true},{name:"弹力带内旋",have:false},{name:"哑铃内旋",have:false}]
   },
 
   // === 手臂 ===
@@ -175,8 +175,8 @@ const GROUPS = [
   { id:"fore_ext", name:"前臂伸肌群", region:"手臂",
     match:{ nameAny:["Extensor Carpi Radialis Longus","Extensor Carpi Radialis Brevis","Extensor Carpi Ulnaris"] },
     evidence:{ ratio:.35, sessions:3 },
-    why:"握力训练间接覆盖，伸肌专项少。",
-    exercises:[{name:"反握腕弯举",have:false},{name:"绳索腕伸",have:false}]
+    why:"握力训练间接覆盖，反握弯举专项强化伸肌群。",
+    exercises:[{name:"反握弯举",have:true},{name:"反握腕弯举",have:false},{name:"绳索腕伸",have:false}]
   },
 
   // === 背 ===
@@ -195,8 +195,8 @@ const GROUPS = [
   { id:"trap_l", name:"斜方肌下束", region:"背",
     match:{ name:"Trapezius", detail:"Ascending" },
     evidence:{ ratio:.5, sessions:3, gap:true },
-    why:"下束需低位绳索/Y字动作专项；有缺口。",
-    exercises:[{name:"Y字哑铃上举",have:false},{name:"低位绳索下拉",have:false}]
+    why:"下束需低位绳索/Y字动作专项；Y字哑铃上举直接激活下束。",
+    exercises:[{name:"Y字哑铃上举",have:true},{name:"低位绳索下拉",have:false}]
   },
   { id:"lats", name:"背阔肌", region:"背",
     match:{ nameAny:["Latissimus Dorsi"] },
@@ -213,8 +213,8 @@ const GROUPS = [
   { id:"lev_scap", name:"肩胛提肌", region:"背",
     match:{ nameAny:["Levator Scapulae"] },
     evidence:{ ratio:.3, sessions:2 },
-    why:"上束训练间接覆盖，无专项。",
-    exercises:[{name:"哑铃耸肩",have:false},{name:"颈部侧伸展",have:false}]
+    why:"上束训练间接覆盖；哑铃耸肩直接激活肩胛提肌与上斜方肌。",
+    exercises:[{name:"哑铃耸肩",have:true},{name:"颈部侧伸展",have:false}]
   },
 
   // === 核心 ===
@@ -227,31 +227,31 @@ const GROUPS = [
   { id:"ql", name:"腰方肌", region:"核心",
     match:{ nameAny:["Quadratus Lumborum"] },
     evidence:{ ratio:.3, sessions:2, gap:true },
-    why:"腰方肌无专项训练；有缺口。",
-    exercises:[{name:"侧弯哑铃",have:false},{name:"单侧负重步行",have:false}]
+    why:"腰方肌无专项训练；侧弯哑铃侧向屈曲脊柱直接激活腰方肌。",
+    exercises:[{name:"侧弯哑铃",have:true},{name:"单侧负重步行",have:false}]
   },
   { id:"abs", name:"腹直肌", region:"核心",
     match:{ nameAny:["Rectus Abdominis","Linea Alba","Pyramidalis"] },
     evidence:{ ratio:.52, sessions:4 },
-    why:"核心训练含卷腹/悬挂举腿，练量适中。",
-    exercises:[{name:"卷腹",have:true},{name:"悬挂举腿",have:true},{name:"仰卧起坐",have:false}]
+    why:"核心训练含坐姿收腹/悬垂举腿，练量适中。",
+    exercises:[{name:"卷腹",have:true},{name:"悬垂举腿",have:true},{name:"坐姿收腹",have:true},{name:"仰卧起坐",have:false}]
   },
   { id:"obl", name:"腹外斜肌", region:"核心",
     match:{ nameAny:["Abdominal External Oblique","External Abdominal Oblique"] },
     evidence:{ ratio:.4, sessions:3 },
-    why:"有氧核心日有练，专项旋转动作尚少。",
-    exercises:[{name:"俄式转体",have:false},{name:"斜向卷腹",have:false}]
+    why:"有氧核心日有练；俄式转体的旋转动作专项激活腹外斜肌。",
+    exercises:[{name:"俄式转体",have:true},{name:"斜向卷腹",have:false}]
   },
   { id:"obl_int", name:"腹内斜肌", region:"核心",
     match:{ nameAny:["Abdominal Internal Oblique","Internal Abdominal Oblique"] },
     evidence:{ ratio:.35, sessions:2, gap:true },
-    why:"内斜肌专项几乎没有；有缺口。",
-    exercises:[{name:"反向旋转卷腹",have:false},{name:"斜板仰卧起坐",have:false}]
+    why:"内斜肌与外斜肌协同旋转；俄式转体同步激活腹内斜肌。",
+    exercises:[{name:"俄式转体",have:true},{name:"反向旋转卷腹",have:false},{name:"斜板仰卧起坐",have:false}]
   },
   { id:"tva", name:"腹横肌", region:"核心",
     match:{ nameAny:["Transverse Abdominal","Transversus Abdominis"] },
     evidence:{ ratio:.2, sessions:1, gap:true },
-    why:"腹横肌需专项激活（呼吸练习/平板支撑）；有明确缺口。",
+    why:"腹横肌需专项激活；平板支撑需腹横肌持续收缩以维持脊柱中立位。",
     exercises:[{name:"平板支撑",have:true},{name:"腹式呼吸练习",have:false}]
   },
 
@@ -259,8 +259,8 @@ const GROUPS = [
   { id:"hip", name:"髂腰肌", region:"下肢",
     match:{ nameAny:["Iliacus","Psoas Major"] },
     evidence:{ ratio:.35, sessions:2, gap:true },
-    why:"深蹲间接激活，无专项髂腰肌训练；缺口。",
-    exercises:[{name:"悬挂举腿",have:true},{name:"跪姿髋屈伸",have:false}]
+    why:"悬垂举腿专项激活髂腰肌（抬腿需髋屈），已纳入每周训练。",
+    exercises:[{name:"悬垂举腿",have:true},{name:"跪姿髋屈伸",have:false}]
   },
   { id:"quads", name:"股四头肌", region:"下肢",
     match:{ nameAny:["Quadriceps Femoris","Rectus Femoris","Vastus Lateralis","Vastus Medialis","Vastus Intermedius"] },
@@ -271,8 +271,8 @@ const GROUPS = [
   { id:"sartorius", name:"缝匠肌", region:"下肢",
     match:{ nameAny:["Sartorius"] },
     evidence:{ ratio:.3, sessions:2 },
-    why:"复合动作间接练到，无专项。",
-    exercises:[{name:"深蹲",have:true}]
+    why:"复合动作间接练到；悬垂举腿的髋屈动作激活缝匠肌。",
+    exercises:[{name:"悬垂举腿",have:true},{name:"深蹲",have:false}]
   },
   { id:"add", name:"内收肌群", region:"下肢",
     match:{ nameAny:["Adductor Magnus","Adductor Longus","Adductor Brevis","Gracilis","Pectineus"] },
@@ -289,8 +289,8 @@ const GROUPS = [
   { id:"gmed", name:"臀中/小肌", region:"下肢",
     match:{ nameAny:["Gluteus Medius","Gluteus Minimus"] },
     evidence:{ ratio:.35, sessions:2, gap:true },
-    why:"臀中肌专项（侧卧蚌式/绳索外展）几乎没有；缺口。",
-    exercises:[{name:"侧卧蚌式",have:false},{name:"绳索臀外展",have:false}]
+    why:"髋外展机专项针对臀中肌；每周两次维持腿日均有覆盖。",
+    exercises:[{name:"髋外展",have:true},{name:"侧卧蚌式",have:false},{name:"绳索臀外展",have:false}]
   },
   { id:"semi", name:"半腱/半膜肌", region:"下肢",
     match:{ nameAny:["Semimembranosus","Semitendinosus"] },
@@ -307,26 +307,26 @@ const GROUPS = [
   { id:"gastroc_m", name:"腓肠肌内侧头", region:"下肢",
     match:{ name:"Gastrocnemius", detail:"Medial Head" },
     evidence:{ ratio:.55, sessions:4 },
-    why:"蹬腿机屈膝提踵替代坐姿提踵，练量适中。",
-    exercises:[{name:"蹬腿机屈膝提踵",have:true},{name:"站立提踵",have:false}]
+    why:"站姿提踵/蹬腿机提踵均可激活腓肠肌；每周两种提踵保证覆盖。",
+    exercises:[{name:"蹬腿机屈膝提踵",have:true},{name:"站姿提踵",have:true}]
   },
   { id:"gastroc_l", name:"腓肠肌外侧头", region:"下肢",
     match:{ name:"Gastrocnemius", detail:"Lateral Head" },
     evidence:{ ratio:.52, sessions:4 },
-    why:"同腓肠肌内侧头；蹬腿机提踵覆盖外侧头。",
-    exercises:[{name:"蹬腿机屈膝提踵",have:true},{name:"站立提踵",have:false}]
+    why:"同腓肠肌内侧头；站姿/蹬腿机提踵均覆盖外侧头。",
+    exercises:[{name:"蹬腿机屈膝提踵",have:true},{name:"站姿提踵",have:true}]
   },
   { id:"soleus", name:"比目鱼肌", region:"下肢",
     match:{ nameAny:["Soleus"] },
     evidence:{ ratio:.45, sessions:3 },
-    why:"屈膝提踵直接针对比目鱼肌，蹬腿机屈膝替代坐姿提踵机。",
-    exercises:[{name:"蹬腿机屈膝提踵",have:true},{name:"坐姿提踵机",have:false}]
+    why:"比目鱼肌在所有踝跖屈中参与；站姿提踵提供足够刺激。",
+    exercises:[{name:"蹬腿机屈膝提踵",have:true},{name:"站姿提踵",have:true},{name:"坐姿提踵机",have:false}]
   },
   { id:"ta", name:"胫骨前肌", region:"下肢",
     match:{ nameAny:["Tibialis Anterior"] },
     evidence:{ ratio:.2, sessions:1, gap:true },
-    why:"胫骨前肌无专项；有缺口。",
-    exercises:[{name:"脚尖勾起练习",have:false}]
+    why:"胫骨前肌负责踝背屈；脚尖勾起练习专项强化，预防胫前疼痛。",
+    exercises:[{name:"脚尖勾起练习",have:true}]
   },
 ];
 
