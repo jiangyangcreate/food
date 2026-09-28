@@ -264,7 +264,8 @@ export const DEFAULT_BACKUP = {
               { name: "绳索侧平举",   w: "5kg",    r: "12", s: "3", feel: "", done: false },
               { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false },
               { name: "平板支撑",     w: "—",      r: "30秒", s: "3", feel: "", done: false },
-              { name: "侧弯哑铃",     w: "8kg",    r: "12", s: "2", feel: "", done: false }
+              { name: "侧弯哑铃",     w: "8kg",    r: "12", s: "2", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重",   r: "20", s: "3", feel: "", done: false }
             ]
           },
           {
@@ -276,7 +277,8 @@ export const DEFAULT_BACKUP = {
               { name: "二头弯举",     w: "20kg",   r: "10", s: "4", feel: "", done: false },
               { name: "悬垂举腿",     w: "自重",   r: "8",  s: "3", feel: "", done: false },
               { name: "绳索内旋",     w: "5kg",    r: "12", s: "3", feel: "", done: false },
-              { name: "站姿提踵",     w: "30kg",   r: "15", s: "3", feel: "", done: false }
+              { name: "站姿提踵",     w: "30kg",   r: "15", s: "3", feel: "", done: false },
+              { name: "反握弯举",     w: "10kg",   r: "12", s: "3", feel: "", done: false }
             ]
           }
         ]
