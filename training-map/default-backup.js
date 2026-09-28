@@ -238,7 +238,9 @@ export const DEFAULT_BACKUP = {
               { name: "上斜机械推胸", w: "25kg",   r: "12", s: "4", feel: "", done: false },
               { name: "肩推",         w: "22.5kg", r: "8",  s: "4", feel: "", done: false },
               { name: "哑铃侧平举",   w: "6kg",    r: "12", s: "4", feel: "", done: false },
-              { name: "绳索臂屈伸",   w: "15kg",   r: "12", s: "4", feel: "", done: false }
+              { name: "绳索臂屈伸",   w: "15kg",   r: "12", s: "4", feel: "", done: false },
+              { name: "哑铃仰卧上拉", w: "10kg",   r: "12", s: "3", feel: "", done: false },
+              { name: "俄式转体",     w: "自重",   r: "15", s: "3", feel: "", done: false }
             ]
           },
           {
@@ -248,7 +250,9 @@ export const DEFAULT_BACKUP = {
               { name: "高位下拉", w: "35kg",     r: "10",  s: "4", feel: "", done: false },
               { name: "面拉",     w: "力竭重量", r: "12",  s: "4", feel: "", done: false },
               { name: "锤式弯举", w: "15kg",     r: "12",  s: "4", feel: "", done: false },
-              { name: "悬垂",     w: "自重",     r: "45秒", s: "3", feel: "", done: false }
+              { name: "悬垂",     w: "自重",     r: "45秒", s: "3", feel: "", done: false },
+              { name: "Y字哑铃上举", w: "3kg",   r: "12",  s: "3", feel: "", done: false },
+              { name: "哑铃耸肩",    w: "10kg",  r: "15",  s: "3", feel: "", done: false }
             ]
           },
           {
@@ -258,7 +262,9 @@ export const DEFAULT_BACKUP = {
               { name: "髋外展",       w: "52.5kg", r: "15", s: "4", feel: "", done: false },
               { name: "臀推",         w: "40kg",   r: "10", s: "3", feel: "", done: false },
               { name: "绳索侧平举",   w: "5kg",    r: "12", s: "3", feel: "", done: false },
-              { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false }
+              { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false },
+              { name: "平板支撑",     w: "—",      r: "30秒", s: "3", feel: "", done: false },
+              { name: "侧弯哑铃",     w: "8kg",    r: "12", s: "2", feel: "", done: false }
             ]
           },
           {
@@ -268,7 +274,9 @@ export const DEFAULT_BACKUP = {
               { name: "绳索侧平举",   w: "5kg",    r: "12", s: "3", feel: "", done: false },
               { name: "过头臂屈伸",   w: "12.5kg", r: "12", s: "3", feel: "", done: false },
               { name: "二头弯举",     w: "20kg",   r: "10", s: "4", feel: "", done: false },
-              { name: "悬垂举腿",     w: "自重",   r: "8",  s: "3", feel: "", done: false }
+              { name: "悬垂举腿",     w: "自重",   r: "8",  s: "3", feel: "", done: false },
+              { name: "绳索内旋",     w: "5kg",    r: "12", s: "3", feel: "", done: false },
+              { name: "站姿提踵",     w: "30kg",   r: "15", s: "3", feel: "", done: false }
             ]
           }
         ]
@@ -284,7 +292,9 @@ export const DEFAULT_BACKUP = {
               { name: "坐姿腿伸展", w: "47.5kg", r: "12", s: "4", feel: "", done: false },
               { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "", done: false },
               { name: "大腿内收",   w: "42.5kg", r: "10", s: "4", feel: "", done: false },
-              { name: "站姿提踵",   w: "45kg",   r: "12", s: "4", feel: "", done: false }
+              { name: "站姿提踵",   w: "45kg",   r: "12", s: "4", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "", done: false },
+              { name: "悬垂举腿",   w: "自重",   r: "8",  s: "3", feel: "", done: false }
             ]
           },
           {
@@ -294,7 +304,9 @@ export const DEFAULT_BACKUP = {
               { name: "高位下拉", w: "37.5kg", r: "10",  s: "4", feel: "", done: false },
               { name: "绳索侧平举", w: "5kg",  r: "15",  s: "4", feel: "", done: false },
               { name: "二头弯举", w: "20kg",   r: "10",  s: "4", feel: "", done: false },
-              { name: "悬垂",     w: "自重",   r: "50秒", s: "3", feel: "", done: false }
+              { name: "悬垂",     w: "自重",   r: "50秒", s: "3", feel: "", done: false },
+              { name: "Y字哑铃上举", w: "3kg", r: "12",  s: "3", feel: "", done: false },
+              { name: "哑铃耸肩",    w: "10kg", r: "15", s: "3", feel: "", done: false }
             ]
           },
           {
@@ -304,7 +316,9 @@ export const DEFAULT_BACKUP = {
               { name: "上斜机械推胸", w: "30kg",   r: "8",  s: "4", feel: "", done: false },
               { name: "哑铃侧平举",   w: "6kg",    r: "15", s: "4", feel: "", done: false },
               { name: "肩推",         w: "25kg",   r: "6",  s: "3", feel: "", done: false },
-              { name: "绳索臂屈伸",   w: "17.5kg", r: "10", s: "4", feel: "", done: false }
+              { name: "绳索臂屈伸",   w: "17.5kg", r: "10", s: "4", feel: "", done: false },
+              { name: "哑铃仰卧上拉", w: "12.5kg", r: "12", s: "3", feel: "", done: false },
+              { name: "俄式转体",     w: "自重",   r: "15", s: "3", feel: "", done: false }
             ]
           },
           {
@@ -314,7 +328,9 @@ export const DEFAULT_BACKUP = {
               { name: "髋外展",       w: "52.5kg", r: "15", s: "4", feel: "", done: false },
               { name: "臀推",         w: "50kg",   r: "10", s: "4", feel: "", done: false },
               { name: "绳索侧平举",   w: "5kg",    r: "15", s: "4", feel: "", done: false },
-              { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false }
+              { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false },
+              { name: "平板支撑",     w: "—",      r: "30秒", s: "3", feel: "", done: false },
+              { name: "侧弯哑铃",     w: "8kg",    r: "12", s: "2", feel: "", done: false }
             ]
           },
           {
@@ -324,7 +340,9 @@ export const DEFAULT_BACKUP = {
               { name: "双臂下拉",   w: "70kg",    r: "6",  s: "3", feel: "", done: false },
               { name: "锤式弯举",   w: "17.5kg",  r: "10", s: "4", feel: "", done: false },
               { name: "过头臂屈伸", w: "15kg",    r: "10", s: "3", feel: "", done: false },
-              { name: "窄距俯卧撑", w: "自重",    r: "12", s: "3", feel: "", done: false }
+              { name: "窄距俯卧撑", w: "自重",    r: "12", s: "3", feel: "", done: false },
+              { name: "绳索内旋",   w: "5kg",     r: "12", s: "3", feel: "", done: false },
+              { name: "反握弯举",   w: "10kg",    r: "12", s: "3", feel: "", done: false }
             ]
           }
         ]
