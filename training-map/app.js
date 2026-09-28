@@ -114,7 +114,7 @@ const GROUPS = [
     match:{ nameAny:["Infraspinatus"] },
     evidence:{ ratio:.25, sessions:1, gap:true },
     why:"旋转袖外旋肌，现有面拉间接激活但量少；需专项补。",
-    exercises:[{name:"弹力带外旋",have:false},{name:"哑铃俯卧外旋",have:false}]
+    exercises:[{name:"面拉",have:true},{name:"弹力带外旋",have:false},{name:"哑铃俯卧外旋",have:false}]
   },
   { id:"teres_min", name:"小圆肌", region:"胸与肩",
     match:{ nameAny:["Teres Minor"] },
@@ -190,7 +190,7 @@ const GROUPS = [
     match:{ name:"Trapezius", detail:"Transverse" },
     evidence:{ ratio:.65, sessions:5 },
     why:"划船动作中束激活充分，水平拉力足。",
-    exercises:[{name:"坐姿绳索划船",have:true},{name:"T杠划船",have:true}]
+    exercises:[{name:"坐姿绳索划船",have:true},{name:"T杠划船",have:true},{name:"面拉",have:true}]
   },
   { id:"trap_l", name:"斜方肌下束", region:"背",
     match:{ name:"Trapezius", detail:"Ascending" },
@@ -284,7 +284,7 @@ const GROUPS = [
     match:{ nameAny:["Gluteus Maximus"] },
     evidence:{ ratio:.75, sessions:5 },
     why:"坐式蹬腿130kg×10（1.6×体重）主驱动臀大肌，罗马尼亚硬拉加入后练量提升。",
-    exercises:[{name:"坐式蹬腿",have:true},{name:"罗马尼亚硬拉",have:true},{name:"臀推",have:false}]
+    exercises:[{name:"坐式蹬腿",have:true},{name:"罗马尼亚硬拉",have:true},{name:"臀推",have:true}]
   },
   { id:"gmed", name:"臀中/小肌", region:"下肢",
     match:{ nameAny:["Gluteus Medius","Gluteus Minimus"] },

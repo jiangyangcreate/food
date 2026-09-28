@@ -220,7 +220,7 @@ export const DEFAULT_BACKUP = {
       },
       // ── W40 (进行中) ─────────────────────────────────────────────
       {
-        week: 40, note: "进行中",
+        week: 40, note: "进行中 · 腿周四改维持+肩背",
         days: [
           {
             theme: "腿", kind: "normal",
@@ -252,13 +252,13 @@ export const DEFAULT_BACKUP = {
             ]
           },
           {
-            theme: "腿", kind: "normal",
+            theme: "腿（维持）/ 肩背", kind: "normal",
             exercises: [
-              { name: "罗马尼亚硬拉",   w: "40kg",     r: "10", s: "3", feel: "", done: false },
-              { name: "髋外展",         w: "52.5kg",   r: "15", s: "4", feel: "", done: false },
-              { name: "蹬腿机屈膝提踵", w: "力竭重量", r: "12", s: "4", feel: "", done: false },
-              { name: "反向山羊挺身",   w: "自重",     r: "15", s: "4", feel: "", done: false },
-              { name: "坐姿收腹",       w: "45kg",     r: "8",  s: "3", feel: "", done: false }
+              { name: "罗马尼亚硬拉", w: "40kg",   r: "10", s: "3", feel: "", done: false },
+              { name: "髋外展",       w: "52.5kg", r: "15", s: "4", feel: "", done: false },
+              { name: "臀推",         w: "40kg",   r: "10", s: "3", feel: "", done: false },
+              { name: "绳索侧平举",   w: "5kg",    r: "12", s: "3", feel: "", done: false },
+              { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false }
             ]
           },
           {
@@ -275,7 +275,7 @@ export const DEFAULT_BACKUP = {
       },
       // ── W41 ─────────────────────────────────────────────────────
       {
-        week: 41, note: "",
+        week: 41, note: "腿周四维持 + 肩背补量",
         days: [
           {
             theme: "腿", kind: "normal",
@@ -308,13 +308,13 @@ export const DEFAULT_BACKUP = {
             ]
           },
           {
-            theme: "腿", kind: "normal",
+            theme: "腿（维持）/ 肩背", kind: "normal",
             exercises: [
-              { name: "罗马尼亚硬拉",   w: "50kg",     r: "10", s: "4", feel: "", done: false },
-              { name: "坐姿腿伸展",     w: "50kg",     r: "12", s: "4", feel: "", done: false },
-              { name: "髋外展",         w: "52.5kg",   r: "15", s: "4", feel: "", done: false },
-              { name: "蹬腿机屈膝提踵", w: "力竭重量", r: "15", s: "4", feel: "", done: false },
-              { name: "坐姿收腹",       w: "50kg",     r: "8",  s: "3", feel: "", done: false }
+              { name: "罗马尼亚硬拉", w: "50kg",   r: "10", s: "4", feel: "", done: false },
+              { name: "髋外展",       w: "52.5kg", r: "15", s: "4", feel: "", done: false },
+              { name: "臀推",         w: "50kg",   r: "10", s: "4", feel: "", done: false },
+              { name: "绳索侧平举",   w: "5kg",    r: "15", s: "4", feel: "", done: false },
+              { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false }
             ]
           },
           {
