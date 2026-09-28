@@ -5,7 +5,7 @@
 export const DEFAULT_BACKUP = {
   format: "training-map-backup",
   version: 1,
-  exportedAt: "2026-09-25T12:00:00.000Z",
+  exportedAt: "2026-09-28T08:00:00.000Z",
   goal: {
     heightCm: 187,
     weightKg: 80,
@@ -24,8 +24,8 @@ export const DEFAULT_BACKUP = {
     trap_u: 1, trap_m: 2, trap_l: 1,
     lats: 3, rhomb: 2, lev_scap: 1,
     erector: 2, ql: 1, abs: 3, obl: 2, obl_int: 1, tva: 2,
-    hip: 1, quads: 3, sartorius: 1, add: 3,
-    gmax: 2, gmed: 2, semi: 4, bf: 4,
+    hip: 1, quads: 4, sartorius: 1, add: 4,
+    gmax: 3, gmed: 2, semi: 4, bf: 4,
     gastroc_m: 3, gastroc_l: 3, soleus: 1, ta: 2
   },
   logEdits: {
@@ -43,7 +43,11 @@ export const DEFAULT_BACKUP = {
     "2026-09-25#1": { w: "65kg",  r: "6",  s: "4", feel: "顶峰收缩停1-2秒", done: true },
     "2026-09-25#2": { w: "20kg",  r: "10", s: "4", feel: "张开角度控制在90-135度，后续维持20kg，尝试放下角度在135度到180度", done: true },
     "2026-09-25#3": { w: "3kg",   r: "12", s: "3", feel: "我的肩太弱，后续稳定在5kg争取做到12个*4；另加5kg×8×1组", done: true },
-    "2026-09-25#4": { w: "—",     r: "30分钟", s: "1", feel: "cardio", done: true }
+    "2026-09-25#4": { w: "—",     r: "30分钟", s: "1", feel: "cardio", done: true },
+    "2026-09-28#0": { w: "130kg",  r: "10", s: "4", feel: "体力和肌肉都几乎极限",           done: true },
+    "2026-09-28#1": { w: "42.5kg", r: "8",  s: "4", feel: "极限了，下次可以这个重量加次数",  done: true },
+    "2026-09-28#2": { w: "45kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true },
+    "2026-09-28#3": { w: "50kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05"],
@@ -158,9 +162,9 @@ export const DEFAULT_BACKUP = {
           { theme: "体检休息", kind: "rest",   exercises: [] }
         ]
       },
-      // ── W39 (进行中) ─────────────────────────────────────────────
+      // ── W39 ─────────────────────────────────────────────────────
       {
-        week: 39, note: "进行中",
+        week: 39, note: "",
         days: [
           {
             theme: "腿", kind: "normal",
@@ -214,18 +218,17 @@ export const DEFAULT_BACKUP = {
           }
         ]
       },
-      // ── W40 ─────────────────────────────────────────────────────
+      // ── W40 (进行中) ─────────────────────────────────────────────
       {
-        week: 40, note: "",
+        week: 40, note: "进行中",
         days: [
           {
             theme: "腿", kind: "normal",
             exercises: [
-              { name: "坐式蹬腿", w: "125kg", r: "10", s: "4", feel: "", done: false },
-              { name: "腿屈伸",   w: "45kg",  r: "12", s: "4", feel: "", done: false },
-              { name: "腿弯举",   w: "50kg",  r: "12", s: "3", feel: "", done: false },
-              { name: "内收",     w: "40kg",  r: "12", s: "4", feel: "", done: false },
-              { name: "站姿提踵", w: "40kg",  r: "15", s: "4", feel: "", done: false }
+              { name: "坐式蹬腿",   w: "130kg",  r: "10", s: "4", feel: "体力和肌肉都几乎极限",           done: true },
+              { name: "大腿内收",   w: "42.5kg", r: "8",  s: "4", feel: "极限了，下次可以这个重量加次数",  done: true },
+              { name: "坐姿腿伸展", w: "45kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true },
+              { name: "坐姿腿弯举", w: "50kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true }
             ]
           },
           {
@@ -251,11 +254,11 @@ export const DEFAULT_BACKUP = {
           {
             theme: "腿", kind: "normal",
             exercises: [
-              { name: "腿弯举",       w: "55kg",     r: "8",  s: "4", feel: "", done: false },
-              { name: "髋外展",       w: "52.5kg",   r: "15", s: "4", feel: "", done: false },
+              { name: "罗马尼亚硬拉",   w: "40kg",     r: "10", s: "3", feel: "", done: false },
+              { name: "髋外展",         w: "52.5kg",   r: "15", s: "4", feel: "", done: false },
               { name: "蹬腿机屈膝提踵", w: "力竭重量", r: "12", s: "4", feel: "", done: false },
-              { name: "反向山羊挺身", w: "自重",     r: "15", s: "4", feel: "", done: false },
-              { name: "坐姿收腹",     w: "45kg",     r: "8",  s: "3", feel: "", done: false }
+              { name: "反向山羊挺身",   w: "自重",     r: "15", s: "4", feel: "", done: false },
+              { name: "坐姿收腹",       w: "45kg",     r: "8",  s: "3", feel: "", done: false }
             ]
           },
           {
@@ -277,11 +280,11 @@ export const DEFAULT_BACKUP = {
           {
             theme: "腿", kind: "normal",
             exercises: [
-              { name: "坐式蹬腿",   w: "130kg", r: "8",  s: "4", feel: "", done: false },
-              { name: "腿屈伸",     w: "50kg",  r: "10", s: "4", feel: "", done: false },
-              { name: "内收",       w: "40kg",  r: "15", s: "4", feel: "", done: false },
-              { name: "站姿提踵",   w: "45kg",  r: "12", s: "4", feel: "", done: false },
-              { name: "反向山羊挺身", w: "自重", r: "12", s: "4", feel: "", done: false }
+              { name: "坐式蹬腿",   w: "130kg",  r: "10", s: "4", feel: "", done: false },
+              { name: "坐姿腿伸展", w: "47.5kg", r: "12", s: "4", feel: "", done: false },
+              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "", done: false },
+              { name: "大腿内收",   w: "42.5kg", r: "10", s: "4", feel: "", done: false },
+              { name: "站姿提踵",   w: "45kg",   r: "12", s: "4", feel: "", done: false }
             ]
           },
           {
@@ -307,11 +310,11 @@ export const DEFAULT_BACKUP = {
           {
             theme: "腿", kind: "normal",
             exercises: [
-              { name: "腿弯举",       w: "55kg",     r: "10", s: "4", feel: "", done: false },
-              { name: "腿屈伸",       w: "50kg",     r: "12", s: "3", feel: "", done: false },
-              { name: "髋外展",       w: "52.5kg",   r: "15", s: "4", feel: "", done: false },
+              { name: "罗马尼亚硬拉",   w: "50kg",     r: "10", s: "4", feel: "", done: false },
+              { name: "坐姿腿伸展",     w: "50kg",     r: "12", s: "4", feel: "", done: false },
+              { name: "髋外展",         w: "52.5kg",   r: "15", s: "4", feel: "", done: false },
               { name: "蹬腿机屈膝提踵", w: "力竭重量", r: "15", s: "4", feel: "", done: false },
-              { name: "坐姿收腹",     w: "50kg",     r: "8",  s: "3", feel: "", done: false }
+              { name: "坐姿收腹",       w: "50kg",     r: "8",  s: "3", feel: "", done: false }
             ]
           },
           {

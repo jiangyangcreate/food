@@ -221,8 +221,8 @@ const GROUPS = [
   { id:"erector", name:"竖脊肌", region:"核心",
     match:{ nameAny:["Iliocostalis","Longissimus","Spinalis","Multifidus","Erector Spinae"] },
     evidence:{ ratio:.7, sessions:5 },
-    why:"深蹲/硬拉/划船全程激活，练量较充分。",
-    exercises:[{name:"深蹲",have:true},{name:"罗马椅背伸",have:false}]
+    why:"深蹲/划船全程激活；罗马尼亚硬拉加入后竖脊肌在离心阶段得到专项刺激。",
+    exercises:[{name:"罗马尼亚硬拉",have:true},{name:"深蹲",have:true},{name:"罗马椅背伸",have:false}]
   },
   { id:"ql", name:"腰方肌", region:"核心",
     match:{ nameAny:["Quadratus Lumborum"] },
@@ -265,8 +265,8 @@ const GROUPS = [
   { id:"quads", name:"股四头肌", region:"下肢",
     match:{ nameAny:["Quadriceps Femoris","Rectus Femoris","Vastus Lateralis","Vastus Medialis","Vastus Intermedius"] },
     evidence:{ ratio:.82, sessions:6 },
-    why:"深蹲+腿举是训练重心，股四头肌负荷接近目标。",
-    exercises:[{name:"深蹲",have:true},{name:"腿举",have:true},{name:"腿屈伸",have:false}]
+    why:"坐式蹬腿130kg×10（1.6×体重）＋坐姿腿伸展专项，股四头肌覆盖充分。",
+    exercises:[{name:"坐式蹬腿",have:true},{name:"坐姿腿伸展",have:true},{name:"深蹲",have:true}]
   },
   { id:"sartorius", name:"缝匠肌", region:"下肢",
     match:{ nameAny:["Sartorius"] },
@@ -276,15 +276,15 @@ const GROUPS = [
   },
   { id:"add", name:"内收肌群", region:"下肢",
     match:{ nameAny:["Adductor Magnus","Adductor Longus","Adductor Brevis","Gracilis","Pectineus"] },
-    evidence:{ ratio:.65, sessions:5 },
-    why:"深蹲宽站距激活内收肌，练量中等。",
-    exercises:[{name:"深蹲",have:true},{name:"腿举宽站",have:true},{name:"大腿内侧夹",have:false}]
+    evidence:{ ratio:.70, sessions:6 },
+    why:"大腿内收机专项42.5kg×8×4近极限，加上宽站腿举，内收肌群训练充分。",
+    exercises:[{name:"大腿内收",have:true},{name:"腿举宽站",have:true},{name:"深蹲",have:true}]
   },
   { id:"gmax", name:"臀大肌", region:"下肢",
     match:{ nameAny:["Gluteus Maximus"] },
     evidence:{ ratio:.75, sessions:5 },
-    why:"深蹲/腿举驱动臀大肌，练量接近目标。",
-    exercises:[{name:"深蹲",have:true},{name:"臀推",have:false},{name:"罗马尼亚硬拉",have:false}]
+    why:"坐式蹬腿130kg×10（1.6×体重）主驱动臀大肌，罗马尼亚硬拉加入后练量提升。",
+    exercises:[{name:"坐式蹬腿",have:true},{name:"罗马尼亚硬拉",have:true},{name:"臀推",have:false}]
   },
   { id:"gmed", name:"臀中/小肌", region:"下肢",
     match:{ nameAny:["Gluteus Medius","Gluteus Minimus"] },
@@ -295,14 +295,14 @@ const GROUPS = [
   { id:"semi", name:"半腱/半膜肌", region:"下肢",
     match:{ nameAny:["Semimembranosus","Semitendinosus"] },
     evidence:{ ratio:.72, sessions:5 },
-    why:"腿弯举内侧腘绳肌激活充分，负荷接近目标。",
-    exercises:[{name:"腿弯举",have:true},{name:"罗马尼亚硬拉",have:false}]
+    why:"坐姿腿弯举50kg×12×4专项激活内侧腘绳肌；罗马尼亚硬拉加入拉伸端刺激。",
+    exercises:[{name:"坐姿腿弯举",have:true},{name:"罗马尼亚硬拉",have:true}]
   },
   { id:"bf", name:"股二头肌", region:"下肢",
     match:{ nameAny:["Biceps Femoris","Long Head Of Biceps Femoris","Short Head Of Biceps Femoris"] },
     evidence:{ ratio:.7, sessions:5 },
-    why:"腿弯举外侧腘绳肌覆盖，练量适中。",
-    exercises:[{name:"腿弯举",have:true},{name:"北欧腘绳肌弯举",have:false}]
+    why:"坐姿腿弯举覆盖外侧腘绳肌；罗马尼亚硬拉长头拉伸刺激，练量充分。",
+    exercises:[{name:"坐姿腿弯举",have:true},{name:"罗马尼亚硬拉",have:true},{name:"北欧腘绳肌弯举",have:false}]
   },
   { id:"gastroc_m", name:"腓肠肌内侧头", region:"下肢",
     match:{ name:"Gastrocnemius", detail:"Medial Head" },
