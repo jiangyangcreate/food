@@ -47,7 +47,8 @@ export const DEFAULT_BACKUP = {
     "2026-09-28#0": { w: "130kg",  r: "10", s: "4", feel: "体力和肌肉都几乎极限",           done: true },
     "2026-09-28#1": { w: "42.5kg", r: "8",  s: "4", feel: "极限了，下次可以这个重量加次数",  done: true },
     "2026-09-28#2": { w: "45kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true },
-    "2026-09-28#3": { w: "50kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true }
+    "2026-09-28#3": { w: "50kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true },
+    "2026-09-29#rest": { w: "—", r: "—", s: "—", feel: "聚餐休息，今日全休", done: false }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05"],
@@ -231,18 +232,7 @@ export const DEFAULT_BACKUP = {
               { name: "坐姿腿弯举", w: "50kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true }
             ]
           },
-          {
-            theme: "推", kind: "normal",
-            exercises: [
-              { name: "平板卧推",     w: "37.5kg", r: "8",  s: "4", feel: "", done: false },
-              { name: "上斜机械推胸", w: "25kg",   r: "12", s: "4", feel: "", done: false },
-              { name: "肩推",         w: "22.5kg", r: "8",  s: "4", feel: "", done: false },
-              { name: "哑铃侧平举",   w: "6kg",    r: "12", s: "4", feel: "", done: false },
-              { name: "绳索臂屈伸",   w: "15kg",   r: "12", s: "4", feel: "", done: false },
-              { name: "哑铃仰卧上拉", w: "10kg",   r: "12", s: "3", feel: "", done: false },
-              { name: "俄式转体",     w: "自重",   r: "15", s: "3", feel: "", done: false }
-            ]
-          },
+          { theme: "聚餐休息", kind: "rest", exercises: [] },
           {
             theme: "拉", kind: "normal",
             exercises: [
@@ -279,6 +269,18 @@ export const DEFAULT_BACKUP = {
               { name: "绳索内旋",     w: "5kg",    r: "12", s: "3", feel: "", done: false },
               { name: "站姿提踵",     w: "30kg",   r: "15", s: "3", feel: "", done: false },
               { name: "反握弯举",     w: "10kg",   r: "12", s: "3", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "推（补）", kind: "normal",
+            exercises: [
+              { name: "平板卧推",     w: "37.5kg", r: "8",  s: "4", feel: "", done: false },
+              { name: "上斜机械推胸", w: "25kg",   r: "12", s: "4", feel: "", done: false },
+              { name: "肩推",         w: "22.5kg", r: "8",  s: "4", feel: "", done: false },
+              { name: "哑铃侧平举",   w: "6kg",    r: "12", s: "4", feel: "", done: false },
+              { name: "绳索臂屈伸",   w: "15kg",   r: "12", s: "4", feel: "", done: false },
+              { name: "哑铃仰卧上拉", w: "10kg",   r: "12", s: "3", feel: "", done: false },
+              { name: "俄式转体",     w: "自重",   r: "15", s: "3", feel: "", done: false }
             ]
           }
         ]
