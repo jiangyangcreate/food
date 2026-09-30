@@ -60,13 +60,13 @@ const GROUPS = [
     match:{ name:"Deltoid", detail:"Clavicular" },
     evidence:{ ratio:.68, sessions:5 },
     why:"每周推系训练激活充分，肩推/飞鸟主要驱动肌；比例接近 70% 但未达标。",
-    exercises:[{name:"哑铃肩推",have:true},{name:"颈前推",have:true},{name:"阿诺德推",have:false}]
+    exercises:[{name:"哑铃肩推",have:true},{name:"颈前推",have:true},{name:"肩推",have:true},{name:"阿诺德推",have:false}]
   },
   { id:"mid_delt", name:"肩中束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Acromial" },
     evidence:{ ratio:.48, sessions:5 },
     why:"侧平举重量尚轻，中束孤立感不足；已练但负荷比例偏低。",
-    exercises:[{name:"哑铃侧平举",have:true},{name:"绳索侧平举",have:true},{name:"哑铃直臂上举",have:false}]
+    exercises:[{name:"哑铃侧平举",have:true},{name:"绳索侧平举",have:true},{name:"肩推",have:true},{name:"哑铃直臂上举",have:false}]
   },
   { id:"rear_delt", name:"肩后束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Scapular" },
@@ -126,7 +126,7 @@ const GROUPS = [
     match:{ nameAny:["Teres Major"] },
     evidence:{ ratio:.55, sessions:4 },
     why:"背阔肌训练间接激活，单臂划船有协同作用。",
-    exercises:[{name:"高位下拉",have:true},{name:"单臂哑铃划船",have:true}]
+    exercises:[{name:"高位下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true}]
   },
   { id:"subscap", name:"肩胛下肌", region:"胸与肩",
     match:{ nameAny:["Subscapularis"] },
@@ -140,7 +140,7 @@ const GROUPS = [
     match:{ nameAny:["Biceps Brachii","Short Head Of Biceps Brachii","Long Head Of Biceps Brachii","Biceps"] },
     evidence:{ ratio:.75, sessions:6 },
     why:"哑铃弯举/锤式弯举每周练习，负荷比例接近 75%。",
-    exercises:[{name:"哑铃弯举",have:true},{name:"锤式弯举",have:true},{name:"杠铃弯举",have:false}]
+    exercises:[{name:"哑铃弯举",have:true},{name:"锤式弯举",have:true},{name:"二头弯举",have:true},{name:"杠铃弯举",have:false}]
   },
   { id:"brachialis", name:"肱肌", region:"手臂",
     match:{ nameAny:["Brachialis"] },
@@ -152,25 +152,25 @@ const GROUPS = [
     match:{ name:"Triceps Brachii", detail:"Long Head" },
     evidence:{ ratio:.6, sessions:5 },
     why:"绳索下压/窄距卧推覆盖，长头需过头动作补充。",
-    exercises:[{name:"绳索下压",have:true},{name:"哑铃过头臂屈伸",have:false}]
+    exercises:[{name:"绳索下压",have:true},{name:"过头臂屈伸",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃过头臂屈伸",have:false}]
   },
   { id:"tri_lat", name:"肱三头肌外侧头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Lateral Head" },
     evidence:{ ratio:.62, sessions:5 },
     why:"绳索下压外侧头激活好，练量适中。",
-    exercises:[{name:"绳索下压",have:true},{name:"俯身臂屈伸",have:false}]
+    exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"俯身臂屈伸",have:false}]
   },
   { id:"tri_med", name:"肱三头肌内侧头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Medial Head" },
     evidence:{ ratio:.55, sessions:4 },
     why:"内侧头在全范围动作中激活，练量中等。",
-    exercises:[{name:"绳索下压",have:true},{name:"双杠臂屈伸",have:false}]
+    exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"双杠臂屈伸",have:false}]
   },
   { id:"fore_flex", name:"前臂屈肌群", region:"手臂",
     match:{ nameAny:["Flexor Carpi Radialis","Flexor Carpi Ulnaris","Palmaris Longus","Pronator Teres"] },
     evidence:{ ratio:.45, sessions:4 },
     why:"弯举动作间接激活，无专项前臂训练。",
-    exercises:[{name:"哑铃弯举",have:true},{name:"腕弯举",have:false}]
+    exercises:[{name:"悬垂",have:true},{name:"锤式弯举",have:true},{name:"哑铃弯举",have:true},{name:"腕弯举",have:false}]
   },
   { id:"fore_ext", name:"前臂伸肌群", region:"手臂",
     match:{ nameAny:["Extensor Carpi Radialis Longus","Extensor Carpi Radialis Brevis","Extensor Carpi Ulnaris"] },
@@ -184,13 +184,13 @@ const GROUPS = [
     match:{ name:"Trapezius", detail:"Descending" },
     evidence:{ ratio:.6, sessions:5 },
     why:"面拉/耸肩有练，上束整体适中。",
-    exercises:[{name:"面拉",have:true},{name:"哑铃耸肩",have:false}]
+    exercises:[{name:"面拉",have:true},{name:"哑铃耸肩",have:true}]
   },
   { id:"trap_m", name:"斜方肌中束", region:"背",
     match:{ name:"Trapezius", detail:"Transverse" },
     evidence:{ ratio:.65, sessions:5 },
     why:"划船动作中束激活充分，水平拉力足。",
-    exercises:[{name:"坐姿绳索划船",have:true},{name:"T杠划船",have:true},{name:"面拉",have:true}]
+    exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"T杠划船",have:true},{name:"面拉",have:true}]
   },
   { id:"trap_l", name:"斜方肌下束", region:"背",
     match:{ name:"Trapezius", detail:"Ascending" },
@@ -202,13 +202,13 @@ const GROUPS = [
     match:{ nameAny:["Latissimus Dorsi"] },
     evidence:{ ratio:.78, sessions:6 },
     why:"高位下拉+单臂划船，背阔肌是训练重点，负荷接近目标。",
-    exercises:[{name:"高位下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"引体向上",have:false}]
+    exercises:[{name:"高位下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true},{name:"双臂下拉",have:true},{name:"坐姿划船",have:true},{name:"引体向上",have:false}]
   },
   { id:"rhomb", name:"菱形肌", region:"背",
     match:{ nameAny:["Rhomboid Major","Rhomboid Minor"] },
     evidence:{ ratio:.58, sessions:4 },
     why:"划船动作肩胛内收激活菱形肌，练量适中。",
-    exercises:[{name:"坐姿绳索划船",have:true},{name:"面拉",have:true}]
+    exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"面拉",have:true}]
   },
   { id:"lev_scap", name:"肩胛提肌", region:"背",
     match:{ nameAny:["Levator Scapulae"] },
