@@ -15,14 +15,14 @@ export const DEFAULT_BACKUP = {
     label: "187cm · 80kg · 体脂 15% 古典健美"
   },
   scores: {
-    ant_delt: 2, mid_delt: 2, rear_delt: 2,
+    ant_delt: 2, mid_delt: 2, rear_delt: 3,
     pec_u: 2, pec_s: 2, pec_l: 3, pec_min: 2,
     serr: 2, supra: 2, infra: 2, teres_min: 2,
     teres_maj: 3, subscap: 1, bi: 3, brachialis: 3,
     tri_long: 3, tri_lat: 3, tri_med: 3,
-    fore_flex: 3, fore_ext: 2,
-    trap_u: 1, trap_m: 2, trap_l: 1,
-    lats: 3, rhomb: 2, lev_scap: 1,
+    fore_flex: 2, fore_ext: 2,
+    trap_u: 2, trap_m: 3, trap_l: 2,
+    lats: 3, rhomb: 3, lev_scap: 2,
     erector: 2, ql: 1, abs: 3, obl: 2, obl_int: 1, tva: 2,
     hip: 1, quads: 4, sartorius: 1, add: 4,
     gmax: 3, gmed: 2, semi: 4, bf: 4,
@@ -48,7 +48,14 @@ export const DEFAULT_BACKUP = {
     "2026-09-28#1": { w: "42.5kg", r: "8",  s: "4", feel: "极限了，下次可以这个重量加次数",  done: true },
     "2026-09-28#2": { w: "45kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true },
     "2026-09-28#3": { w: "50kg",   r: "12", s: "4", feel: "重量适中，下次加2.5kg",          done: true },
-    "2026-09-29#rest": { w: "—", r: "—", s: "—", feel: "聚餐休息，今日全休", done: false }
+    "2026-09-29#rest": { w: "—", r: "—", s: "—", feel: "聚餐休息，今日全休", done: false },
+    "2026-09-30#0": { w: "自重", r: "45秒", s: "3", feel: "极限了", done: true },
+    "2026-09-30#1": { w: "10kg", r: "8", s: "4", feel: "小臂从来没练过，非常薄弱", done: true },
+    "2026-09-30#2": { w: "10kg", r: "15", s: "4", feel: "", done: true },
+    "2026-09-30#3": { w: "35kg", r: "10", s: "4", feel: "下次试 40kg×8×4", done: true },
+    "2026-09-30#4": { w: "3kg", r: "15", s: "3", feel: "", done: true },
+    "2026-09-30#5": { w: "10kg", r: "10", s: "3", feel: "", done: true },
+    "2026-09-30#6": { w: "40kg", r: "10", s: "3", feel: "", done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05"],
@@ -235,118 +242,117 @@ export const DEFAULT_BACKUP = {
           { theme: "聚餐休息", kind: "rest", exercises: [] },
           {
             theme: "拉", kind: "normal",
+            note: "小肌肉提前做（平时没怎么练、放后面怕做不动）；一小时太短，四组做不完，部分动作只能三组。",
             exercises: [
-              { name: "坐姿划船", w: "40kg",     r: "10",  s: "4", feel: "", done: false },
-              { name: "高位下拉", w: "35kg",     r: "10",  s: "4", feel: "", done: false },
-              { name: "面拉",     w: "力竭重量", r: "12",  s: "4", feel: "", done: false },
-              { name: "锤式弯举", w: "15kg",     r: "12",  s: "4", feel: "", done: false },
-              { name: "悬垂",     w: "自重",     r: "45秒", s: "3", feel: "", done: false },
-              { name: "Y字哑铃上举", w: "3kg",   r: "12",  s: "3", feel: "", done: false },
-              { name: "哑铃耸肩",    w: "10kg",  r: "15",  s: "3", feel: "", done: false }
+              { name: "悬垂",        w: "自重", r: "45秒", s: "3", feel: "极限了",                done: true },
+              { name: "锤式弯举",    w: "10kg", r: "8",    s: "4", feel: "小臂从来没练过，非常薄弱", done: true },
+              { name: "哑铃耸肩",    w: "10kg", r: "15",   s: "4", feel: "",                     done: true },
+              { name: "高位下拉",    w: "35kg", r: "10",   s: "4", feel: "下次试 40kg×8×4",       done: true },
+              { name: "Y字哑铃上举", w: "3kg",  r: "15",   s: "3", feel: "",                     done: true },
+              { name: "面拉",        w: "10kg", r: "10",   s: "3", feel: "",                     done: true },
+              { name: "坐姿划船",    w: "40kg", r: "10",   s: "3", feel: "",                     done: true }
             ]
           },
           {
             theme: "腿（维持）/ 肩背", kind: "normal",
             exercises: [
-              { name: "罗马尼亚硬拉", w: "40kg",   r: "10", s: "3", feel: "", done: false },
-              { name: "髋外展",       w: "52.5kg", r: "15", s: "4", feel: "", done: false },
-              { name: "臀推",         w: "40kg",   r: "10", s: "3", feel: "", done: false },
-              { name: "绳索侧平举",   w: "5kg",    r: "12", s: "3", feel: "", done: false },
-              { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false },
-              { name: "平板支撑",     w: "—",      r: "30秒", s: "3", feel: "", done: false },
-              { name: "侧弯哑铃",     w: "8kg",    r: "12", s: "2", feel: "", done: false },
-              { name: "脚尖勾起练习", w: "自重",   r: "20", s: "3", feel: "", done: false }
+              { name: "面拉",         w: "15kg",   r: "12",  s: "3", feel: "", done: false },
+              { name: "绳索侧平举",   w: "5kg",    r: "12",  s: "3", feel: "", done: false },
+              { name: "罗马尼亚硬拉", w: "40kg",   r: "10",  s: "3", feel: "", done: false },
+              { name: "髋外展",       w: "52.5kg", r: "15",  s: "3", feel: "", done: false },
+              { name: "站姿提踵",     w: "30kg",   r: "15",  s: "3", feel: "", done: false },
+              { name: "侧弯哑铃",     w: "8kg",    r: "12",  s: "3", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重",   r: "20",  s: "3", feel: "", done: false }
             ]
           },
           {
             theme: "肩臂", kind: "normal",
             exercises: [
-              { name: "双臂下拉",     w: "65kg",   r: "8",  s: "4", feel: "", done: false },
-              { name: "绳索侧平举",   w: "5kg",    r: "12", s: "3", feel: "", done: false },
-              { name: "过头臂屈伸",   w: "12.5kg", r: "12", s: "3", feel: "", done: false },
-              { name: "二头弯举",     w: "20kg",   r: "10", s: "4", feel: "", done: false },
-              { name: "悬垂举腿",     w: "自重",   r: "8",  s: "3", feel: "", done: false },
-              { name: "绳索内旋",     w: "5kg",    r: "12", s: "3", feel: "", done: false },
-              { name: "站姿提踵",     w: "30kg",   r: "15", s: "3", feel: "", done: false },
-              { name: "反握弯举",     w: "10kg",   r: "12", s: "3", feel: "", done: false }
+              { name: "绳索内旋",   w: "5kg",    r: "12",  s: "3", feel: "", done: false },
+              { name: "反握弯举",   w: "10kg",   r: "12",  s: "3", feel: "", done: false },
+              { name: "双臂下拉",   w: "65kg",   r: "8",   s: "4", feel: "", done: false },
+              { name: "二头弯举",   w: "20kg",   r: "10",  s: "3", feel: "", done: false },
+              { name: "过头臂屈伸", w: "12.5kg", r: "12",  s: "3", feel: "", done: false },
+              { name: "平板支撑",   w: "—",      r: "30秒", s: "3", feel: "", done: false },
+              { name: "悬垂举腿",   w: "自重",   r: "8",   s: "3", feel: "", done: false }
             ]
           },
           {
             theme: "推（补）", kind: "normal",
             exercises: [
-              { name: "平板卧推",     w: "37.5kg", r: "8",  s: "4", feel: "", done: false },
-              { name: "上斜机械推胸", w: "25kg",   r: "12", s: "4", feel: "", done: false },
-              { name: "肩推",         w: "22.5kg", r: "8",  s: "4", feel: "", done: false },
-              { name: "哑铃侧平举",   w: "6kg",    r: "12", s: "4", feel: "", done: false },
-              { name: "绳索臂屈伸",   w: "15kg",   r: "12", s: "4", feel: "", done: false },
-              { name: "哑铃仰卧上拉", w: "10kg",   r: "12", s: "3", feel: "", done: false },
-              { name: "俄式转体",     w: "自重",   r: "15", s: "3", feel: "", done: false }
+              { name: "哑铃侧平举",   w: "6kg",    r: "12",  s: "3", feel: "", done: false },
+              { name: "平板卧推",     w: "37.5kg", r: "8",   s: "4", feel: "", done: false },
+              { name: "上斜机械推胸", w: "25kg",   r: "10",  s: "3", feel: "", done: false },
+              { name: "肩推",         w: "22.5kg", r: "8",   s: "3", feel: "", done: false },
+              { name: "绳索臂屈伸",   w: "15kg",   r: "12",  s: "3", feel: "", done: false },
+              { name: "哑铃仰卧上拉", w: "10kg",   r: "12",  s: "3", feel: "", done: false },
+              { name: "俄式转体",     w: "自重",   r: "15",  s: "3", feel: "", done: false }
             ]
           }
         ]
       },
       // ── W41 ─────────────────────────────────────────────────────
       {
-        week: 41, note: "腿周四维持 + 肩背补量",
+        week: 41, note: "前臂专项 · 小肌肉优先 · 每组3组为主",
         days: [
           {
             theme: "腿", kind: "normal",
             exercises: [
-              { name: "坐式蹬腿",   w: "130kg",  r: "10", s: "4", feel: "", done: false },
-              { name: "坐姿腿伸展", w: "47.5kg", r: "12", s: "4", feel: "", done: false },
-              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "", done: false },
-              { name: "大腿内收",   w: "42.5kg", r: "10", s: "4", feel: "", done: false },
-              { name: "站姿提踵",   w: "45kg",   r: "12", s: "4", feel: "", done: false },
-              { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "", done: false },
-              { name: "悬垂举腿",   w: "自重",   r: "8",  s: "3", feel: "", done: false }
+              { name: "坐式蹬腿",     w: "130kg",  r: "10", s: "4", feel: "", done: false },
+              { name: "坐姿腿伸展",   w: "47.5kg", r: "12", s: "3", feel: "", done: false },
+              { name: "坐姿腿弯举",   w: "52.5kg", r: "12", s: "3", feel: "", done: false },
+              { name: "大腿内收",     w: "42.5kg", r: "10", s: "3", feel: "", done: false },
+              { name: "站姿提踵",     w: "45kg",   r: "12", s: "3", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重",   r: "20", s: "3", feel: "", done: false },
+              { name: "悬垂举腿",     w: "自重",   r: "8",  s: "3", feel: "", done: false }
             ]
           },
           {
             theme: "拉", kind: "normal",
             exercises: [
-              { name: "坐姿划船", w: "42.5kg", r: "8",   s: "4", feel: "", done: false },
-              { name: "高位下拉", w: "37.5kg", r: "10",  s: "4", feel: "", done: false },
-              { name: "绳索侧平举", w: "5kg",  r: "15",  s: "4", feel: "", done: false },
-              { name: "二头弯举", w: "20kg",   r: "10",  s: "4", feel: "", done: false },
-              { name: "悬垂",     w: "自重",   r: "50秒", s: "3", feel: "", done: false },
-              { name: "Y字哑铃上举", w: "3kg", r: "12",  s: "3", feel: "", done: false },
-              { name: "哑铃耸肩",    w: "10kg", r: "15", s: "3", feel: "", done: false }
+              { name: "锤式弯举",    w: "12kg",   r: "8",   s: "3", feel: "", done: false },
+              { name: "悬垂",        w: "自重",   r: "50秒", s: "3", feel: "", done: false },
+              { name: "Y字哑铃上举", w: "3kg",    r: "12",  s: "3", feel: "", done: false },
+              { name: "哑铃耸肩",    w: "10kg",   r: "15",  s: "3", feel: "", done: false },
+              { name: "高位下拉",    w: "40kg",   r: "8",   s: "4", feel: "", done: false },
+              { name: "坐姿划船",    w: "42.5kg", r: "8",   s: "3", feel: "", done: false },
+              { name: "面拉",        w: "12kg",   r: "12",  s: "3", feel: "", done: false }
             ]
           },
           {
             theme: "推", kind: "normal",
             exercises: [
-              { name: "平板卧推",     w: "40kg",   r: "6",  s: "4", feel: "", done: false },
-              { name: "上斜机械推胸", w: "30kg",   r: "8",  s: "4", feel: "", done: false },
-              { name: "哑铃侧平举",   w: "6kg",    r: "15", s: "4", feel: "", done: false },
-              { name: "肩推",         w: "25kg",   r: "6",  s: "3", feel: "", done: false },
-              { name: "绳索臂屈伸",   w: "17.5kg", r: "10", s: "4", feel: "", done: false },
-              { name: "哑铃仰卧上拉", w: "12.5kg", r: "12", s: "3", feel: "", done: false },
-              { name: "俄式转体",     w: "自重",   r: "15", s: "3", feel: "", done: false }
+              { name: "哑铃侧平举",   w: "6kg",    r: "15",  s: "3", feel: "", done: false },
+              { name: "平板卧推",     w: "40kg",   r: "6",   s: "4", feel: "", done: false },
+              { name: "上斜机械推胸", w: "30kg",   r: "8",   s: "3", feel: "", done: false },
+              { name: "肩推",         w: "25kg",   r: "6",   s: "3", feel: "", done: false },
+              { name: "绳索臂屈伸",   w: "17.5kg", r: "10",  s: "3", feel: "", done: false },
+              { name: "哑铃仰卧上拉", w: "12.5kg", r: "12",  s: "3", feel: "", done: false },
+              { name: "俄式转体",     w: "自重",   r: "15",  s: "3", feel: "", done: false }
             ]
           },
           {
             theme: "腿（维持）/ 肩背", kind: "normal",
             exercises: [
-              { name: "罗马尼亚硬拉", w: "50kg",   r: "10", s: "4", feel: "", done: false },
-              { name: "髋外展",       w: "52.5kg", r: "15", s: "4", feel: "", done: false },
-              { name: "臀推",         w: "50kg",   r: "10", s: "4", feel: "", done: false },
-              { name: "绳索侧平举",   w: "5kg",    r: "15", s: "4", feel: "", done: false },
-              { name: "面拉",         w: "15kg",   r: "12", s: "3", feel: "", done: false },
+              { name: "反握弯举",     w: "10kg",   r: "12",  s: "3", feel: "", done: false },
+              { name: "面拉",         w: "15kg",   r: "12",  s: "3", feel: "", done: false },
+              { name: "绳索侧平举",   w: "5kg",    r: "15",  s: "3", feel: "", done: false },
+              { name: "罗马尼亚硬拉", w: "50kg",   r: "10",  s: "3", feel: "", done: false },
+              { name: "髋外展",       w: "52.5kg", r: "15",  s: "3", feel: "", done: false },
               { name: "平板支撑",     w: "—",      r: "30秒", s: "3", feel: "", done: false },
-              { name: "侧弯哑铃",     w: "8kg",    r: "12", s: "2", feel: "", done: false }
+              { name: "侧弯哑铃",     w: "8kg",    r: "12",  s: "3", feel: "", done: false }
             ]
           },
           {
             theme: "肩臂", kind: "normal",
             exercises: [
-              { name: "面拉",       w: "力竭重量", r: "12", s: "4", feel: "", done: false },
-              { name: "双臂下拉",   w: "70kg",    r: "6",  s: "3", feel: "", done: false },
-              { name: "锤式弯举",   w: "17.5kg",  r: "10", s: "4", feel: "", done: false },
-              { name: "过头臂屈伸", w: "15kg",    r: "10", s: "3", feel: "", done: false },
-              { name: "窄距俯卧撑", w: "自重",    r: "12", s: "3", feel: "", done: false },
-              { name: "绳索内旋",   w: "5kg",     r: "12", s: "3", feel: "", done: false },
-              { name: "反握弯举",   w: "10kg",    r: "12", s: "3", feel: "", done: false }
+              { name: "绳索内旋",   w: "5kg",  r: "12",  s: "3", feel: "", done: false },
+              { name: "面拉",       w: "12kg", r: "12",  s: "3", feel: "", done: false },
+              { name: "锤式弯举",   w: "12kg", r: "10",  s: "3", feel: "", done: false },
+              { name: "双臂下拉",   w: "70kg", r: "6",   s: "3", feel: "", done: false },
+              { name: "过头臂屈伸", w: "15kg", r: "10",  s: "3", feel: "", done: false },
+              { name: "窄距俯卧撑", w: "自重", r: "12",  s: "3", feel: "", done: false },
+              { name: "反握弯举",   w: "10kg", r: "12",  s: "3", feel: "", done: false }
             ]
           }
         ]
