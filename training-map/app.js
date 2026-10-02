@@ -227,8 +227,8 @@ const GROUPS = [
   { id:"ql", name:"腰方肌", region:"核心",
     match:{ nameAny:["Quadratus Lumborum"] },
     evidence:{ ratio:.3, sessions:2, gap:true },
-    why:"腰方肌无专项训练；侧弯哑铃侧向屈曲脊柱直接激活腰方肌。",
-    exercises:[{name:"侧弯哑铃",have:true},{name:"单侧负重步行",have:false}]
+    why:"腰方肌通过侧弯哑铃侧向屈曲脊柱直接激活；侧平板支撑的等长侧向支撑同样强烈刺激腰方肌。",
+    exercises:[{name:"侧弯哑铃",have:true},{name:"侧平板支撑",have:true},{name:"单侧负重步行",have:false}]
   },
   { id:"abs", name:"腹直肌", region:"核心",
     match:{ nameAny:["Rectus Abdominis","Linea Alba","Pyramidalis"] },
@@ -239,8 +239,8 @@ const GROUPS = [
   { id:"obl", name:"腹外斜肌", region:"核心",
     match:{ nameAny:["Abdominal External Oblique","External Abdominal Oblique"] },
     evidence:{ ratio:.4, sessions:3 },
-    why:"有氧核心日有练；俄式转体的旋转动作专项激活腹外斜肌。",
-    exercises:[{name:"俄式转体",have:true},{name:"斜向卷腹",have:false}]
+    why:"有氧核心日有练；俄式转体的旋转动作专项激活腹外斜肌；侧平板支撑对腹斜肌的静态等长刺激显著。",
+    exercises:[{name:"俄式转体",have:true},{name:"侧平板支撑",have:true},{name:"斜向卷腹",have:false}]
   },
   { id:"obl_int", name:"腹内斜肌", region:"核心",
     match:{ nameAny:["Abdominal Internal Oblique","Internal Abdominal Oblique"] },
@@ -251,8 +251,8 @@ const GROUPS = [
   { id:"tva", name:"腹横肌", region:"核心",
     match:{ nameAny:["Transverse Abdominal","Transversus Abdominis"] },
     evidence:{ ratio:.2, sessions:1, gap:true },
-    why:"腹横肌需专项激活；平板支撑需腹横肌持续收缩以维持脊柱中立位。",
-    exercises:[{name:"平板支撑",have:true},{name:"腹式呼吸练习",have:false}]
+    why:"腹横肌需专项激活；平板支撑与侧平板支撑均需腹横肌持续收缩以维持脊柱中立位。",
+    exercises:[{name:"平板支撑",have:true},{name:"侧平板支撑",have:true},{name:"腹式呼吸练习",have:false}]
   },
 
   // === 下肢 ===
@@ -289,8 +289,8 @@ const GROUPS = [
   { id:"gmed", name:"臀中/小肌", region:"下肢",
     match:{ nameAny:["Gluteus Medius","Gluteus Minimus"] },
     evidence:{ ratio:.35, sessions:2, gap:true },
-    why:"髋外展机专项针对臀中肌；每周两次维持腿日均有覆盖。",
-    exercises:[{name:"髋外展",have:true},{name:"侧卧蚌式",have:false},{name:"绳索臀外展",have:false}]
+    why:"髋外展机专项针对臀中肌；侧平板支撑的侧向稳定要求同样激活臀中肌；每周两次维持腿日均有覆盖。",
+    exercises:[{name:"髋外展",have:true},{name:"侧平板支撑",have:true},{name:"侧卧蚌式",have:false},{name:"绳索臀外展",have:false}]
   },
   { id:"semi", name:"半腱/半膜肌", region:"下肢",
     match:{ nameAny:["Semimembranosus","Semitendinosus"] },
