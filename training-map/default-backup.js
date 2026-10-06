@@ -24,8 +24,8 @@ export const DEFAULT_BACKUP = {
     trap_u: 3, trap_m: 3, trap_l: 2,
     lats: 3, rhomb: 3, lev_scap: 2,
     erector: 2, ql: 2, abs: 3, obl: 3, obl_int: 1, tva: 3,
-    hip: 1, quads: 4, sartorius: 1, add: 4,
-    gmax: 3, gmed: 2, semi: 4, bf: 4,
+    hip: 2, quads: 4, sartorius: 1, add: 5,
+    gmax: 3, gmed: 3, semi: 4, bf: 4,
     gastroc_m: 3, gastroc_l: 3, soleus: 1, ta: 2
   },
   logEdits: {
@@ -60,7 +60,14 @@ export const DEFAULT_BACKUP = {
     "2026-10-02#0": { w: "40kg", r: "8", s: "4", feel: "下次尝试一组做10~12个", done: true },
     "2026-10-02#1": { w: "65kg", r: "8", s: "4", feel: "下次还是这个重量和个数，最后几个做的不标准", done: true },
     "2026-10-02#2": { w: "20kg", r: "10", s: "4", feel: "肩膀刚开始练，初期进步很明显", done: true },
-    "2026-10-02#3": { w: "自重", r: "60秒", s: "2", feel: "", done: true }
+    "2026-10-02#3": { w: "自重", r: "60秒", s: "2", feel: "", done: true },
+    "2026-10-05#rest": { w: "—", r: "—", s: "—", feel: "周一没练", done: false },
+    "2026-10-06#0": { w: "自重",   r: "8",  s: "5", feel: "", done: true },
+    "2026-10-06#1": { w: "120kg",  r: "8",  s: "4", feel: "腿部保持训练，加停顿和慢速，不继续冲重量", done: true },
+    "2026-10-06#2": { w: "52.5kg", r: "10", s: "4", feel: "来了新机器，下周试试57kg×8×4", done: true },
+    "2026-10-06#3": { w: "45kg",   r: "10", s: "4", feel: "新最大重量", done: true },
+    "2026-10-06#4": { w: "55kg",   r: "10", s: "4", feel: "引体向上最后很难拉，回到双臂下拉，减少重量，顶峰收缩拉到底", done: true },
+    "2026-10-06#5": { w: "10kg",   r: "8",  s: "2", feel: "主要练小臂，悬垂举腿、引体向上也能顺便练到小臂，后面不用安排", done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05"],
@@ -300,30 +307,18 @@ export const DEFAULT_BACKUP = {
       },
       // ── W41 ─────────────────────────────────────────────────────
       {
-        week: 41, note: "前臂专项 · 小肌肉优先 · 每组3组为主",
+        week: 41, note: "腿拉混合（周二实练）· 锤式弯举已撤 · 周六补课腿/小腿",
         days: [
+          { theme: "周一未练", kind: "rest", exercises: [] },
           {
-            theme: "腿", kind: "normal",
+            theme: "腿 · 拉", kind: "normal",
             exercises: [
-              { name: "坐式蹬腿",     w: "130kg",  r: "10", s: "4", feel: "", done: false },
-              { name: "坐姿腿伸展",   w: "47.5kg", r: "12", s: "3", feel: "", done: false },
-              { name: "坐姿腿弯举",   w: "52.5kg", r: "12", s: "3", feel: "", done: false },
-              { name: "大腿内收",     w: "42.5kg", r: "10", s: "3", feel: "", done: false },
-              { name: "站姿提踵",     w: "45kg",   r: "12", s: "3", feel: "", done: false },
-              { name: "脚尖勾起练习", w: "自重",   r: "20", s: "3", feel: "", done: false },
-              { name: "悬垂举腿",     w: "自重",   r: "8",  s: "3", feel: "", done: false }
-            ]
-          },
-          {
-            theme: "拉", kind: "normal",
-            exercises: [
-              { name: "锤式弯举",    w: "12kg",   r: "8",   s: "3", feel: "", done: false },
-              { name: "悬垂",        w: "自重",   r: "50秒", s: "3", feel: "", done: false },
-              { name: "Y字哑铃上举", w: "3kg",    r: "15",  s: "3", feel: "", done: false },
-              { name: "哑铃耸肩",    w: "10kg",   r: "15",  s: "3", feel: "", done: false },
-              { name: "高位下拉",    w: "40kg",   r: "8",   s: "4", feel: "", done: false },
-              { name: "坐姿划船",    w: "42.5kg", r: "8",   s: "3", feel: "", done: false },
-              { name: "面拉",        w: "20kg",   r: "12",  s: "3", feel: "", done: false }
+              { name: "悬垂举腿（曲腿）", w: "自重",   r: "8",  s: "5", feel: "", done: true },
+              { name: "坐式蹬腿",         w: "120kg",  r: "8",  s: "4", feel: "腿部保持训练，加停顿和慢速，不继续冲重量", done: true },
+              { name: "大腿外展",         w: "52.5kg", r: "10", s: "4", feel: "来了新机器，下周试试57kg×8×4", done: true },
+              { name: "大腿内收",         w: "45kg",   r: "10", s: "4", feel: "新最大重量", done: true },
+              { name: "双臂下拉",         w: "55kg",   r: "10", s: "4", feel: "引体向上最后很难拉，回到双臂下拉，减少重量，顶峰收缩拉到底", done: true },
+              { name: "锤式弯举",         w: "10kg",   r: "8",  s: "2", feel: "主要练小臂，悬垂举腿、引体向上也能顺便练到小臂，后面不用安排", done: true }
             ]
           },
           {
@@ -346,9 +341,9 @@ export const DEFAULT_BACKUP = {
               { name: "绳索侧平举",   w: "5kg",    r: "15",  s: "3", feel: "", done: false },
               { name: "罗马尼亚硬拉", w: "50kg",   r: "10",  s: "3", feel: "", done: false },
               { name: "髋外展",       w: "52.5kg", r: "15",  s: "3", feel: "", done: false },
-              { name: "平板支撑",     w: "—",      r: "60秒", s: "3", feel: "", done: false },
               { name: "侧平板支撑",   w: "自重",   r: "60秒", s: "2", feel: "", done: false },
-              { name: "侧弯哑铃",     w: "8kg",    r: "12",  s: "3", feel: "", done: false }
+              { name: "侧弯哑铃",     w: "8kg",    r: "12",  s: "3", feel: "", done: false },
+              { name: "哑铃耸肩",     w: "10kg",   r: "15",  s: "3", feel: "", done: false }
             ]
           },
           {
@@ -356,12 +351,23 @@ export const DEFAULT_BACKUP = {
             exercises: [
               { name: "绳索内旋",       w: "5kg",  r: "12",  s: "3", feel: "", done: false },
               { name: "面拉",           w: "20kg", r: "12",  s: "3", feel: "", done: false },
-              { name: "锤式弯举",       w: "12kg", r: "10",  s: "3", feel: "", done: false },
-              { name: "双臂下拉",       w: "65kg", r: "8",   s: "4", feel: "", done: false },
+              { name: "Y字哑铃上举",    w: "3kg",  r: "15",  s: "3", feel: "", done: false },
+              { name: "双臂下拉",       w: "55kg", r: "10",  s: "4", feel: "有意降重，专注顶峰收缩拉到底（非退步调整）", done: false },
               { name: "二头弯举（EZ杆）", w: "20kg", r: "10", s: "3", feel: "维持20kg，专注全程活动度", done: false },
               { name: "过头臂屈伸",     w: "15kg", r: "10",  s: "3", feel: "", done: false },
               { name: "窄距俯卧撑",     w: "自重", r: "12",  s: "3", feel: "", done: false },
               { name: "反握弯举",       w: "10kg", r: "12",  s: "3", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "补课（腿 · 小腿）", kind: "normal",
+            note: "补W41周一缺课：腘绳肌、腓肠肌、比目鱼肌、胫骨前肌",
+            exercises: [
+              { name: "坐姿腿伸展",   w: "47.5kg", r: "12", s: "3", feel: "", done: false },
+              { name: "坐姿腿弯举",   w: "52.5kg", r: "12", s: "3", feel: "", done: false },
+              { name: "站姿提踵",     w: "45kg",   r: "12", s: "3", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重",   r: "20", s: "3", feel: "", done: false },
+              { name: "悬垂",         w: "自重",   r: "50秒", s: "3", feel: "", done: false }
             ]
           }
         ]

@@ -125,8 +125,8 @@ const GROUPS = [
   { id:"teres_maj", name:"大圆肌", region:"胸与肩",
     match:{ nameAny:["Teres Major"] },
     evidence:{ ratio:.55, sessions:4 },
-    why:"背阔肌训练间接激活，单臂划船有协同作用。",
-    exercises:[{name:"高位下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true}]
+    why:"背阔肌训练间接激活，单臂划船有协同作用；双臂下拉与高位下拉动作模式相同。",
+    exercises:[{name:"高位下拉",have:true},{name:"双臂下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true}]
   },
   { id:"subscap", name:"肩胛下肌", region:"胸与肩",
     match:{ nameAny:["Subscapularis"] },
@@ -145,8 +145,8 @@ const GROUPS = [
   { id:"brachialis", name:"肱肌", region:"手臂",
     match:{ nameAny:["Brachialis"] },
     evidence:{ ratio:.65, sessions:5 },
-    why:"锤式弯举专门激活肱肌，练量适中。",
-    exercises:[{name:"锤式弯举",have:true},{name:"绳索锤式弯",have:false}]
+    why:"锤式弯举专门激活肱肌，练量适中；弯举系动作（二头弯举、哑铃弯举）亦覆盖。",
+    exercises:[{name:"锤式弯举",have:true},{name:"二头弯举",have:true},{name:"哑铃弯举",have:true},{name:"绳索锤式弯",have:false}]
   },
   { id:"tri_long", name:"肱三头肌长头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Long Head" },
