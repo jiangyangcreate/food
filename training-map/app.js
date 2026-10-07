@@ -1060,10 +1060,7 @@ function addDays(str, n) {
 }
 
 function renderWeekRowHtml(week, weekMonday) {
-  const noteHtml = week.note
-    ? `<br><small style="font-weight:400;font-size:9px;color:var(--accent)">${esc(week.note)}</small>`
-    : "";
-  const weekTd = `<td class="week">第 ${week.week} 周<span class="arrow">▾</span>${noteHtml}</td>`;
+  const weekTd = `<td class="week">第 ${week.week} 周<span class="arrow">▾</span></td>`;
 
   const dayTds = week.days.map(day => {
     if (day.kind === "rest") return `<td class="rest">休</td>`;

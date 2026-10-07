@@ -76,8 +76,8 @@ export const DEFAULT_BACKUP = {
     "2026-10-07#5": { w: "自重",   r: "15", s: "3", feel: "", done: true }
   },
   plan: {
-    weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05"],
-    weekNos: [36, 37, 38, 39, 40, 41],
+    weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12"],
+    weekNos: [36, 37, 38, 39, 40, 41, 42],
     weeks: [
       // ── W36 ─────────────────────────────────────────────────────
       {
@@ -349,7 +349,8 @@ export const DEFAULT_BACKUP = {
               { name: "髋外展",       w: "52.5kg", r: "15",  s: "3", feel: "", done: false },
               { name: "侧平板支撑",   w: "自重",   r: "60秒", s: "2", feel: "", done: false },
               { name: "侧弯哑铃",     w: "8kg",    r: "12",  s: "3", feel: "", done: false },
-              { name: "哑铃耸肩",     w: "10kg",   r: "15",  s: "3", feel: "", done: false }
+              { name: "哑铃耸肩",     w: "10kg",   r: "15",  s: "3", feel: "", done: false },
+              { name: "哑铃仰卧上拉", w: "10kg",   r: "12",  s: "3", feel: "上胸/胸小肌/前锯肌补充；覆盖W41遗漏肌群", done: false }
             ]
           },
           {
@@ -376,6 +377,74 @@ export const DEFAULT_BACKUP = {
               { name: "悬垂",         w: "自重",   r: "50秒", s: "3", feel: "", done: false }
             ]
           }
+        ]
+      },
+      // ── W42 ─────────────────────────────────────────────────────
+      {
+        week: 42, note: "外展升57kg · 卧推升45kg×8×4 · 无上斜动作（上胸改低位绳索夹胸） · 侧平举5kg主动降重 · 蹬腿120kg维持停顿缓速 · 双臂下拉55kg全程顶峰收缩",
+        days: [
+          {
+            theme: "腿（重训）", kind: "normal",
+            exercises: [
+              { name: "大腿外展",   w: "57kg",   r: "8",  s: "4", feel: "新重量", done: false },
+              { name: "大腿内收",   w: "45kg",   r: "12", s: "4", feel: "加次数进阶", done: false },
+              { name: "坐式蹬腿",   w: "120kg",  r: "8",  s: "4", feel: "停顿缓速，维持重量不加", done: false },
+              { name: "坐姿腿伸展", w: "47.5kg", r: "12", s: "3", feel: "", done: false },
+              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "3", feel: "", done: false },
+              { name: "站姿提踵",   w: "45kg",   r: "12", s: "3", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "拉", kind: "normal",
+            note: "小肌肉优先：悬垂前臂/握力、Y字下束斜方、耸肩肩胛提肌",
+            exercises: [
+              { name: "悬垂",        w: "自重", r: "50秒", s: "3", feel: "小肌肉先练", done: false },
+              { name: "悬垂举腿",    w: "自重", r: "8",    s: "5", feel: "", done: false },
+              { name: "反握弯举",    w: "10kg", r: "12",   s: "3", feel: "", done: false },
+              { name: "Y字哑铃上举", w: "3kg",  r: "15",   s: "3", feel: "", done: false },
+              { name: "哑铃耸肩",    w: "10kg", r: "15",   s: "3", feel: "", done: false },
+              { name: "高位下拉",    w: "40kg", r: "8",    s: "3", feel: "", done: false },
+              { name: "双臂下拉",    w: "55kg", r: "10",   s: "4", feel: "全程顶峰收缩拉到底", done: false }
+            ]
+          },
+          {
+            theme: "推", kind: "normal",
+            note: "无上斜动作（肩峰撞击）；低位绳索夹胸为上胸替代，肩部不适立即停止",
+            exercises: [
+              { name: "平板卧推",     w: "45kg",  r: "8",  s: "4", feel: "", done: false },
+              { name: "低位绳索夹胸", w: "8kg",   r: "15", s: "3", feel: "上胸替代动作，肩部不适立即停止", done: false },
+              { name: "哑铃仰卧上拉", w: "10kg",  r: "12", s: "3", feel: "", done: false },
+              { name: "肩推",         w: "25kg",  r: "8",  s: "3", feel: "", done: false },
+              { name: "哑铃侧平举",   w: "5kg",   r: "12", s: "3", feel: "主动降重非退步", done: false },
+              { name: "绳索臂屈伸",   w: "15kg",  r: "12", s: "3", feel: "", done: false },
+              { name: "平板支撑",     w: "自重",  r: "60秒", s: "3", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "腿（维持）/ 肩背", kind: "normal",
+            exercises: [
+              { name: "罗马尼亚硬拉", w: "50kg", r: "10",  s: "3", feel: "", done: false },
+              { name: "面拉",         w: "20kg", r: "12",  s: "3", feel: "", done: false },
+              { name: "绳索侧平举",   w: "5kg",  r: "15",  s: "3", feel: "", done: false },
+              { name: "侧平板支撑",   w: "自重", r: "60秒", s: "2", feel: "", done: false },
+              { name: "俄式转体",     w: "自重", r: "15",  s: "3", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重", r: "20",  s: "3", feel: "", done: false },
+              { name: "侧弯哑铃",     w: "8kg",  r: "12",  s: "3", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "肩臂", kind: "normal",
+            exercises: [
+              { name: "绳索内旋",         w: "5kg",  r: "12", s: "3", feel: "", done: false },
+              { name: "面拉",             w: "20kg", r: "12", s: "3", feel: "", done: false },
+              { name: "二头弯举（EZ杆）", w: "20kg", r: "10", s: "3", feel: "全程活动度", done: false },
+              { name: "过头臂屈伸",       w: "15kg", r: "10", s: "3", feel: "", done: false },
+              { name: "反握弯举",         w: "10kg", r: "12", s: "3", feel: "", done: false },
+              { name: "窄距俯卧撑",       w: "自重", r: "12", s: "3", feel: "", done: false }
+            ]
+          },
+          { theme: "—", kind: "rest", exercises: [] },
+          { theme: "—", kind: "rest", exercises: [] }
         ]
       }
     ]
