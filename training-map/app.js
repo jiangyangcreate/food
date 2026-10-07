@@ -77,8 +77,8 @@ const GROUPS = [
   { id:"pec_u", name:"胸大肌锁骨头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Clavicular" },
     evidence:{ ratio:.72, sessions:5 },
-    why:"上斜哑铃飞鸟+上斜卧推专项覆盖，负荷接近 70% 目标。",
-    exercises:[{name:"上斜哑铃飞鸟",have:true},{name:"上斜机械推胸",have:true},{name:"上斜杠铃卧推",have:false}]
+    why:"低位绳索夹胸（低位→斜上拉）为上胸首选替代；上斜动作因肩峰撞击感已撤，肩部不适立即停止。",
+    exercises:[{name:"低位绳索夹胸",have:true},{name:"上斜哑铃飞鸟",have:false},{name:"上斜机械推胸",have:false},{name:"上斜杠铃卧推",have:false}]
   },
   { id:"pec_s", name:"胸大肌胸肋头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Sternocostal" },

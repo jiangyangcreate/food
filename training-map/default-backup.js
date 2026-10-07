@@ -16,7 +16,7 @@ export const DEFAULT_BACKUP = {
   },
   scores: {
     ant_delt: 2, mid_delt: 2, rear_delt: 4,
-    pec_u: 2, pec_s: 2, pec_l: 3, pec_min: 2,
+    pec_u: 2, pec_s: 3, pec_l: 3, pec_min: 2,
     serr: 2, supra: 2, infra: 2, teres_min: 2,
     teres_maj: 3, subscap: 1, bi: 3, brachialis: 3,
     tri_long: 3, tri_lat: 3, tri_med: 3,
@@ -67,7 +67,13 @@ export const DEFAULT_BACKUP = {
     "2026-10-06#2": { w: "52.5kg", r: "10", s: "4", feel: "来了新机器，下周试试57kg×8×4", done: true },
     "2026-10-06#3": { w: "45kg",   r: "10", s: "4", feel: "新最大重量", done: true },
     "2026-10-06#4": { w: "55kg",   r: "10", s: "4", feel: "引体向上最后很难拉，回到双臂下拉，减少重量，顶峰收缩拉到底", done: true },
-    "2026-10-06#5": { w: "10kg",   r: "8",  s: "2", feel: "主要练小臂，悬垂举腿、引体向上也能顺便练到小臂，后面不用安排", done: true }
+    "2026-10-06#5": { w: "10kg",   r: "8",  s: "2", feel: "主要练小臂，悬垂举腿、引体向上也能顺便练到小臂，后面不用安排", done: true },
+    "2026-10-07#0": { w: "42.5kg", r: "9",  s: "4", feel: "下次卧推试试45kg×8×4", done: true },
+    "2026-10-07#1": { w: "20kg",   r: "8",  s: "4", feel: "有点肩峰撞击的感觉，减少重量到20kg，后续不设置上斜卧推。胸没力了", done: true },
+    "2026-10-07#2": { w: "25kg",   r: "8",  s: "3", feel: "", done: true },
+    "2026-10-07#3": { w: "5kg",    r: "10", s: "3", feel: "", done: true },
+    "2026-10-07#4": { w: "自重",   r: "8",  s: "3", feel: "", done: true },
+    "2026-10-07#5": { w: "自重",   r: "15", s: "3", feel: "", done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05"],
@@ -307,7 +313,7 @@ export const DEFAULT_BACKUP = {
       },
       // ── W41 ─────────────────────────────────────────────────────
       {
-        week: 41, note: "腿拉混合（周二实练）· 锤式弯举已撤 · 周六补课腿/小腿",
+        week: 41, note: "腿拉混合（周二实练）· 锤式弯举已撤 · 周六补课腿/小腿 · 10/07推日实练已记录；上斜动作全撤（肩峰撞击），上胸改用低位绳索夹胸（肩痛停止）；下次卧推45kg×8×4；肩推≥25kg×8×3；侧平举改5kg×12×3（主动降重非退步）；W42外展57kg×8×4",
         days: [
           { theme: "周一未练", kind: "rest", exercises: [] },
           {
@@ -323,14 +329,14 @@ export const DEFAULT_BACKUP = {
           },
           {
             theme: "推", kind: "normal",
+            note: "实际训练 2026-10-07；上斜因肩峰撞击感已撤，后续以低位绳索夹胸代替上胸训练（肩部不适立即停止）",
             exercises: [
-              { name: "哑铃侧平举",   w: "6kg",    r: "15",  s: "3", feel: "", done: false },
-              { name: "平板卧推",     w: "40kg",   r: "10",  s: "4", feel: "", done: false },
-              { name: "上斜机械推胸", w: "30kg",   r: "8",   s: "3", feel: "", done: false },
-              { name: "肩推",         w: "25kg",   r: "6",   s: "3", feel: "", done: false },
-              { name: "绳索臂屈伸",   w: "17.5kg", r: "10",  s: "3", feel: "", done: false },
-              { name: "哑铃仰卧上拉", w: "12.5kg", r: "12",  s: "3", feel: "", done: false },
-              { name: "俄式转体",     w: "自重",   r: "15",  s: "3", feel: "", done: false }
+              { name: "平板卧推",     w: "42.5kg", r: "9",  s: "4", feel: "下次卧推试试45kg×8×4", done: true },
+              { name: "上斜机械推胸", w: "20kg",   r: "8",  s: "4", feel: "有点肩峰撞击的感觉，减少重量到20kg，后续不设置上斜卧推。胸没力了", done: true },
+              { name: "肩推",         w: "25kg",   r: "8",  s: "3", feel: "", done: true },
+              { name: "哑铃侧平举",   w: "5kg",    r: "10", s: "3", feel: "", done: true },
+              { name: "悬垂举腿",     w: "自重",   r: "8",  s: "3", feel: "", done: true },
+              { name: "俄式转体",     w: "自重",   r: "15", s: "3", feel: "", done: true }
             ]
           },
           {
