@@ -84,7 +84,7 @@ const GROUPS = [
     match:{ name:"Pectoralis Major", detail:"Sternocostal" },
     evidence:{ ratio:.82, sessions:6 },
     why:"平板卧推/绳索夹胸主力，胸肋头覆盖最充分，负荷比例高。",
-    exercises:[{name:"平板卧推",have:true},{name:"绳索夹胸",have:true}]
+    exercises:[{name:"平板卧推",have:true},{name:"器械推胸",have:true},{name:"绳索夹胸",have:true}]
   },
   { id:"pec_l", name:"胸大肌腹头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Abdominal" },
@@ -170,7 +170,7 @@ const GROUPS = [
     match:{ nameAny:["Flexor Carpi Radialis","Flexor Carpi Ulnaris","Palmaris Longus","Pronator Teres"] },
     evidence:{ ratio:.45, sessions:4 },
     why:"弯举动作间接激活，无专项前臂训练。",
-    exercises:[{name:"悬垂",have:true},{name:"锤式弯举",have:true},{name:"哑铃弯举",have:true},{name:"腕弯举",have:false}]
+    exercises:[{name:"悬垂",have:true},{name:"引体向上",have:true},{name:"反握弯举",have:true},{name:"锤式弯举",have:true},{name:"哑铃弯举",have:true},{name:"腕弯举",have:false}]
   },
   { id:"fore_ext", name:"前臂伸肌群", region:"手臂",
     match:{ nameAny:["Extensor Carpi Radialis Longus","Extensor Carpi Radialis Brevis","Extensor Carpi Ulnaris"] },
@@ -202,7 +202,7 @@ const GROUPS = [
     match:{ nameAny:["Latissimus Dorsi"] },
     evidence:{ ratio:.78, sessions:6 },
     why:"高位下拉+单臂划船，背阔肌是训练重点，负荷接近目标。",
-    exercises:[{name:"高位下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true},{name:"双臂下拉",have:true},{name:"坐姿划船",have:true},{name:"引体向上",have:false}]
+    exercises:[{name:"高位下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true},{name:"双臂下拉",have:true},{name:"坐姿划船",have:true},{name:"引体向上",have:true}]
   },
   { id:"rhomb", name:"菱形肌", region:"背",
     match:{ nameAny:["Rhomboid Major","Rhomboid Minor"] },
@@ -222,7 +222,7 @@ const GROUPS = [
     match:{ nameAny:["Iliocostalis","Longissimus","Spinalis","Multifidus","Erector Spinae"] },
     evidence:{ ratio:.7, sessions:5 },
     why:"深蹲/划船全程激活；罗马尼亚硬拉加入后竖脊肌在离心阶段得到专项刺激。",
-    exercises:[{name:"罗马尼亚硬拉",have:true},{name:"深蹲",have:true},{name:"罗马椅背伸",have:false}]
+    exercises:[{name:"罗马尼亚硬拉",have:true},{name:"深蹲",have:true},{name:"山羊挺身",have:true},{name:"罗马椅背伸",have:false}]
   },
   { id:"ql", name:"腰方肌", region:"核心",
     match:{ nameAny:["Quadratus Lumborum"] },
@@ -1100,8 +1100,8 @@ function setupTableInteractivity() {
   rows.forEach((row, ri) => {
     const mon = activePlan.weekMondays[ri];
     if (!mon) return;
-    const fri = addDays(mon, 4);
-    if (today >= mon && today <= fri) curRowIdx = ri;
+    const sat = addDays(mon, 5);
+    if (today >= mon && today <= sat) curRowIdx = ri;
   });
   if (curRowIdx === -1) {
     curRowIdx = activePlan.weeks.findIndex(w => w.note === "进行中");
