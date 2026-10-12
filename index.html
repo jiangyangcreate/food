@@ -296,6 +296,39 @@
             padding-left: 4px;
         }
 
+        .exercise-kcal-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .exercise-kcal-row input[type="number"] {
+            flex: 1;
+            min-width: 0;
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border);
+            background: var(--card);
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 600;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .exercise-kcal-row input[type="number"]:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.10);
+        }
+
+        .exercise-kcal-row .unit {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
         .adjust-slider-row {
             display: flex;
             align-items: center;
@@ -1061,9 +1094,9 @@
             <div class="selector-group">
                 <label for="palSelect">💼 日常活动量</label>
                 <select id="palSelect"> 
-                    <option value="bedrest">🛏️ 卧床 PAL 1.2</option>
+                    <option value="home">🏠 居家 PAL 1.25</option>
                     <option value="office" selected>🪑 坐班 PAL 1.3</option>
-                    <option value="outdoor">🚶 外出 PAL 1.4</option>
+                    <option value="outdoor">🚶 外出 PAL 1.35</option>
                 </select>
                 <div class="hint">高强度运动（如跑步、跳绳）会产生较多步数，需避免重复计算可摘下运动手表</div>
             </div>
@@ -1074,8 +1107,13 @@
                     <option value="run30">🏃 慢跑 30 分钟 +250 kcal</option>
                     <option value="strength60">🏋️ 力量训练 60 分钟 +300 kcal</option>
                     <option value="strength90">🏋️ 力量训练 90 分钟 +450 kcal</option>
+                    <option value="custom">✏️ 手动输入</option>
                 </select>
-                <div class="hint">在 TDEE 基础上额外叠加的热量消耗</div>
+                <div class="exercise-kcal-row">
+                    <input type="number" id="exerciseKcalInput" min="0" max="3000" step="1" value="0" aria-label="训练额外热量" />
+                    <span class="unit">kcal</span>
+                </div>
+                <div class="hint">快捷选项会填入下方数值，也可直接输入自定义热量；在 TDEE 基础上额外叠加</div>
             </div>
         </div>
 
@@ -1254,6 +1292,9 @@
             const adjustValueLabel = document.getElementById('adjustValueLabel');
             const palSelect = document.getElementById('palSelect');
             const exerciseSelect = document.getElementById('exerciseSelect');
+            const exerciseKcalInput = document.getElementById('exerciseKcalInput');
+
+            const DIET_SETTINGS_KEY = 'food-diet-settings';
 
             const calValue = document.getElementById('calValue');
             const calKjValue = document.getElementById('calKjValue');
@@ -1373,12 +1414,19 @@
             }
 
             // ---------- 计算函数 ----------
-            const PAL_TIERS = { bedrest: 1.2, office: 1.3, outdoor: 1.4 };
+            const PAL_TIERS = { home: 1.25, office: 1.3, outdoor: 1.35 };
             const LEGACY_PAL_KEY = {
-                sedentary: 'bedrest',
+                bedrest: 'home',
+                sedentary: 'home',
                 light: 'office',
                 moderate: 'outdoor',
                 active: 'outdoor',
+            };
+            const EXERCISE_PRESETS = {
+                rest: 0,
+                run30: 250,
+                strength60: 300,
+                strength90: 450,
             };
 
             function normalizePalKey(palKey) {
@@ -1399,12 +1447,29 @@
                 return PAL_TIERS[normalizePalKey(palKey)];
             }
 
-            function getExerciseCal(exerciseKey) {
-                switch (exerciseKey) {
-                    case 'run30': return 250;
-                    case 'strength60': return 300;
-                    case 'strength90': return 450;
-                    case 'rest': default: return 0;
+            function parseExerciseKcal(raw) {
+                const n = parseInt(raw, 10);
+                if (isNaN(n) || n < 0) return 0;
+                const max = parseInt(exerciseKcalInput.max, 10);
+                if (!isNaN(max) && n > max) return max;
+                return n;
+            }
+
+            function getExerciseKcal() {
+                return parseExerciseKcal(exerciseKcalInput.value);
+            }
+
+            function syncExerciseSelectFromKcal() {
+                const kcal = getExerciseKcal();
+                const match = Object.entries(EXERCISE_PRESETS).find(([, v]) => v === kcal);
+                exerciseSelect.value = match ? match[0] : 'custom';
+            }
+
+            function applyExercisePreset(key) {
+                if (key === 'custom') return;
+                const preset = EXERCISE_PRESETS[key];
+                if (preset !== undefined) {
+                    exerciseKcalInput.value = String(preset);
                 }
             }
 
@@ -1416,11 +1481,11 @@
                 return goal === 'bulk' ? 2.2 : 2.6;
             }
 
-            function compute(weight, bodyfat, adjustValue, palKey, exerciseKey) {
+            function compute(weight, bodyfat, adjustValue, palKey, exerciseKcal) {
                 const ffm = weight * (1 - bodyfat / 100);
                 const bmr = 370 + 21.6 * ffm; // Katch-McArdle
                 const pal = getPAL(palKey);
-                const exercise = getExerciseCal(exerciseKey);
+                const exercise = parseExerciseKcal(exerciseKcal);
                 const tdee = bmr * pal + exercise;
 
                 const goal = adjustValue > 0 ? 'bulk' : 'cut';
@@ -1475,10 +1540,10 @@
                 const weight = parseFloat(weightInput.value) || 78;
                 const bodyfat = parseFloat(fatInput.value) || 15.8;
                 const palKey = palSelect.value;
-                const exerciseKey = exerciseSelect.value;
+                const exerciseKcal = getExerciseKcal();
                 const adjustValue = parseInt(adjustSlider.value, 10) || 0;
 
-                const result = compute(weight, bodyfat, adjustValue, palKey, exerciseKey);
+                const result = compute(weight, bodyfat, adjustValue, palKey, exerciseKcal);
 
                 ffmDisplay.textContent = result.ffm.toFixed(1);
                 calValue.textContent = result.totalCal;
@@ -1488,11 +1553,19 @@
                 fatValue.textContent = result.fat.toFixed(1);
 
                 const goalLabel = adjustValue < 0 ? '🔥 减脂期' : (adjustValue > 0 ? '💪 增肌期' : '⚖️ 维持期');
-                const palMap = { bedrest: '卧床', office: '坐班', outdoor: '外出' };
+                const palMap = { home: '居家', office: '坐班', outdoor: '外出' };
                 const palLabel = palMap[normalizePalKey(palKey)] || '坐班';
-                const exerciseMap = { rest: '休息', run30: '慢跑30分', strength60: '力量60分', strength90: '力量90分' };
+                const exerciseKey = exerciseSelect.value;
+                const exerciseMap = {
+                    rest: '休息',
+                    run30: '慢跑30分',
+                    strength60: '力量60分',
+                    strength90: '力量90分',
+                    custom: '手动训练',
+                };
+                const exLabel = exerciseMap[exerciseKey] || '训练';
                 const exText = result.exercise > 0 ? ` +${result.exercise}kcal` : '';
-                calSub.textContent = `${goalLabel} · ${palLabel} PAL ${result.pal.toFixed(2)} · ${exerciseMap[exerciseKey]}${exText}`;
+                calSub.textContent = `${goalLabel} · ${palLabel} PAL ${result.pal.toFixed(2)} · ${exLabel}${exText}`;
                 proteinSub.textContent = `${result.proteinCoeff}g/kg FFM · 基于去脂体重`;
                 carboSub.textContent = `剩余热量 · ${Math.round(result.cRatio)}%`;
                 fatSub.textContent = `${Math.round(result.fatRatio * 100)}% 总热量`;
@@ -1504,6 +1577,8 @@
 
                 bmrDisplay.textContent = result.bmr;
                 tdeeDisplay.textContent = result.tdee;
+
+                saveDietSettings();
 
                 let statusText, statusClass;
                 if (result.adjust < 0) {
@@ -1944,6 +2019,51 @@
                 if (subtotal) updateSubtotalDisplay(subtotal, item);
             }
 
+            function loadDietSettings() {
+                try {
+                    const raw = localStorage.getItem(DIET_SETTINGS_KEY);
+                    if (!raw) return;
+                    const s = JSON.parse(raw);
+                    if (s.weight != null) weightInput.value = s.weight;
+                    if (s.bodyfat != null) fatInput.value = s.bodyfat;
+                    if (s.adjust != null) adjustSlider.value = s.adjust;
+                    if (s.pal != null) {
+                        const palNorm = normalizePalKey(s.pal);
+                        if (palSelect.querySelector(`option[value="${palNorm}"]`)) {
+                            palSelect.value = palNorm;
+                        }
+                    }
+                    if (s.exerciseKcal != null) {
+                        exerciseKcalInput.value = String(parseExerciseKcal(s.exerciseKcal));
+                    } else if (s.exerciseKey != null) {
+                        applyExercisePreset(normalizeExerciseKey(s.exerciseKey));
+                    }
+                    if (s.exerciseKey === 'custom') {
+                        exerciseSelect.value = 'custom';
+                    } else {
+                        syncExerciseSelectFromKcal();
+                    }
+                } catch (_) { /* ignore corrupt settings */ }
+            }
+
+            function saveDietSettings() {
+                try {
+                    localStorage.setItem(DIET_SETTINGS_KEY, JSON.stringify({
+                        weight: weightInput.value,
+                        bodyfat: fatInput.value,
+                        adjust: adjustSlider.value,
+                        pal: palSelect.value,
+                        exerciseKey: exerciseSelect.value,
+                        exerciseKcal: getExerciseKcal(),
+                    }));
+                } catch (_) { /* quota / private mode */ }
+            }
+
+            function normalizeExerciseKey(key) {
+                if (key in EXERCISE_PRESETS || key === 'custom') return key;
+                return 'rest';
+            }
+
             // ---------- 绑定事件 ----------
             function bindNumberInput(input, updateFn) {
                 input.addEventListener('input', updateFn);
@@ -1969,7 +2089,19 @@
                 updateMain();
             });
             palSelect.addEventListener('change', updateMain);
-            exerciseSelect.addEventListener('change', updateMain);
+            exerciseSelect.addEventListener('change', function() {
+                applyExercisePreset(exerciseSelect.value);
+                updateMain();
+            });
+            exerciseKcalInput.addEventListener('input', function() {
+                syncExerciseSelectFromKcal();
+                updateMain();
+            });
+            exerciseKcalInput.addEventListener('change', function() {
+                this.value = String(getExerciseKcal());
+                syncExerciseSelectFromKcal();
+                updateMain();
+            });
 
             clearServingsBtn.addEventListener('click', clearAllServings);
             addFoodBtn.addEventListener('click', addFood);
@@ -1977,6 +2109,7 @@
             document.getElementById('importBtn').addEventListener('click', importFoods);
 
             // ---------- 初始化 ----------
+            loadDietSettings();
             (function migratePalSelect() {
                 const normalized = normalizePalKey(palSelect.value);
                 if (palSelect.querySelector(`option[value="${normalized}"]`)) {
