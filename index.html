@@ -1061,10 +1061,9 @@
             <div class="selector-group">
                 <label for="palSelect">💼 日常活动量</label>
                 <select id="palSelect"> 
-                    <option value="sedentary" selected>🛏️ 整日卧床/几乎不动（小于5000步） PAL 1.30</option>
-                    <option value="light">🪑 整日久坐，几乎无运动（8000步） PAL 1.40</option>
-                    <option value="moderate">🚶 整日可自由活动，但无明显运动（17000步） PAL 1.65</option>
-                    <option value="active">🏃 整日长时间站立、频繁移动（25000步） PAL 1.85</option>
+                    <option value="bedrest">🛏️ 卧床 PAL 1.2</option>
+                    <option value="office" selected>🪑 坐班 PAL 1.3</option>
+                    <option value="outdoor">🚶 外出 PAL 1.4</option>
                 </select>
                 <div class="hint">高强度运动（如跑步、跳绳）会产生较多步数，需避免重复计算可摘下运动手表</div>
             </div>
@@ -1374,13 +1373,30 @@
             }
 
             // ---------- 计算函数 ----------
-            function getPAL(palKey) {
-                switch (palKey) {
-                    case 'sedentary': default: return 1.2;
-                    case 'light': return 1.40;
-                    case 'moderate': return 1.65;
-                    case 'active': return 1.85;
+            const PAL_TIERS = { bedrest: 1.2, office: 1.3, outdoor: 1.4 };
+            const LEGACY_PAL_KEY = {
+                sedentary: 'bedrest',
+                light: 'office',
+                moderate: 'outdoor',
+                active: 'outdoor',
+            };
+
+            function normalizePalKey(palKey) {
+                if (palKey in PAL_TIERS) return palKey;
+                if (palKey in LEGACY_PAL_KEY) return LEGACY_PAL_KEY[palKey];
+                const n = parseFloat(palKey);
+                if (!isNaN(n)) {
+                    const closest = Object.entries(PAL_TIERS).reduce((best, [key, val]) => {
+                        const d = Math.abs(val - n);
+                        return d < best.d ? { key, d } : best;
+                    }, { key: 'office', d: Infinity });
+                    return closest.key;
                 }
+                return 'office';
+            }
+
+            function getPAL(palKey) {
+                return PAL_TIERS[normalizePalKey(palKey)];
             }
 
             function getExerciseCal(exerciseKey) {
@@ -1472,10 +1488,11 @@
                 fatValue.textContent = result.fat.toFixed(1);
 
                 const goalLabel = adjustValue < 0 ? '🔥 减脂期' : (adjustValue > 0 ? '💪 增肌期' : '⚖️ 维持期');
-                const palMap = { sedentary: '卧床/几乎不动', light: '久坐，几乎无运动', moderate: '可自由活动，但无明显运动', active: '长时间站立、频繁移动' };
+                const palMap = { bedrest: '卧床', office: '坐班', outdoor: '外出' };
+                const palLabel = palMap[normalizePalKey(palKey)] || '坐班';
                 const exerciseMap = { rest: '休息', run30: '慢跑30分', strength60: '力量60分', strength90: '力量90分' };
                 const exText = result.exercise > 0 ? ` +${result.exercise}kcal` : '';
-                calSub.textContent = `${goalLabel} · ${palMap[palKey]} PAL ${result.pal.toFixed(2)} · ${exerciseMap[exerciseKey]}${exText}`;
+                calSub.textContent = `${goalLabel} · ${palLabel} PAL ${result.pal.toFixed(2)} · ${exerciseMap[exerciseKey]}${exText}`;
                 proteinSub.textContent = `${result.proteinCoeff}g/kg FFM · 基于去脂体重`;
                 carboSub.textContent = `剩余热量 · ${Math.round(result.cRatio)}%`;
                 fatSub.textContent = `${Math.round(result.fatRatio * 100)}% 总热量`;
@@ -1960,6 +1977,12 @@
             document.getElementById('importBtn').addEventListener('click', importFoods);
 
             // ---------- 初始化 ----------
+            (function migratePalSelect() {
+                const normalized = normalizePalKey(palSelect.value);
+                if (palSelect.querySelector(`option[value="${normalized}"]`)) {
+                    palSelect.value = normalized;
+                }
+            })();
             initFoods();
             updateAdjustLabel();
             updateMain();
