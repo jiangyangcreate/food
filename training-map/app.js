@@ -60,37 +60,37 @@ const GROUPS = [
     match:{ name:"Deltoid", detail:"Clavicular" },
     evidence:{ ratio:.68, sessions:5 },
     why:"每周推系训练激活充分，肩推/飞鸟主要驱动肌；比例接近 70% 但未达标。",
-    exercises:[{name:"哑铃肩推",have:true},{name:"颈前推",have:true},{name:"肩推",have:true},{name:"阿诺德推",have:false}]
+    exercises:[{name:"哑铃肩推",have:true},{name:"颈前推",have:true},{name:"肩推",have:true},{name:"史密斯推胸",have:true},{name:"固定坐姿推胸",have:true},{name:"哑铃上斜推胸",have:true},{name:"哑铃坐姿推肩",have:true},{name:"固定坐姿器械推肩",have:true},{name:"阿诺德推",have:false}]
   },
   { id:"mid_delt", name:"肩中束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Acromial" },
     evidence:{ ratio:.48, sessions:5 },
     why:"侧平举重量尚轻，中束孤立感不足；已练但负荷比例偏低。",
-    exercises:[{name:"哑铃侧平举",have:true},{name:"绳索侧平举",have:true},{name:"肩推",have:true},{name:"哑铃直臂上举",have:false}]
+    exercises:[{name:"哑铃侧平举",have:true},{name:"绳索侧平举",have:true},{name:"肩推",have:true},{name:"哑铃飞鸟（侧平举）",have:true},{name:"哑铃坐姿推肩",have:true},{name:"固定坐姿器械推肩",have:true},{name:"哑铃直臂上举",have:false}]
   },
   { id:"rear_delt", name:"肩后束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Scapular" },
     evidence:{ ratio:.38, sessions:3 },
     why:"面拉有练到但组数不多；拉日后束练量尚可，仍有缺口。",
-    exercises:[{name:"面拉",have:true},{name:"俯身飞鸟",have:false},{name:"绳索后束拉",have:false}]
+    exercises:[{name:"面拉",have:true},{name:"绳索面拉",have:true},{name:"蝴蝶机反向飞鸟",have:true},{name:"俯身飞鸟",have:false},{name:"绳索后束拉",have:false}]
   },
   { id:"pec_u", name:"胸大肌锁骨头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Clavicular" },
     evidence:{ ratio:.72, sessions:5 },
-    why:"哑铃上斜推胸为上胸主力，低位绳索夹胸（低位→斜上拉）辅助。",
-    exercises:[{name:"哑铃上斜推胸",have:true},{name:"低位绳索夹胸",have:true},{name:"上斜哑铃飞鸟",have:false},{name:"上斜机械推胸",have:false},{name:"上斜杠铃卧推",have:false}]
+    why:"哑铃上斜推胸与低位绳索夹胸覆盖上胸；上斜推胸注意肩峰，肩不适即停。",
+    exercises:[{name:"低位绳索夹胸",have:true},{name:"哑铃上斜推胸",have:true},{name:"史密斯推胸",have:true},{name:"上斜哑铃飞鸟",have:false},{name:"上斜机械推胸",have:false},{name:"上斜杠铃卧推",have:false}]
   },
   { id:"pec_s", name:"胸大肌胸肋头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Sternocostal" },
     evidence:{ ratio:.82, sessions:6 },
     why:"平板卧推/绳索夹胸主力，胸肋头覆盖最充分，负荷比例高。",
-    exercises:[{name:"平板卧推",have:true},{name:"器械推胸",have:true},{name:"绳索夹胸",have:true}]
+    exercises:[{name:"平板卧推",have:true},{name:"器械推胸",have:true},{name:"绳索夹胸",have:true},{name:"史密斯推胸",have:true},{name:"固定坐姿推胸",have:true},{name:"站姿龙门架夹胸",have:true}]
   },
   { id:"pec_l", name:"胸大肌腹头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Abdominal" },
     evidence:{ ratio:.55, sessions:4, gap:true },
     why:"腹头需低位飞鸟专项，现有动作欠缺；哑铃仰卧上拉提供离心拉伸刺激。",
-    exercises:[{name:"哑铃仰卧上拉",have:true},{name:"低位绳索飞鸟",have:false},{name:"哑铃下斜卧推",have:false}]
+    exercises:[{name:"哑铃仰卧上拉",have:true},{name:"站姿龙门架夹胸",have:true},{name:"低位绳索飞鸟",have:false},{name:"哑铃下斜卧推",have:false}]
   },
   { id:"pec_min", name:"胸小肌", region:"胸与肩",
     match:{ nameAny:["Pectoralis Minor"] },
@@ -108,25 +108,25 @@ const GROUPS = [
     match:{ nameAny:["Supraspinatus"] },
     evidence:{ ratio:.25, sessions:1, gap:true },
     why:"旋转袖深层肌，冈上肌负责肩外展起始 15-30°，侧平举即可激活。",
-    exercises:[{name:"哑铃侧平举",have:true},{name:"空罐式哑铃上举",have:false},{name:"弹力带外旋",have:false}]
+    exercises:[{name:"哑铃侧平举",have:true},{name:"哑铃飞鸟（侧平举）",have:true},{name:"空罐式哑铃上举",have:false},{name:"弹力带外旋",have:false}]
   },
   { id:"infra", name:"冈下肌", region:"胸与肩",
     match:{ nameAny:["Infraspinatus"] },
     evidence:{ ratio:.25, sessions:1, gap:true },
     why:"旋转袖外旋肌；面拉的外旋分量可直接激活冈下肌。",
-    exercises:[{name:"面拉",have:true},{name:"弹力带外旋",have:false},{name:"哑铃俯卧外旋",have:false}]
+    exercises:[{name:"面拉",have:true},{name:"绳索面拉",have:true},{name:"蝴蝶机反向飞鸟",have:true},{name:"弹力带外旋",have:false},{name:"哑铃俯卧外旋",have:false}]
   },
   { id:"teres_min", name:"小圆肌", region:"胸与肩",
     match:{ nameAny:["Teres Minor"] },
     evidence:{ ratio:.22, sessions:1, gap:true },
     why:"旋转袖小圆肌；面拉的外旋分量同时激活小圆肌。",
-    exercises:[{name:"面拉",have:true},{name:"绳索外旋",have:false},{name:"弹力带外旋",have:false}]
+    exercises:[{name:"面拉",have:true},{name:"绳索面拉",have:true},{name:"蝴蝶机反向飞鸟",have:true},{name:"绳索外旋",have:false},{name:"弹力带外旋",have:false}]
   },
   { id:"teres_maj", name:"大圆肌", region:"胸与肩",
     match:{ nameAny:["Teres Major"] },
     evidence:{ ratio:.55, sessions:4 },
     why:"背阔肌训练间接激活，单臂划船有协同作用；双臂下拉与高位下拉动作模式相同。",
-    exercises:[{name:"高位下拉",have:true},{name:"双臂下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true}]
+    exercises:[{name:"高位下拉",have:true},{name:"对握宽手下拉",have:true},{name:"坐姿窄距下拉",have:true},{name:"双臂下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true}]
   },
   { id:"subscap", name:"肩胛下肌", region:"胸与肩",
     match:{ nameAny:["Subscapularis"] },
@@ -140,37 +140,37 @@ const GROUPS = [
     match:{ nameAny:["Biceps Brachii","Short Head Of Biceps Brachii","Long Head Of Biceps Brachii","Biceps"] },
     evidence:{ ratio:.75, sessions:6 },
     why:"哑铃弯举/锤式弯举每周练习，负荷比例接近 75%。",
-    exercises:[{name:"哑铃弯举",have:true},{name:"锤式弯举",have:true},{name:"二头弯举",have:true},{name:"杠铃弯举",have:false}]
+    exercises:[{name:"哑铃弯举",have:true},{name:"锤式弯举",have:true},{name:"二头弯举",have:true},{name:"直杆绳索弯举",have:true},{name:"杠铃窄距弯举",have:true},{name:"杠铃宽距弯举",have:true},{name:"哑铃坐姿弯举",have:true},{name:"杠铃弯举",have:false}]
   },
   { id:"brachialis", name:"肱肌", region:"手臂",
     match:{ nameAny:["Brachialis"] },
     evidence:{ ratio:.65, sessions:5 },
     why:"锤式弯举专门激活肱肌，练量适中；弯举系动作（二头弯举、哑铃弯举）亦覆盖。",
-    exercises:[{name:"锤式弯举",have:true},{name:"二头弯举",have:true},{name:"哑铃弯举",have:true},{name:"绳索锤式弯",have:false}]
+    exercises:[{name:"锤式弯举",have:true},{name:"二头弯举",have:true},{name:"哑铃弯举",have:true},{name:"直杆绳索弯举",have:true},{name:"杠铃窄距弯举",have:true},{name:"哑铃坐姿弯举",have:true},{name:"绳索锤式弯",have:false}]
   },
   { id:"tri_long", name:"肱三头肌长头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Long Head" },
     evidence:{ ratio:.6, sessions:5 },
     why:"绳索下压/窄距卧推覆盖，长头需过头动作补充。",
-    exercises:[{name:"绳索下压",have:true},{name:"过头臂屈伸",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃过头臂屈伸",have:false}]
+    exercises:[{name:"绳索下压",have:true},{name:"过头臂屈伸",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"哑铃过头臂屈伸",have:false}]
   },
   { id:"tri_lat", name:"肱三头肌外侧头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Lateral Head" },
     evidence:{ ratio:.62, sessions:5 },
     why:"绳索下压外侧头激活好，练量适中。",
-    exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"俯身臂屈伸",have:false}]
+    exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"俯身臂屈伸",have:false}]
   },
   { id:"tri_med", name:"肱三头肌内侧头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Medial Head" },
     evidence:{ ratio:.55, sessions:4 },
     why:"内侧头在全范围动作中激活，练量中等。",
-    exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"双杠臂屈伸",have:false}]
+    exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"双杠臂屈伸",have:false}]
   },
   { id:"fore_flex", name:"前臂屈肌群", region:"手臂",
     match:{ nameAny:["Flexor Carpi Radialis","Flexor Carpi Ulnaris","Palmaris Longus","Pronator Teres"] },
     evidence:{ ratio:.45, sessions:4 },
     why:"弯举动作间接激活，无专项前臂训练。",
-    exercises:[{name:"悬垂",have:true},{name:"引体向上",have:true},{name:"反握弯举",have:true},{name:"锤式弯举",have:true},{name:"哑铃弯举",have:true},{name:"腕弯举",have:false}]
+    exercises:[{name:"悬垂",have:true},{name:"引体向上",have:true},{name:"反握弯举",have:true},{name:"锤式弯举",have:true},{name:"哑铃弯举",have:true},{name:"直杆绳索弯举",have:true},{name:"杠铃窄距弯举",have:true},{name:"杠铃宽距弯举",have:true},{name:"哑铃坐姿弯举",have:true},{name:"腕弯举",have:false}]
   },
   { id:"fore_ext", name:"前臂伸肌群", region:"手臂",
     match:{ nameAny:["Extensor Carpi Radialis Longus","Extensor Carpi Radialis Brevis","Extensor Carpi Ulnaris"] },
@@ -184,13 +184,13 @@ const GROUPS = [
     match:{ name:"Trapezius", detail:"Descending" },
     evidence:{ ratio:.6, sessions:5 },
     why:"面拉/耸肩有练，上束整体适中。",
-    exercises:[{name:"面拉",have:true},{name:"哑铃耸肩",have:true}]
+    exercises:[{name:"面拉",have:true},{name:"绳索面拉",have:true},{name:"哑铃耸肩",have:true}]
   },
   { id:"trap_m", name:"斜方肌中束", region:"背",
     match:{ name:"Trapezius", detail:"Transverse" },
     evidence:{ ratio:.65, sessions:5 },
     why:"划船动作中束激活充分，水平拉力足。",
-    exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"T杠划船",have:true},{name:"面拉",have:true}]
+    exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"固定器械划船",have:true},{name:"T杠划船",have:true},{name:"面拉",have:true},{name:"绳索面拉",have:true}]
   },
   { id:"trap_l", name:"斜方肌下束", region:"背",
     match:{ name:"Trapezius", detail:"Ascending" },
@@ -202,13 +202,13 @@ const GROUPS = [
     match:{ nameAny:["Latissimus Dorsi"] },
     evidence:{ ratio:.78, sessions:6 },
     why:"高位下拉+单臂划船，背阔肌是训练重点，负荷接近目标。",
-    exercises:[{name:"高位下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true},{name:"双臂下拉",have:true},{name:"坐姿划船",have:true},{name:"引体向上",have:true}]
+    exercises:[{name:"高位下拉",have:true},{name:"对握宽手下拉",have:true},{name:"坐姿窄距下拉",have:true},{name:"单臂哑铃划船",have:true},{name:"悬垂",have:true},{name:"双臂下拉",have:true},{name:"坐姿划船",have:true},{name:"固定器械划船",have:true},{name:"引体向上",have:true}]
   },
   { id:"rhomb", name:"菱形肌", region:"背",
     match:{ nameAny:["Rhomboid Major","Rhomboid Minor"] },
     evidence:{ ratio:.58, sessions:4 },
     why:"划船动作肩胛内收激活菱形肌，练量适中。",
-    exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"面拉",have:true}]
+    exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"固定器械划船",have:true},{name:"面拉",have:true},{name:"绳索面拉",have:true}]
   },
   { id:"lev_scap", name:"肩胛提肌", region:"背",
     match:{ nameAny:["Levator Scapulae"] },
@@ -222,7 +222,7 @@ const GROUPS = [
     match:{ nameAny:["Iliocostalis","Longissimus","Spinalis","Multifidus","Erector Spinae"] },
     evidence:{ ratio:.7, sessions:5 },
     why:"深蹲/划船全程激活；罗马尼亚硬拉加入后竖脊肌在离心阶段得到专项刺激。",
-    exercises:[{name:"罗马尼亚硬拉",have:true},{name:"深蹲",have:true},{name:"山羊挺身",have:true},{name:"罗马椅背伸",have:false}]
+    exercises:[{name:"罗马尼亚硬拉",have:true},{name:"深蹲",have:true},{name:"史密斯深蹲",have:true},{name:"哑铃深蹲",have:true},{name:"山羊挺身",have:true},{name:"罗马椅背伸",have:false}]
   },
   { id:"ql", name:"腰方肌", region:"核心",
     match:{ nameAny:["Quadratus Lumborum"] },
@@ -266,31 +266,31 @@ const GROUPS = [
     match:{ nameAny:["Quadriceps Femoris","Rectus Femoris","Vastus Lateralis","Vastus Medialis","Vastus Intermedius"] },
     evidence:{ ratio:.82, sessions:6 },
     why:"坐式蹬腿130kg×10（1.6×体重）＋坐姿腿伸展专项，股四头肌覆盖充分。",
-    exercises:[{name:"坐式蹬腿",have:true},{name:"坐姿腿伸展",have:true},{name:"深蹲",have:true}]
+    exercises:[{name:"坐式蹬腿",have:true},{name:"倒蹬机",have:true},{name:"坐姿腿伸展",have:true},{name:"深蹲",have:true},{name:"史密斯深蹲",have:true},{name:"哑铃深蹲",have:true},{name:"哑铃弓步走",have:true}]
   },
   { id:"sartorius", name:"缝匠肌", region:"下肢",
     match:{ nameAny:["Sartorius"] },
     evidence:{ ratio:.3, sessions:2 },
     why:"复合动作间接练到；悬垂举腿的髋屈动作激活缝匠肌。",
-    exercises:[{name:"悬垂举腿",have:true},{name:"深蹲",have:false}]
+    exercises:[{name:"悬垂举腿",have:true},{name:"深蹲",have:false},{name:"哑铃弓步走",have:true}]
   },
   { id:"add", name:"内收肌群", region:"下肢",
     match:{ nameAny:["Adductor Magnus","Adductor Longus","Adductor Brevis","Gracilis","Pectineus"] },
     evidence:{ ratio:.70, sessions:6 },
     why:"大腿内收机专项42.5kg×8×4近极限，加上宽站腿举，内收肌群训练充分。",
-    exercises:[{name:"大腿内收",have:true},{name:"腿举宽站",have:true},{name:"深蹲",have:true}]
+    exercises:[{name:"大腿内收",have:true},{name:"腿举宽站",have:true},{name:"深蹲",have:true},{name:"史密斯深蹲",have:true},{name:"哑铃深蹲",have:true},{name:"哑铃弓步走",have:true}]
   },
   { id:"gmax", name:"臀大肌", region:"下肢",
     match:{ nameAny:["Gluteus Maximus"] },
     evidence:{ ratio:.75, sessions:5 },
     why:"坐式蹬腿130kg×10（1.6×体重）主驱动臀大肌，罗马尼亚硬拉加入后练量提升。",
-    exercises:[{name:"坐式蹬腿",have:true},{name:"罗马尼亚硬拉",have:true},{name:"臀推",have:true}]
+    exercises:[{name:"坐式蹬腿",have:true},{name:"倒蹬机",have:true},{name:"罗马尼亚硬拉",have:true},{name:"臀推",have:true},{name:"史密斯深蹲",have:true},{name:"哑铃深蹲",have:true},{name:"哑铃弓步走",have:true}]
   },
   { id:"gmed", name:"臀中/小肌", region:"下肢",
     match:{ nameAny:["Gluteus Medius","Gluteus Minimus"] },
     evidence:{ ratio:.35, sessions:2, gap:true },
     why:"髋外展机专项针对臀中肌；侧平板支撑的侧向稳定要求同样激活臀中肌；每周两次维持腿日均有覆盖。",
-    exercises:[{name:"髋外展",have:true},{name:"侧平板支撑",have:true},{name:"侧卧蚌式",have:false},{name:"绳索臀外展",have:false}]
+    exercises:[{name:"髋外展",have:true},{name:"侧平板支撑",have:true},{name:"哑铃弓步走",have:true},{name:"侧卧蚌式",have:false},{name:"绳索臀外展",have:false}]
   },
   { id:"semi", name:"半腱/半膜肌", region:"下肢",
     match:{ nameAny:["Semimembranosus","Semitendinosus"] },
