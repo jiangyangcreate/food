@@ -705,10 +705,10 @@
             overflow-x: auto;
         }
 
-        /* 列顺序：拖拽手柄, 食物, 热量, 蛋白, 脂肪, 碳水, 每份重量(g), 价格, 份数, 每份营养, 删除 */
+        /* 列顺序：拖拽手柄, 食物, 热量, 蛋白, 脂肪, 碳水, 每份重量(g), 价格, 蛋价/100g蛋白, 份数, 每份营养, 删除 */
         .tracker-row {
             display: grid;
-            grid-template-columns: repeat(9, 72px) 280px 72px;
+            grid-template-columns: repeat(10, 72px) 220px 72px;
             gap: 4px;
             align-items: center;
             background: var(--bg);
@@ -849,10 +849,40 @@
             text-align: right;
             font-variant-numeric: tabular-nums;
         }
-        .tracker-row .subtotal .protein-price {
-            color: var(--text-muted);
+        .tracker-row .protein-price-cell {
+            color: var(--text-secondary);
             font-weight: 600;
             font-size: 11px;
+            text-align: center;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+        .tracker-row.zero-serving .protein-price-cell {
+            color: #9a9a9f;
+        }
+
+        .tracker-row.header-row .sortable-col {
+            cursor: pointer;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            border-radius: 4px;
+            padding: 2px 4px;
+            margin: -2px -4px;
+            transition: background 0.15s;
+        }
+        .tracker-row.header-row .sortable-col:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .tracker-row.header-row .sortable-col .sort-indicator {
+            font-size: 9px;
+            opacity: 0.45;
+            min-width: 1em;
+        }
+        .tracker-row.header-row .sortable-col.active .sort-indicator {
+            opacity: 1;
         }
 
         .tracker-row .delete-btn {
@@ -922,7 +952,7 @@
 
         @media (max-width: 900px) {
             .tracker-row {
-                grid-template-columns: repeat(9, 60px) 144px 60px;
+                grid-template-columns: repeat(10, 60px) 120px 60px;
                 font-size: 11px;
                 padding: 4px 6px;
             }
@@ -941,7 +971,7 @@
 
         @media (max-width: 600px) {
             .tracker-row {
-                grid-template-columns: repeat(9, 40px) 108px 40px;
+                grid-template-columns: repeat(10, 40px) 96px 40px;
                 font-size: 10px;
                 padding: 2px 4px;
                 gap: 2px;
@@ -1243,6 +1273,7 @@
                     <span>碳水(100g)</span>
                     <span>每份克重</span>
                     <span>价格(元/份)</span>
+                    <span class="sortable-col" id="proteinPriceSortHeader" title="点击按蛋价排序">蛋价/100g蛋白<span class="sort-indicator" aria-hidden="true"></span></span>
                     <span>份数</span>
                     <span>每份营养</span>
                     <span style="text-align:center;"></span>
@@ -1396,6 +1427,8 @@
 
             // 当前食物数组
             let foodItems = [];
+            /** @type {'asc' | 'desc' | null} 蛋价列排序；null 表示保持拖拽/导入顺序 */
+            let proteinPriceSort = null;
 
             let targetCal = 0,
                 targetProtein = 0,
@@ -1746,7 +1779,36 @@
             function formatProteinPriceLabel(item) {
                 const v = proteinPricePer100g(item);
                 if (v == null) return '—';
-                return `¥${v.toFixed(1)}/100g蛋白`;
+                return `¥${v.toFixed(1)}`;
+            }
+
+            function compareProteinPrice(a, b, dir) {
+                const va = proteinPricePer100g(a);
+                const vb = proteinPricePer100g(b);
+                const aMissing = va == null;
+                const bMissing = vb == null;
+                if (aMissing && bMissing) return 0;
+                if (aMissing) return 1;
+                if (bMissing) return -1;
+                const diff = va - vb;
+                return dir === 'asc' ? diff : -diff;
+            }
+
+            function updateProteinPriceSortHeader() {
+                const header = document.getElementById('proteinPriceSortHeader');
+                if (!header) return;
+                const indicator = header.querySelector('.sort-indicator');
+                header.classList.toggle('active', proteinPriceSort != null);
+                if (!indicator) return;
+                if (proteinPriceSort === 'asc') indicator.textContent = '▲';
+                else if (proteinPriceSort === 'desc') indicator.textContent = '▼';
+                else indicator.textContent = '⇅';
+            }
+
+            function toggleProteinPriceSort() {
+                proteinPriceSort = proteinPriceSort === 'asc' ? 'desc' : 'asc';
+                updateProteinPriceSortHeader();
+                renderTracker();
             }
 
             // 更新小计显示
@@ -1758,13 +1820,11 @@
                 const kcal = (item.caloriesPer100gKJ / 4.184) * (weight / 100);
                 // 相当于 Python 的 f"{x:>4}"：右对齐占 4 字符宽，不补零
                 const num = (n, d) => `<span class="sub-val">${n.toFixed(d)}</span>`;
-                const proteinPrice = formatProteinPriceLabel(item);
                 el.innerHTML = `
                     <span class="nutr-item" style="color:var(--color-protein);">蛋 ${num(protein, 1)}</span>
                     <span class="nutr-item" style="color:var(--color-carbo);">碳 ${num(carbs, 1)}</span>
                     <span class="nutr-item" style="color:var(--color-fat);">脂 ${num(fat, 1)}</span>
                     <span class="nutr-item" style="color:var(--color-cal);">热 ${num(kcal, 0)}</span>
-                    <span class="nutr-item protein-price" title="每百克蛋白质价格">蛋价 ${proteinPrice}</span>
                 `;
             }
 
@@ -1839,6 +1899,9 @@
             function renderTracker() {
                 const container = trackerRows;
                 container.innerHTML = '';
+                if (proteinPriceSort) {
+                    foodItems.sort((a, b) => compareProteinPrice(a, b, proteinPriceSort));
+                }
                 foodItems.forEach((item) => {
                     const row = document.createElement('div');
                     row.className = 'tracker-row' + (item.servings <= 0 ? ' zero-serving' : '');
@@ -1916,6 +1979,11 @@
                         }
                     });
 
+                    const proteinPriceCell = document.createElement('span');
+                    proteinPriceCell.className = 'protein-price-cell';
+                    proteinPriceCell.title = '每百克蛋白质价格（元）';
+                    proteinPriceCell.textContent = formatProteinPriceLabel(item);
+
                     // 份数：仅输入框（无 +/- 按钮）
                     const servingInput = document.createElement('input');
                     servingInput.type = 'number';
@@ -1966,6 +2034,7 @@
                     row.appendChild(carbsInput);
                     row.appendChild(weightInput);
                     row.appendChild(priceInput);
+                    row.appendChild(proteinPriceCell);
                     row.appendChild(servingInput);
                     row.appendChild(subtotal);
                     row.appendChild(delBtn);
@@ -2002,6 +2071,8 @@
                             if (fromIndex !== -1 && toIndex !== -1) {
                                 const [removed] = foodItems.splice(fromIndex, 1);
                                 foodItems.splice(toIndex, 0, removed);
+                                proteinPriceSort = null;
+                                updateProteinPriceSortHeader();
                                 renderTracker();
                                 showToast('↕️ 顺序已调整');
                             }
@@ -2038,7 +2109,7 @@
                 return input;
             }
 
-            // 更新某行小计
+            // 更新某行小计与蛋价列
             function updateRowSubtotal(id) {
                 const row = document.querySelector(`.tracker-row[data-id="${id}"]`);
                 if (!row) return;
@@ -2046,6 +2117,8 @@
                 if (!item) return;
                 const subtotal = row.querySelector('.subtotal');
                 if (subtotal) updateSubtotalDisplay(subtotal, item);
+                const proteinPriceCell = row.querySelector('.protein-price-cell');
+                if (proteinPriceCell) proteinPriceCell.textContent = formatProteinPriceLabel(item);
             }
 
             function loadDietSettings() {
@@ -2137,6 +2210,17 @@
             document.getElementById('exportBtn').addEventListener('click', exportFoods);
             document.getElementById('importBtn').addEventListener('click', importFoods);
 
+            const proteinPriceSortHeader = document.getElementById('proteinPriceSortHeader');
+            if (proteinPriceSortHeader) {
+                proteinPriceSortHeader.addEventListener('click', toggleProteinPriceSort);
+                proteinPriceSortHeader.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleProteinPriceSort();
+                    }
+                });
+            }
+
             // ---------- 初始化 ----------
             loadDietSettings();
             (function migratePalSelect() {
@@ -2146,6 +2230,7 @@
                 }
             })();
             initFoods();
+            updateProteinPriceSortHeader();
             updateAdjustLabel();
             updateMain();
         })();
