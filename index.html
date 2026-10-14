@@ -708,7 +708,7 @@
         /* 列顺序：拖拽手柄, 食物, 热量, 蛋白, 脂肪, 碳水, 每份重量(g), 价格, 份数, 每份营养, 删除 */
         .tracker-row {
             display: grid;
-            grid-template-columns: repeat(9, 72px) 234px 72px;
+            grid-template-columns: repeat(9, 72px) 280px 72px;
             gap: 4px;
             align-items: center;
             background: var(--bg);
@@ -848,6 +848,11 @@
             width: 4ch;
             text-align: right;
             font-variant-numeric: tabular-nums;
+        }
+        .tracker-row .subtotal .protein-price {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 11px;
         }
 
         .tracker-row .delete-btn {
@@ -1723,6 +1728,27 @@
                 input.click();
             }
 
+            /** 每百克蛋白质价格（元）：元/份 ÷ 每份蛋白质(g) × 100；无价格或蛋白为 0 时返回 null */
+            function proteinPricePer100g(item) {
+                const price = Number(item.price);
+                if (!Number.isFinite(price) || price <= 0) return null;
+                const weight = Number(item.weight);
+                const proteinPer100 = Number(item.proteinPer100);
+                if (!Number.isFinite(weight) || weight <= 0) return null;
+                if (!Number.isFinite(proteinPer100) || proteinPer100 <= 0) return null;
+                const proteinPerServing = (weight / 100) * proteinPer100;
+                if (proteinPerServing <= 0) return null;
+                const yuanPer100gProtein = (price / proteinPerServing) * 100;
+                if (!Number.isFinite(yuanPer100gProtein) || yuanPer100gProtein <= 0) return null;
+                return yuanPer100gProtein;
+            }
+
+            function formatProteinPriceLabel(item) {
+                const v = proteinPricePer100g(item);
+                if (v == null) return '—';
+                return `¥${v.toFixed(1)}/100g蛋白`;
+            }
+
             // 更新小计显示
             function updateSubtotalDisplay(el, item) {
                 const weight = item.weight;
@@ -1732,11 +1758,13 @@
                 const kcal = (item.caloriesPer100gKJ / 4.184) * (weight / 100);
                 // 相当于 Python 的 f"{x:>4}"：右对齐占 4 字符宽，不补零
                 const num = (n, d) => `<span class="sub-val">${n.toFixed(d)}</span>`;
+                const proteinPrice = formatProteinPriceLabel(item);
                 el.innerHTML = `
                     <span class="nutr-item" style="color:var(--color-protein);">蛋 ${num(protein, 1)}</span>
                     <span class="nutr-item" style="color:var(--color-carbo);">碳 ${num(carbs, 1)}</span>
                     <span class="nutr-item" style="color:var(--color-fat);">脂 ${num(fat, 1)}</span>
                     <span class="nutr-item" style="color:var(--color-cal);">热 ${num(kcal, 0)}</span>
+                    <span class="nutr-item protein-price" title="每百克蛋白质价格">蛋价 ${proteinPrice}</span>
                 `;
             }
 
@@ -1882,6 +1910,7 @@
                             const val = parseFloat(this.value);
                             if (!isNaN(val) && val >= 0) {
                                 found.price = val;
+                                updateRowSubtotal(id);
                                 updateSummary();
                             }
                         }
