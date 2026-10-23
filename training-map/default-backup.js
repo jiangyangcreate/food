@@ -73,11 +73,14 @@ export const DEFAULT_BACKUP = {
     "2026-10-07#2": { w: "25kg",   r: "8",  s: "3", feel: "", done: true },
     "2026-10-07#3": { w: "5kg",    r: "10", s: "3", feel: "", done: true },
     "2026-10-07#4": { w: "自重",   r: "8",  s: "3", feel: "", done: true },
-    "2026-10-07#5": { w: "自重",   r: "15", s: "3", feel: "", done: true }
+    "2026-10-07#5": { w: "自重",   r: "15", s: "3", feel: "", done: true },
+    "2026-10-23#0": { w: "120kg", r: "12", s: "4", feel: "由坐式蹬腿改为倒蹬，屈伸度更大，需要用手扶膝盖。下周重量不变，争取不用手扶；不用手扶成功则下下周加重量", done: true },
+    "2026-10-23#2": { w: "47.5kg", r: "12", s: "4", feel: "下次试50kg", done: true },
+    "2026-10-23#3": { w: "单只10kg", r: "每边12步", s: "1", feel: "共24步，每边12步", done: true }
   },
   plan: {
-    weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12","2026-10-19"],
-    weekNos: [36, 37, 38, 39, 40, 41, 42, 43],
+    weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12","2026-10-19","2026-10-26","2026-11-02"],
+    weekNos: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45],
     weeks: [
       // ── W36 ─────────────────────────────────────────────────────
       {
@@ -454,7 +457,7 @@ export const DEFAULT_BACKUP = {
       // ── W43 ─────────────────────────────────────────────────────
       {
         week: 43,
-        note: "",
+        note: "10/23腿日：倒蹬120kg屈伸更大需扶膝；弓步走改单只10kg、24步（每边12步）；腿弯举下次50kg",
         days: [
           {
             theme: "背",
@@ -503,10 +506,136 @@ export const DEFAULT_BACKUP = {
             theme: "腿",
             kind: "normal",
             exercises: [
-              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "腰背紧贴靠垫，停顿慢放，维持不加", done: false },
+              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "由坐式蹬腿改为倒蹬，屈伸度更大，需要用手扶膝盖。下周重量不变，争取不用手扶；不用手扶成功则下下周加重量", done: true },
               { name: "史密斯深蹲", w: "40kg", r: "12", s: "4", feel: "躯干骨盆稳定，含杆重", done: false },
-              { name: "坐姿腿弯举", w: "47.5kg", r: "12", s: "4", feel: "膝盖外旋", done: false },
-              { name: "哑铃弓步走", w: "单只8kg", r: "14", s: "3", feel: "超级组", done: false },
+              { name: "坐姿腿弯举", w: "47.5kg", r: "12", s: "4", feel: "下次试50kg", done: true },
+              { name: "哑铃弓步走", w: "单只10kg", r: "每边12步", s: "1", feel: "共24步，每边12步", done: true },
+              { name: "哑铃深蹲", w: "单只8kg", r: "14", s: "3", feel: "超级组；练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          { theme: "—", kind: "rest", exercises: [] },
+          { theme: "—", kind: "rest", exercises: [] }
+        ]
+      },
+      // ── W44 ─────────────────────────────────────────────────────
+      {
+        week: 44,
+        note: "倒蹬维持120kg，争取不用手扶；弓步走单只10kg、每边12步；腿弯举试50kg",
+        days: [
+          {
+            theme: "背",
+            kind: "normal",
+            exercises: [
+              { name: "对握宽手下拉", w: "40kg", r: "12", s: "4", feel: "身体中立位", done: false },
+              { name: "坐姿窄距下拉", w: "40kg", r: "12", s: "4", feel: "含胸位", done: false },
+              { name: "高位下拉", w: "40kg", r: "12", s: "4", feel: "手肘向下回旋", done: false },
+              { name: "固定器械划船", w: "40kg", r: "12", s: "4", feel: "全周伸；练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          {
+            theme: "胸",
+            kind: "normal",
+            exercises: [
+              { name: "史密斯推胸", w: "40kg", r: "12", s: "4", feel: "稳定肩胛，含杆重", done: false },
+              { name: "固定坐姿推胸", w: "37.5kg", r: "12", s: "4", feel: "臂大肌贴紧靠背", done: false },
+              { name: "哑铃上斜推胸", w: "单只12.5kg", r: "12", s: "4", feel: "臂大肌贴紧靠背，肩不适即停", done: false },
+              { name: "站姿龙门架夹胸", w: "8kg", r: "12", s: "4", feel: "含胸位；练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          {
+            theme: "肩",
+            kind: "normal",
+            exercises: [
+              { name: "哑铃坐姿推肩", w: "单只10kg", r: "12", s: "4", feel: "", done: false },
+              { name: "固定坐姿器械推肩", w: "20kg", r: "12", s: "4", feel: "肘内收", done: false },
+              { name: "哑铃飞鸟（侧平举）", w: "5kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂", done: false },
+              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "超级组，开肘", done: false },
+              { name: "绳索面拉", w: "22.5kg", r: "12", s: "4", feel: "超级组，开肘；练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          {
+            theme: "手臂",
+            kind: "normal",
+            exercises: [
+              { name: "直杆绳索弯举", w: "15kg", r: "12", s: "4", feel: "夹肘", done: false },
+              { name: "杠铃窄距弯举", w: "20kg", r: "12", s: "4", feel: "夹肘", done: false },
+              { name: "哑铃坐姿臂屈伸", w: "单只10kg", r: "12", s: "4", feel: "核心稳定", done: false },
+              { name: "俯身哑铃臂屈伸", w: "单只5kg", r: "12", s: "4", feel: "", done: false },
+              { name: "杠铃宽距弯举", w: "17.5kg", r: "12", s: "4", feel: "肩后伸", done: false },
+              { name: "哑铃坐姿弯举", w: "单只8kg", r: "12", s: "4", feel: "练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          {
+            theme: "腿",
+            kind: "normal",
+            exercises: [
+              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "重量不变，争取不用手扶膝盖。不用手扶成功则下下周加重量", done: false },
+              { name: "史密斯深蹲", w: "40kg", r: "12", s: "4", feel: "躯干骨盆稳定，含杆重", done: false },
+              { name: "坐姿腿弯举", w: "50kg", r: "12", s: "4", feel: "上次47.5kg，本次试50kg", done: false },
+              { name: "哑铃弓步走", w: "单只10kg", r: "每边12步", s: "1", feel: "共24步，每边12步", done: false },
+              { name: "哑铃深蹲", w: "单只8kg", r: "14", s: "3", feel: "超级组；练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          { theme: "—", kind: "rest", exercises: [] },
+          { theme: "—", kind: "rest", exercises: [] }
+        ]
+      },
+      // ── W45 ─────────────────────────────────────────────────────
+      {
+        week: 45,
+        note: "倒蹬：若W44不用手扶完成再加重量，否则维持120kg",
+        days: [
+          {
+            theme: "背",
+            kind: "normal",
+            exercises: [
+              { name: "对握宽手下拉", w: "40kg", r: "12", s: "4", feel: "身体中立位", done: false },
+              { name: "坐姿窄距下拉", w: "40kg", r: "12", s: "4", feel: "含胸位", done: false },
+              { name: "高位下拉", w: "40kg", r: "12", s: "4", feel: "手肘向下回旋", done: false },
+              { name: "固定器械划船", w: "40kg", r: "12", s: "4", feel: "全周伸；练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          {
+            theme: "胸",
+            kind: "normal",
+            exercises: [
+              { name: "史密斯推胸", w: "40kg", r: "12", s: "4", feel: "稳定肩胛，含杆重", done: false },
+              { name: "固定坐姿推胸", w: "37.5kg", r: "12", s: "4", feel: "臂大肌贴紧靠背", done: false },
+              { name: "哑铃上斜推胸", w: "单只12.5kg", r: "12", s: "4", feel: "臂大肌贴紧靠背，肩不适即停", done: false },
+              { name: "站姿龙门架夹胸", w: "8kg", r: "12", s: "4", feel: "含胸位；练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          {
+            theme: "肩",
+            kind: "normal",
+            exercises: [
+              { name: "哑铃坐姿推肩", w: "单只10kg", r: "12", s: "4", feel: "", done: false },
+              { name: "固定坐姿器械推肩", w: "20kg", r: "12", s: "4", feel: "肘内收", done: false },
+              { name: "哑铃飞鸟（侧平举）", w: "5kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂", done: false },
+              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "超级组，开肘", done: false },
+              { name: "绳索面拉", w: "22.5kg", r: "12", s: "4", feel: "超级组，开肘；练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          {
+            theme: "手臂",
+            kind: "normal",
+            exercises: [
+              { name: "直杆绳索弯举", w: "15kg", r: "12", s: "4", feel: "夹肘", done: false },
+              { name: "杠铃窄距弯举", w: "20kg", r: "12", s: "4", feel: "夹肘", done: false },
+              { name: "哑铃坐姿臂屈伸", w: "单只10kg", r: "12", s: "4", feel: "核心稳定", done: false },
+              { name: "俯身哑铃臂屈伸", w: "单只5kg", r: "12", s: "4", feel: "", done: false },
+              { name: "杠铃宽距弯举", w: "17.5kg", r: "12", s: "4", feel: "肩后伸", done: false },
+              { name: "哑铃坐姿弯举", w: "单只8kg", r: "12", s: "4", feel: "练完爬楼机20分钟；组间休50秒。", done: false }
+            ]
+          },
+          {
+            theme: "腿",
+            kind: "normal",
+            exercises: [
+              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "若上周不用手扶完成再加重量，否则维持120kg", done: false },
+              { name: "史密斯深蹲", w: "40kg", r: "12", s: "4", feel: "躯干骨盆稳定，含杆重", done: false },
+              { name: "坐姿腿弯举", w: "50kg", r: "12", s: "4", feel: "膝盖外旋", done: false },
+              { name: "哑铃弓步走", w: "单只10kg", r: "每边12步", s: "1", feel: "共24步，每边12步", done: false },
               { name: "哑铃深蹲", w: "单只8kg", r: "14", s: "3", feel: "超级组；练完爬楼机20分钟；组间休50秒。", done: false }
             ]
           },
