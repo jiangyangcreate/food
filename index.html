@@ -705,10 +705,10 @@
             overflow-x: auto;
         }
 
-        /* 列顺序：拖拽手柄, 食物, 热量, 蛋白, 脂肪, 碳水, 每份重量(g), 价格, 蛋价/100g蛋白, 份数, 每份营养, 删除 */
+        /* 列顺序：拖拽手柄, 食物, 热量, 蛋白, 脂肪, 碳水, 每份重量(g), 价格, 每百克蛋白质, 份数, 每份营养, 删除 */
         .tracker-row {
             display: grid;
-            grid-template-columns: repeat(10, 72px) 220px 72px;
+            grid-template-columns: repeat(8, 72px) calc(72px * 1.15) 72px 220px 72px;
             gap: 4px;
             align-items: center;
             background: var(--bg);
@@ -871,6 +871,7 @@
             border-radius: 4px;
             padding: 2px 4px;
             margin: -2px -4px;
+            white-space: nowrap;
             transition: background 0.15s;
         }
         .tracker-row.header-row .sortable-col:hover {
@@ -952,7 +953,7 @@
 
         @media (max-width: 900px) {
             .tracker-row {
-                grid-template-columns: repeat(10, 60px) 120px 60px;
+                grid-template-columns: repeat(8, 60px) calc(60px * 1.15) 60px 120px 60px;
                 font-size: 11px;
                 padding: 4px 6px;
             }
@@ -971,7 +972,7 @@
 
         @media (max-width: 600px) {
             .tracker-row {
-                grid-template-columns: repeat(10, 40px) 96px 40px;
+                grid-template-columns: repeat(8, 40px) calc(40px * 1.15) 40px 96px 40px;
                 font-size: 10px;
                 padding: 2px 4px;
                 gap: 2px;
@@ -1264,18 +1265,18 @@
 
             <div class="tracker-grid" id="trackerGrid">
                 <!-- 表头 -->
-                <div class="tracker-row header-row">
+                <div class="tracker-row header-row" id="trackerHeader">
                     <span style="text-align:center;">排序</span>
-                    <span>食物名称</span>
-                    <span>千焦(100g)</span>
-                    <span>蛋白(100g)</span>
-                    <span>脂肪(100g)</span>
-                    <span>碳水(100g)</span>
-                    <span>每份克重</span>
-                    <span>价格(元/份)</span>
-                    <span class="sortable-col" id="proteinPriceSortHeader" title="点击按每百克蛋白质排序">每百克蛋白质<span class="sort-indicator" aria-hidden="true"></span></span>
-                    <span>份数</span>
-                    <span>每份营养</span>
+                    <span class="sortable-col" data-sort-key="name" tabindex="0" role="button" title="点击按食物名称排序">食物名称<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="caloriesPer100gKJ" tabindex="0" role="button" title="点击按每百克千焦排序">千焦(100g)<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="proteinPer100" tabindex="0" role="button" title="点击按每百克蛋白质克数排序">蛋白(100g)<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="fatPer100" tabindex="0" role="button" title="点击按每百克脂肪排序">脂肪(100g)<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="carbsPer100" tabindex="0" role="button" title="点击按每百克碳水排序">碳水(100g)<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="weight" tabindex="0" role="button" title="点击按每份克重排序">每份克重<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="price" tabindex="0" role="button" title="点击按每份价格排序">价格(元/份)<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="proteinPrice" tabindex="0" role="button" title="点击按每百克蛋白质价格排序">每百克蛋白质<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="servings" tabindex="0" role="button" title="点击按份数排序">份数<span class="sort-indicator" aria-hidden="true"></span></span>
+                    <span class="sortable-col" data-sort-key="perServingKcal" tabindex="0" role="button" title="点击按每份热量排序">每份营养<span class="sort-indicator" aria-hidden="true"></span></span>
                     <span style="text-align:center;"></span>
                 </div>
                 <div id="trackerRows"></div>
@@ -1355,66 +1356,48 @@
             const clearServingsBtn = document.getElementById('clearServingsBtn');
             const toast = document.getElementById('toast');
 
-            // ---------- 初始食物数据 ----------
+            // ---------- 初始食物数据（与 食物清单.json 一致，文件加载失败时使用） ----------
             const defaultFoods = [
-                { id: 'milk', name: '牛奶', weight: 220, servings: 1,
-                    proteinPer100: 3, carbsPer100: 5, fatPer100: 1.3,
-                    caloriesPer100gKJ: 182.6, price: 3.32 },
-                { id: 'egg', name: '鸡蛋', weight: 50, servings: 2,
+                { id: '1792745902629_qdff91sx', name: '鸡胸', weight: 300, servings: 0,
+                    proteinPer100: 24, carbsPer100: 1, fatPer100: 2,
+                    caloriesPer100gKJ: 549, price: 8.9 },
+                { id: 'egg', name: '鸡蛋', weight: 50, servings: 6,
                     proteinPer100: 13.1, carbsPer100: 2.4, fatPer100: 8.6,
-                    caloriesPer100gKJ: 581.6, price: 1.0 },
-                { id: 'egg_white', name: '鸡蛋白', weight: 50, servings: 1,
-                    proteinPer100: 11.6, carbsPer100: 3.1, fatPer100: 0.1,
-                    caloriesPer100gKJ: 200, price: 1.0 },
-                { id: 'corn', name: '玉米粒', weight: 60, servings: 3,
-                    proteinPer100: 3.0, carbsPer100: 18.1, fatPer100: 1.6,
-                    caloriesPer100gKJ: 418, price: 2 },
-                { id: 'grain_bun', name: '小馒头', weight: 33, servings: 0,
-                    proteinPer100: 8.1, carbsPer100: 56.4, fatPer100: 2.2,
-                    caloriesPer100gKJ: 1178, price: 0.75 },
-                { id: 'chicken_breast', name: '即食鸡胸', weight: 100, servings: 0,
-                    proteinPer100: 26.4, carbsPer100: 2, fatPer100: 1.8,
-                    caloriesPer100gKJ: 549, price: 5.9 },
-                { id: 'fish_noodle', name: '鱼面', weight: 100, servings: 0,
-                    proteinPer100: 7.6, carbsPer100: 16.2, fatPer100: 0,
-                    caloriesPer100gKJ: 405, price: 4.0 },
-                { id: 'fish_cake', name: '鱼糕', weight: 150, servings: 0,
-                    proteinPer100: 10.3, carbsPer100: 5.4, fatPer100: 6.5,
-                    caloriesPer100gKJ: 507, price: 7.8 },
-                { id: 'fresh_shrimp', name: '鲜虾仁', weight: 180, servings: 0,
-                    proteinPer100: 12.7, carbsPer100: 0, fatPer100: 0.6,
-                    caloriesPer100gKJ: 238, price: 17.5 },
-                { id: 'basafish', name: '巴沙鱼', weight: 250, servings: 0,
-                    proteinPer100: 9.6, carbsPer100: 1.8, fatPer100: 4.2,
-                    caloriesPer100gKJ: 349.8, price: 9.8 },
-                { id: 'snapper', name: '鲷鱼片', weight: 200, servings: 0,
-                    proteinPer100: 11, carbsPer100: 0, fatPer100: 3.9,
-                    caloriesPer100gKJ: 330.5, price: 10.93 },
-                { id: 'squid', name: '鱿鱼花', weight: 200, servings: 0,
-                    proteinPer100: 7.6, carbsPer100: 0, fatPer100: 0,
-                    caloriesPer100gKJ: 127.6, price: 9.9 },
-                { id: 'maodou', name: '毛豆粒', weight: 200, servings: 0,
-                    proteinPer100: 10, carbsPer100: 10, fatPer100: 5,
-                    caloriesPer100gKJ: 523, price: 5.9 },
+                    caloriesPer100gKJ: 581.6, price: 1 },
                 { id: 'soft_tofu', name: '嫩豆腐', weight: 350, servings: 0,
                     proteinPer100: 3.8, carbsPer100: 2.9, fatPer100: 1.9,
                     caloriesPer100gKJ: 189, price: 2.39 },
-                { id: 'qianzhang', name: '千张', weight: 200, servings: 0,
-                    proteinPer100: 20, carbsPer100: 4, fatPer100: 10,
-                    caloriesPer100gKJ: 778, price: 3.69 },
-                { id: 'tofu', name: '老豆腐', weight: 380, servings: 0,
-                    proteinPer100: 8, carbsPer100: 3, fatPer100: 4,
-                    caloriesPer100gKJ: 335, price: 3.89 },
-                { id: 'coriander', name: '香菜', weight: 100, servings: 0,
-                    proteinPer100: 2.1, carbsPer100: 3.7, fatPer100: 0.5,
-                    caloriesPer100gKJ: 96.2, price: 0 },
+                { id: 'chicken_breast', name: '即食鸡胸', weight: 100, servings: 3,
+                    proteinPer100: 26.4, carbsPer100: 2, fatPer100: 1.8,
+                    caloriesPer100gKJ: 549, price: 5.9 },
+                { id: 'maodou', name: '毛豆粒', weight: 200, servings: 0,
+                    proteinPer100: 10, carbsPer100: 10, fatPer100: 5,
+                    caloriesPer100gKJ: 523, price: 5.9 },
+                { id: '1792733582299_7t3oq1xi', name: '干米', weight: 10, servings: 20,
+                    proteinPer100: 7.7, carbsPer100: 80, fatPer100: 0.9,
+                    caloriesPer100gKJ: 1530, price: 0.24 },
+                { id: '1792733010896_5mjdlm1x', name: '希腊酸奶', weight: 820, servings: 0,
+                    proteinPer100: 10.2, carbsPer100: 4.5, fatPer100: 0,
+                    caloriesPer100gKJ: 250, price: 31.5 },
                 { id: 'frozen_shrimp', name: '冻虾仁', weight: 150, servings: 0,
                     proteinPer100: 17.4, carbsPer100: 0, fatPer100: 0,
                     caloriesPer100gKJ: 290.1, price: 9.9 },
+                { id: 'basafish', name: '巴沙鱼', weight: 250, servings: 0,
+                    proteinPer100: 9.6, carbsPer100: 1.8, fatPer100: 4.2,
+                    caloriesPer100gKJ: 349.8, price: 9.8 },
                 { id: 'chicken_dumpling', name: '鸡肉蒸饺', weight: 20, servings: 0,
                     proteinPer100: 6.6, carbsPer100: 17, fatPer100: 1.9,
                     caloriesPer100gKJ: 427, price: 0.59 },
-                { id: 'leafy_green', name: '时蔬·叶菜', weight: 100, servings: 0,
+                { id: 'fresh_shrimp', name: '鲜虾仁', weight: 180, servings: 1,
+                    proteinPer100: 12.7, carbsPer100: 0, fatPer100: 0.6,
+                    caloriesPer100gKJ: 238, price: 17.5 },
+                { id: 'corn', name: '玉米粒', weight: 60, servings: 0,
+                    proteinPer100: 3, carbsPer100: 18.1, fatPer100: 1.6,
+                    caloriesPer100gKJ: 418, price: 2 },
+                { id: 'coriander', name: '香菜', weight: 100, servings: 0,
+                    proteinPer100: 2.1, carbsPer100: 3.7, fatPer100: 0.5,
+                    caloriesPer100gKJ: 96.2, price: 0 },
+                { id: 'leafy_green', name: '时蔬·叶菜', weight: 100, servings: 2.5,
                     proteinPer100: 2, carbsPer100: 3, fatPer100: 0.3,
                     caloriesPer100gKJ: 90, price: 0 },
                 { id: 'mushroom', name: '时蔬·菌菇', weight: 100, servings: 0,
@@ -1423,12 +1406,18 @@
                 { id: 'sprout', name: '时蔬·芽苗', weight: 100, servings: 0,
                     proteinPer100: 3, carbsPer100: 4, fatPer100: 0.2,
                     caloriesPer100gKJ: 120, price: 0 },
+                { id: '1792734061739_119f66os', name: '水', weight: 100, servings: 0,
+                    proteinPer100: 0, carbsPer100: 0, fatPer100: 0,
+                    caloriesPer100gKJ: 0, price: 0 },
+                { id: '1792748164950_86lrxfrp', name: '藤椒', weight: 50, servings: 0.5,
+                    proteinPer100: 0, carbsPer100: 0, fatPer100: 0,
+                    caloriesPer100gKJ: 0, price: 2.9 },
             ];
 
             // 当前食物数组
             let foodItems = [];
-            /** @type {'asc' | 'desc' | null} 蛋价列排序；null 表示保持拖拽/导入顺序 */
-            let proteinPriceSort = null;
+            /** @type {{ key: string, dir: 'asc' | 'desc' } | null} 当前排序；null 表示保持拖拽/导入顺序 */
+            let foodSort = null;
 
             let targetCal = 0,
                 targetProtein = 0,
@@ -1782,9 +1771,28 @@
                 return `¥${v.toFixed(1)}`;
             }
 
-            function compareProteinPrice(a, b, dir) {
-                const va = proteinPricePer100g(a);
-                const vb = proteinPricePer100g(b);
+            function kcalPerServing(item) {
+                const weight = Number(item.weight);
+                const kj = Number(item.caloriesPer100gKJ);
+                if (!Number.isFinite(weight) || !Number.isFinite(kj)) return null;
+                return (kj / 4.184) * (weight / 100);
+            }
+
+            function foodSortValue(item, key) {
+                if (key === 'name') return String(item.name || '');
+                if (key === 'proteinPrice') return proteinPricePer100g(item);
+                if (key === 'perServingKcal') return kcalPerServing(item);
+                const n = Number(item[key]);
+                return Number.isFinite(n) ? n : null;
+            }
+
+            function compareFood(a, b, key, dir) {
+                const va = foodSortValue(a, key);
+                const vb = foodSortValue(b, key);
+                if (key === 'name') {
+                    const diff = va.localeCompare(vb, 'zh');
+                    return dir === 'asc' ? diff : -diff;
+                }
                 const aMissing = va == null;
                 const bMissing = vb == null;
                 if (aMissing && bMissing) return 0;
@@ -1794,20 +1802,26 @@
                 return dir === 'asc' ? diff : -diff;
             }
 
-            function updateProteinPriceSortHeader() {
-                const header = document.getElementById('proteinPriceSortHeader');
-                if (!header) return;
-                const indicator = header.querySelector('.sort-indicator');
-                header.classList.toggle('active', proteinPriceSort != null);
-                if (!indicator) return;
-                if (proteinPriceSort === 'asc') indicator.textContent = '▲';
-                else if (proteinPriceSort === 'desc') indicator.textContent = '▼';
-                else indicator.textContent = '⇅';
+            function updateFoodSortHeaders() {
+                document.querySelectorAll('#trackerHeader .sortable-col').forEach(function(header) {
+                    const key = header.dataset.sortKey;
+                    const active = !!(foodSort && foodSort.key === key);
+                    header.classList.toggle('active', active);
+                    const indicator = header.querySelector('.sort-indicator');
+                    if (!indicator) return;
+                    if (!active) indicator.textContent = '⇅';
+                    else indicator.textContent = foodSort.dir === 'asc' ? '▲' : '▼';
+                });
             }
 
-            function toggleProteinPriceSort() {
-                proteinPriceSort = proteinPriceSort === 'asc' ? 'desc' : 'asc';
-                updateProteinPriceSortHeader();
+            function toggleFoodSort(key) {
+                if (!key) return;
+                if (foodSort && foodSort.key === key) {
+                    foodSort.dir = foodSort.dir === 'asc' ? 'desc' : 'asc';
+                } else {
+                    foodSort = { key: key, dir: 'asc' };
+                }
+                updateFoodSortHeaders();
                 renderTracker();
             }
 
@@ -1899,8 +1913,8 @@
             function renderTracker() {
                 const container = trackerRows;
                 container.innerHTML = '';
-                if (proteinPriceSort) {
-                    foodItems.sort((a, b) => compareProteinPrice(a, b, proteinPriceSort));
+                if (foodSort) {
+                    foodItems.sort((a, b) => compareFood(a, b, foodSort.key, foodSort.dir));
                 }
                 foodItems.forEach((item) => {
                     const row = document.createElement('div');
@@ -2071,8 +2085,8 @@
                             if (fromIndex !== -1 && toIndex !== -1) {
                                 const [removed] = foodItems.splice(fromIndex, 1);
                                 foodItems.splice(toIndex, 0, removed);
-                                proteinPriceSort = null;
-                                updateProteinPriceSortHeader();
+                                foodSort = null;
+                                updateFoodSortHeaders();
                                 renderTracker();
                                 showToast('↕️ 顺序已调整');
                             }
@@ -2210,16 +2224,17 @@
             document.getElementById('exportBtn').addEventListener('click', exportFoods);
             document.getElementById('importBtn').addEventListener('click', importFoods);
 
-            const proteinPriceSortHeader = document.getElementById('proteinPriceSortHeader');
-            if (proteinPriceSortHeader) {
-                proteinPriceSortHeader.addEventListener('click', toggleProteinPriceSort);
-                proteinPriceSortHeader.addEventListener('keydown', function(e) {
+            document.querySelectorAll('#trackerHeader .sortable-col').forEach(function(header) {
+                header.addEventListener('click', function() {
+                    toggleFoodSort(header.dataset.sortKey);
+                });
+                header.addEventListener('keydown', function(e) {
                     if (e.key === 'Enter' || e.key === ' ') {
                         e.preventDefault();
-                        toggleProteinPriceSort();
+                        toggleFoodSort(header.dataset.sortKey);
                     }
                 });
-            }
+            });
 
             // ---------- 初始化 ----------
             loadDietSettings();
@@ -2230,7 +2245,7 @@
                 }
             })();
             initFoods();
-            updateProteinPriceSortHeader();
+            updateFoodSortHeaders();
             updateAdjustLabel();
             updateMain();
         })();

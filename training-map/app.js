@@ -389,10 +389,49 @@ function restoreAuto() {
 // ── Plan storage ──────────────────────────────────────────────────
 let activePlan = null;
 
+function padWeekToSevenDays(week) {
+  if (!week || !Array.isArray(week.days)) return week;
+  while (week.days.length < 7) {
+    week.days.push({ theme: "—", kind: "rest", exercises: [] });
+  }
+  return week;
+}
+
+function mergeHistoricalPlan(plan) {
+  const backup = DEFAULT_BACKUP.plan;
+  if (!plan || !backup || !Array.isArray(plan.weeks) || !Array.isArray(backup.weeks)) return plan;
+
+  const have = new Set(plan.weeks.map(w => w.week));
+  const missing = backup.weeks
+    .filter(w => !have.has(w.week))
+    .map(w => JSON.parse(JSON.stringify(w)));
+
+  const mondayOf = {};
+  (backup.weekNos || []).forEach((n, i) => { mondayOf[n] = backup.weekMondays[i]; });
+  (plan.weekNos || []).forEach((n, i) => { mondayOf[n] = plan.weekMondays[i]; });
+
+  if (missing.length) {
+    plan.weeks = [...plan.weeks, ...missing].sort((a, b) => a.week - b.week);
+  }
+  plan.weeks.forEach(padWeekToSevenDays);
+  plan.weekNos = plan.weeks.map(w => w.week);
+  plan.weekMondays = plan.weeks.map(w => mondayOf[w.week]);
+  return plan;
+}
+
 function loadPlan() {
   try {
     const raw = localStorage.getItem(PLAN_KEY);
-    if (raw) { activePlan = JSON.parse(raw); return; }
+    if (raw) {
+      const stored = JSON.parse(raw);
+      const beforeCount = (stored.weeks || []).length;
+      const beforeDays = (stored.weeks || []).reduce((n, w) => n + ((w.days || []).length), 0);
+      activePlan = mergeHistoricalPlan(stored);
+      const afterCount = activePlan.weeks.length;
+      const afterDays = activePlan.weeks.reduce((n, w) => n + w.days.length, 0);
+      if (beforeCount !== afterCount || beforeDays !== afterDays) savePlan(activePlan);
+      return;
+    }
   } catch {}
   activePlan = DEFAULT_BACKUP.plan;
 }
@@ -1100,8 +1139,8 @@ function setupTableInteractivity() {
   rows.forEach((row, ri) => {
     const mon = activePlan.weekMondays[ri];
     if (!mon) return;
-    const sat = addDays(mon, 5);
-    if (today >= mon && today <= sat) curRowIdx = ri;
+    const sun = addDays(mon, 6);
+    if (today >= mon && today <= sun) curRowIdx = ri;
   });
   if (curRowIdx === -1) {
     curRowIdx = activePlan.weeks.findIndex(w => w.note === "进行中");
@@ -1156,13 +1195,19 @@ function initTable() {
 // ── Training log edits ────────────────────────────────────────────
 function loadLogEdits() {
   let edits = {};
+  const defaults = DEFAULT_BACKUP.logEdits || {};
   try {
     const raw = localStorage.getItem(LOG_KEY);
     if (raw) {
-      edits = JSON.parse(raw);
+      const stored = JSON.parse(raw);
+      edits = { ...defaults, ...stored };
+      const missing = Object.keys(defaults).some(k => !(k in stored));
+      if (missing) {
+        try { localStorage.setItem(LOG_KEY, JSON.stringify(edits)); } catch {}
+      }
     } else {
       // First load – seed from bundled defaults
-      edits = DEFAULT_BACKUP.logEdits || {};
+      edits = defaults;
     }
   } catch {}
 
