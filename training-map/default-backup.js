@@ -528,7 +528,7 @@ export const DEFAULT_BACKUP = {
       // ── W44 ─────────────────────────────────────────────────────
       {
         week: 44,
-        note: "倒蹬维持120kg，争取不用手扶；弓步走单只10kg、每边12步；腿弯举试50kg；卧推 42.5kg×10×4，下2周冲12个一组",
+        note: "倒蹬维持120kg，争取不用手扶；弓步走单只10kg、每边12步；腿弯举试50kg；卧推 42.5kg×10×4，下2周冲12个一组；周六小肌群测试",
         days: [
           {
             theme: "背",
@@ -584,14 +584,24 @@ export const DEFAULT_BACKUP = {
               { name: "哑铃深蹲", w: "单只10kg", r: "14", s: "3", feel: "练完爬楼机20分钟；组间休50秒。", ss: 1, done: false }
             ]
           },
-          { theme: "—", kind: "rest", exercises: [] },
+          {
+            theme: "小肌群",
+            kind: "normal",
+            exercises: [
+              { name: "平板支撑", w: "自重", r: "60秒", s: "3", feel: "测试腹横肌；最后一组尽量延长，记下最长秒数", done: false },
+              { name: "侧平板支撑", w: "自重", r: "每边40秒", s: "2", feel: "测试腰方、腹斜；身体成直线", done: false },
+              { name: "Y字哑铃上举", w: "3kg", r: "12", s: "3", feel: "测试斜方下束；拇指朝上，肩不适即停", done: false },
+              { name: "哑铃仰卧上拉", w: "8kg", r: "12", s: "3", feel: "测试前锯、胸小；肘微屈，肩不适即停", done: false },
+              { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "测试胫骨前肌；脚跟不离地", done: false }
+            ]
+          },
           { theme: "—", kind: "rest", exercises: [] }
         ]
       },
       // ── W45 ─────────────────────────────────────────────────────
       {
         week: 45,
-        note: "倒蹬：若W44不用手扶完成再加重量，否则维持120kg；卧推50kg×12×4，坐姿推胸50kg冲12个",
+        note: "倒蹬：若W44不用手扶完成再加重量，否则维持120kg；卧推50kg×12×4，坐姿推胸50kg冲12个；周六小肌群测试",
         days: [
           {
             theme: "背",
@@ -647,7 +657,18 @@ export const DEFAULT_BACKUP = {
               { name: "哑铃深蹲", w: "单只10kg", r: "14", s: "3", feel: "练完爬楼机20分钟；组间休50秒。", ss: 1, done: false }
             ]
           },
-          { theme: "—", kind: "rest", exercises: [] },
+          {
+            theme: "小肌群",
+            kind: "normal",
+            exercises: [
+              { name: "平板支撑", w: "自重", r: "75秒", s: "3", feel: "对照10/31最长秒数", done: false },
+              { name: "侧平板支撑", w: "自重", r: "每边45秒", s: "2", feel: "对照上周", done: false },
+              { name: "侧卧哑铃外旋", w: "单只2kg", r: "12", s: "3", feel: "测试冈下、小圆；肘贴身，没有2kg就用最轻的哑铃", done: false },
+              { name: "Y字哑铃上举", w: "3kg", r: "15", s: "3", feel: "斜方下束；肩不适即停", done: false },
+              { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "胫骨前肌", done: false },
+              { name: "屈膝提踵", w: "自重", r: "15", s: "3", feel: "测试比目鱼肌；膝盖弯曲，慢起，顶峰停2秒", done: false }
+            ]
+          },
           { theme: "—", kind: "rest", exercises: [] }
         ]
       }

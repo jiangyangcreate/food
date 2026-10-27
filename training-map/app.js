@@ -427,7 +427,25 @@ function mergeHistoricalPlan(plan) {
   plan.weeks.forEach(padWeekToSevenDays);
   plan.weekNos = plan.weeks.map(w => w.week);
   plan.weekMondays = plan.weeks.map(w => mondayOf[w.week]);
+  fillEmptySaturdays(plan);
   return plan;
+}
+
+// 已有课表里，周六仍是空休息日时，补上备份里的小肌群测试。有动作的周六不覆盖。
+function fillEmptySaturdays(plan) {
+  const backupWeeks = (DEFAULT_BACKUP.plan && DEFAULT_BACKUP.plan.weeks) || [];
+  let changed = false;
+  (plan.weeks || []).forEach(week => {
+    const src = backupWeeks.find(item => item.week === week.week);
+    if (!src || !week.days || !src.days) return;
+    const from = src.days[5];
+    const dst = week.days[5];
+    if (!from || !dst || !from.exercises || !from.exercises.length) return;
+    if (dst.exercises && dst.exercises.length) return;
+    week.days[5] = JSON.parse(JSON.stringify(from));
+    changed = true;
+  });
+  return changed;
 }
 
 function loadPlan() {
@@ -437,10 +455,12 @@ function loadPlan() {
       const stored = JSON.parse(raw);
       const beforeCount = (stored.weeks || []).length;
       const beforeDays = (stored.weeks || []).reduce((n, w) => n + ((w.days || []).length), 0);
+      const beforeSat = (stored.weeks || []).reduce((n, w) => n + (((w.days || [])[5] && w.days[5].exercises) ? w.days[5].exercises.length : 0), 0);
       activePlan = mergeHistoricalPlan(stored);
       const afterCount = activePlan.weeks.length;
       const afterDays = activePlan.weeks.reduce((n, w) => n + w.days.length, 0);
-      if (beforeCount !== afterCount || beforeDays !== afterDays) savePlan(activePlan);
+      const afterSat = activePlan.weeks.reduce((n, w) => n + ((w.days[5] && w.days[5].exercises) ? w.days[5].exercises.length : 0), 0);
+      if (beforeCount !== afterCount || beforeDays !== afterDays || beforeSat !== afterSat) savePlan(activePlan);
       return;
     }
   } catch {}

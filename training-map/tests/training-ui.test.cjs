@@ -124,3 +124,25 @@ test('weekly muscle coverage weights exercises and ignores unknown ones', () => 
   assert.equal(Object.values(sets).some(v => Number.isNaN(v)), false);
   assert.equal(Object.keys(context.weeklyMuscleSets(null)).length, 0);
 });
+
+test('empty saturdays receive the small-muscle test and logged saturdays stay', () => {
+  const code = source.slice(source.indexOf('function fillEmptySaturdays'), source.indexOf('function loadPlan'));
+  const context = vm.createContext({
+    DEFAULT_BACKUP: {
+      plan: {
+        weeks: [{
+          week: 44,
+          days: [{}, {}, {}, {}, {}, { theme: '小肌群', exercises: [{ name: '平板支撑' }] }, {}],
+        }],
+      },
+    },
+  });
+  vm.runInContext(code, context);
+  const empty = { weeks: [{ week: 44, days: [{}, {}, {}, {}, {}, { theme: '—', kind: 'rest', exercises: [] }, {}] }] };
+  assert.equal(context.fillEmptySaturdays(empty), true);
+  assert.equal(empty.weeks[0].days[5].exercises[0].name, '平板支撑');
+
+  const logged = { weeks: [{ week: 44, days: [{}, {}, {}, {}, {}, { exercises: [{ name: '已有动作' }] }, {}] }] };
+  assert.equal(context.fillEmptySaturdays(logged), false);
+  assert.equal(logged.weeks[0].days[5].exercises[0].name, '已有动作');
+});
