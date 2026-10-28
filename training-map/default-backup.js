@@ -15,7 +15,7 @@ export const DEFAULT_BACKUP = {
     label: "2029-12-30 · 186cm · 85.5kg · 体脂 15% · FFMI 21 古典健美"
   },
   scores: {
-    ant_delt: 1, mid_delt: 1, rear_delt: 2,
+    ant_delt: 1, mid_delt: 2, rear_delt: 2,
     pec_u: 2, pec_s: 2, pec_l: 2, pec_min: 2,
     serr: 2, supra: 2, infra: 2, teres_min: 2,
     teres_maj: 3, subscap: 1, bi: 1, brachialis: 3,
@@ -84,7 +84,12 @@ export const DEFAULT_BACKUP = {
     "2026-10-27#0": { w: "42/45/50kg", r: "12/12/9", s: "4", feel: "42kg×12余力多→45kg×12×2→50kg×9（留1-2个，怕力竭）", done: true },
     "2026-10-27#1": { w: "50kg", r: "6/8", s: "4", feel: "排在卧推后；前2组6个、后2组8个", done: true },
     "2026-10-27#2": { w: "10kg", r: "12", s: "4", feel: "下周保持", done: true },
-    "2026-10-27#3": { w: "单只15kg", r: "8", s: "4", feel: "下周保持", done: true }
+    "2026-10-27#3": { w: "单只15kg", r: "8", s: "4", feel: "下周保持", done: true },
+    "2026-10-28#0": { w: "7.5kg", r: "12", s: "4", feel: "降重护肩", done: true },
+    "2026-10-28#1": { w: "7.5kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂；下周保持降重护肩、动作做标准", done: true },
+    "2026-10-28#2": { w: "25kg", r: "12", s: "4", feel: "肘内收", done: true },
+    "2026-10-28#3": { w: "20kg", r: "12", s: "4", feel: "开肘", done: true },
+    "2026-10-28#4": { w: "15kg", r: "12", s: "4", feel: "小重量更有感觉", done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12","2026-10-19","2026-10-26","2026-11-02"],
@@ -528,7 +533,7 @@ export const DEFAULT_BACKUP = {
       // ── W44 ─────────────────────────────────────────────────────
       {
         week: 44,
-        note: "倒蹬维持120kg，争取不用手扶；弓步走单只10kg、每边12步；腿弯举试50kg；卧推 42.5kg×10×4，下2周冲12个一组；周六小肌群测试",
+        note: "10/28肩日：哑铃上举/开合飞鸟7.5kg×12×4降重护肩；器械推肩25kg；反向飞鸟20kg+面拉15kg超级组。倒蹬维持120kg，争取不用手扶；弓步走单只10kg、每边12步；腿弯举试50kg；周六小肌群测试",
         days: [
           {
             theme: "背",
@@ -554,11 +559,11 @@ export const DEFAULT_BACKUP = {
             theme: "肩",
             kind: "normal",
             exercises: [
-              { name: "哑铃双臂上举", w: "10kg", r: "12", s: "4", feel: "", ss: 1, done: false },
-              { name: "哑铃开合飞鸟", w: "10kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂", ss: 1, done: false },
-              { name: "固定坐姿器械推肩", w: "20kg", r: "12", s: "4", feel: "肘内收", done: false },
-              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "开肘", ss: 2, done: false },
-              { name: "绳索面拉", w: "22.5kg", r: "12", s: "4", feel: "开肘；练完爬楼机20分钟；组间休50秒。", ss: 2, done: false }
+              { name: "哑铃双臂上举", w: "7.5kg", r: "12", s: "4", feel: "降重护肩", ss: 1, done: true },
+              { name: "哑铃开合飞鸟", w: "7.5kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂；下周保持降重护肩、动作做标准", ss: 1, done: true },
+              { name: "固定坐姿器械推肩", w: "25kg", r: "12", s: "4", feel: "肘内收", ss: 2, done: true },
+              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "开肘", ss: 2, done: true },
+              { name: "绳索面拉", w: "15kg", r: "12", s: "4", feel: "小重量更有感觉", ss: 2, done: true }
             ]
           },
           {
@@ -601,7 +606,7 @@ export const DEFAULT_BACKUP = {
       // ── W45 ─────────────────────────────────────────────────────
       {
         week: 45,
-        note: "倒蹬：若W44不用手扶完成再加重量，否则维持120kg；卧推50kg×12×4，坐姿推胸50kg冲12个；周六小肌群测试",
+        note: "倒蹬：若W44不用手扶完成再加重量，否则维持120kg；卧推50kg×12×4，坐姿推胸50kg冲12个；肩日降重护肩（哑铃7.5kg、面拉15kg、组数3）；周六小肌群测试",
         days: [
           {
             theme: "背",
@@ -627,11 +632,11 @@ export const DEFAULT_BACKUP = {
             theme: "肩",
             kind: "normal",
             exercises: [
-              { name: "哑铃双臂上举", w: "10kg", r: "12", s: "4", feel: "", ss: 1, done: false },
-              { name: "哑铃开合飞鸟", w: "10kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂", ss: 1, done: false },
-              { name: "固定坐姿器械推肩", w: "20kg", r: "12", s: "4", feel: "肘内收", done: false },
-              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "开肘", ss: 2, done: false },
-              { name: "绳索面拉", w: "22.5kg", r: "12", s: "4", feel: "开肘；练完爬楼机20分钟；组间休50秒。", ss: 2, done: false }
+              { name: "哑铃双臂上举", w: "7.5kg", r: "12", s: "3", feel: "降重护肩，动作做标准", ss: 1, done: false },
+              { name: "哑铃开合飞鸟", w: "7.5kg", r: "12", s: "3", feel: "稳定核心，小臂低于大臂；降重护肩、动作做标准", ss: 1, done: false },
+              { name: "固定坐姿器械推肩", w: "25kg", r: "12", s: "3", feel: "肘内收", ss: 2, done: false },
+              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "3", feel: "开肘", ss: 2, done: false },
+              { name: "绳索面拉", w: "15kg", r: "12", s: "3", feel: "开肘；小重量更有感觉；练完爬楼机20分钟；组间休50秒。", ss: 2, done: false }
             ]
           },
           {

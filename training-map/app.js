@@ -58,20 +58,20 @@ const GROUPS = [
   // === 胸与肩 ===
   { id:"ant_delt", name:"肩前束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Clavicular" },
-    evidence:{ ratio:.68, sessions:5 },
-    why:"2026-10-07 肩推 25kg×8，e1RM 32kg，参照 97kg，达到 33%。",
-    exercises:[{name:"哑铃肩推",have:true},{name:"颈前推",have:true},{name:"肩推",have:true},{name:"史密斯推胸",have:true},{name:"固定坐姿推胸",have:true},{name:"哑铃上斜推胸",have:true},{name:"哑铃坐姿推肩",have:true},{name:"固定坐姿器械推肩",have:true},{name:"阿诺德推",have:false}]
+    evidence:{ ratio:.68, sessions:6 },
+    why:"2026-10-28 固定坐姿器械推肩 25kg×12，e1RM 35kg，参照 97kg，达到 36%。哑铃双臂上举 7.5kg×12 为护肩降重。",
+    exercises:[{name:"哑铃肩推",have:true},{name:"哑铃双臂上举",have:true},{name:"颈前推",have:true},{name:"肩推",have:true},{name:"史密斯推胸",have:true},{name:"固定坐姿推胸",have:true},{name:"哑铃上斜推胸",have:true},{name:"哑铃坐姿推肩",have:true},{name:"固定坐姿器械推肩",have:true},{name:"阿诺德推",have:false}]
   },
   { id:"mid_delt", name:"肩中束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Acromial" },
-    evidence:{ ratio:.48, sessions:5 },
-    why:"2026-10-07 哑铃侧平举 5kg×10，e1RM 6.7kg，参照单只 23kg，达到 29%。",
-    exercises:[{name:"哑铃侧平举",have:true},{name:"绳索侧平举",have:true},{name:"肩推",have:true},{name:"哑铃飞鸟（侧平举）",have:true},{name:"哑铃坐姿推肩",have:true},{name:"固定坐姿器械推肩",have:true},{name:"哑铃直臂上举",have:false}]
+    evidence:{ ratio:.48, sessions:6 },
+    why:"2026-10-28 哑铃开合飞鸟 7.5kg×12，e1RM 10.5kg，参照单只 23kg，达到 46%。",
+    exercises:[{name:"哑铃侧平举",have:true},{name:"哑铃开合飞鸟",have:true},{name:"绳索侧平举",have:true},{name:"肩推",have:true},{name:"哑铃飞鸟（侧平举）",have:true},{name:"哑铃坐姿推肩",have:true},{name:"固定坐姿器械推肩",have:true},{name:"哑铃直臂上举",have:false}]
   },
   { id:"rear_delt", name:"肩后束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Scapular" },
-    evidence:{ ratio:.38, sessions:3 },
-    why:"2026-10-02 面拉 20kg×10，e1RM 27kg，参照 49kg，达到 54%。",
+    evidence:{ ratio:.38, sessions:4 },
+    why:"2026-10-28 蝴蝶机反向飞鸟 20kg×12，e1RM 28kg，参照 49kg，达到 57%。面拉 15kg×12 小重量更有感觉。",
     exercises:[{name:"面拉",have:true},{name:"绳索面拉",have:true},{name:"蝴蝶机反向飞鸟",have:true},{name:"俯身飞鸟",have:false},{name:"绳索后束拉",have:false}]
   },
   { id:"pec_u", name:"胸大肌锁骨头", region:"胸与肩",
@@ -358,7 +358,7 @@ function esc(s) {
 
 // ── Score storage ─────────────────────────────────────────────────
 let scores = {};
-const SCORES_VERSION = 5;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
+const SCORES_VERSION = 6;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
 
 function applyDefaultScores(target) {
   const defaults = DEFAULT_BACKUP.scores || {};
