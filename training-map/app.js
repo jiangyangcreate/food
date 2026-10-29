@@ -138,8 +138,8 @@ const GROUPS = [
   // === 手臂 ===
   { id:"bi", name:"肱二头肌", region:"手臂",
     match:{ nameAny:["Biceps Brachii","Short Head Of Biceps Brachii","Long Head Of Biceps Brachii","Biceps"] },
-    evidence:{ ratio:.75, sessions:6 },
-    why:"2026-09-25 二头弯举（EZ杆）20kg×10，e1RM 27kg，参照 69kg，达到 39%。",
+    evidence:{ ratio:.75, sessions:7 },
+    why:"2026-10-29 杠铃窄距弯举 25kg×12，e1RM 35kg，参照 69kg，达到 51%。",
     exercises:[{name:"哑铃弯举",have:true},{name:"锤式弯举",have:true},{name:"二头弯举",have:true},{name:"直杆绳索弯举",have:true},{name:"杠铃窄距弯举",have:true},{name:"杠铃宽距弯举",have:true},{name:"哑铃坐姿弯举",have:true},{name:"杠铃弯举",have:false}]
   },
   { id:"brachialis", name:"肱肌", region:"手臂",
@@ -150,20 +150,20 @@ const GROUPS = [
   },
   { id:"tri_long", name:"肱三头肌长头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Long Head" },
-    evidence:{ ratio:.6, sessions:5 },
-    why:"绳索下压/窄距卧推覆盖，长头需过头动作补充。",
+    evidence:{ ratio:.6, sessions:6 },
+    why:"2026-10-29 俯身哑铃臂屈伸 单只7.5kg×12，e1RM 10.5kg，参照单只 27kg，达到 39%。",
     exercises:[{name:"绳索下压",have:true},{name:"过头臂屈伸",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"哑铃过头臂屈伸",have:false}]
   },
   { id:"tri_lat", name:"肱三头肌外侧头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Lateral Head" },
-    evidence:{ ratio:.62, sessions:5 },
-    why:"2026-09-23 绳索臂屈伸 15kg×10，e1RM 20kg，参照 57kg，达到 35%。",
+    evidence:{ ratio:.62, sessions:6 },
+    why:"2026-10-29 绳索臂屈伸 15kg×12，e1RM 21kg，参照 57kg，达到 37%。",
     exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"俯身臂屈伸",have:false}]
   },
   { id:"tri_med", name:"肱三头肌内侧头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Medial Head" },
-    evidence:{ ratio:.55, sessions:4 },
-    why:"2026-09-23 绳索臂屈伸 15kg×10，e1RM 20kg，参照 57kg，达到 35%。",
+    evidence:{ ratio:.55, sessions:5 },
+    why:"2026-10-29 绳索臂屈伸 15kg×12，e1RM 21kg，参照 57kg，达到 37%。",
     exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"双杠臂屈伸",have:false}]
   },
   { id:"fore_flex", name:"前臂屈肌群", region:"手臂",
@@ -358,7 +358,7 @@ function esc(s) {
 
 // ── Score storage ─────────────────────────────────────────────────
 let scores = {};
-const SCORES_VERSION = 6;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
+const SCORES_VERSION = 7;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
 
 function applyDefaultScores(target) {
   const defaults = DEFAULT_BACKUP.scores || {};
@@ -1097,6 +1097,7 @@ const EXERCISE_MUSCLE = {
   "杠铃窄距弯举": { bi:.8, brachialis:.6, fore_flex:.4 },
   "哑铃坐姿臂屈伸": { tri_long:1, tri_lat:.6, tri_med:.4 },
   "俯身哑铃臂屈伸": { tri_long:.8, tri_lat:.6, tri_med:.4 },
+  "绳索臂屈伸":   { tri_lat:1, tri_med:.8, tri_long:.4 },
   "杠铃宽距弯举": { bi:1, brachialis:.3 },
   "哑铃坐姿弯举": { bi:1, brachialis:.4, fore_flex:.3 },
   "倒蹬机":       { quads:1, gmax:.7, add:.8, gmed:.2 },
