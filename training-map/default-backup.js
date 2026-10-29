@@ -18,8 +18,8 @@ export const DEFAULT_BACKUP = {
     ant_delt: 1, mid_delt: 2, rear_delt: 2,
     pec_u: 2, pec_s: 2, pec_l: 2, pec_min: 2,
     serr: 2, supra: 2, infra: 2, teres_min: 2,
-    teres_maj: 3, subscap: 1, bi: 1, brachialis: 3,
-    tri_long: 3, tri_lat: 1, tri_med: 1,
+    teres_maj: 3, subscap: 1, bi: 2, brachialis: 3,
+    tri_long: 1, tri_lat: 1, tri_med: 1,
     fore_flex: 2, fore_ext: 2,
     trap_u: 3, trap_m: 2, trap_l: 2,
     lats: 3, rhomb: 2, lev_scap: 2,
@@ -89,7 +89,12 @@ export const DEFAULT_BACKUP = {
     "2026-10-28#1": { w: "7.5kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂；下周保持降重护肩、动作做标准", done: true },
     "2026-10-28#2": { w: "25kg", r: "12", s: "4", feel: "肘内收", done: true },
     "2026-10-28#3": { w: "20kg", r: "12", s: "4", feel: "开肘", done: true },
-    "2026-10-28#4": { w: "15kg", r: "12", s: "4", feel: "小重量更有感觉", done: true }
+    "2026-10-28#4": { w: "15kg", r: "12", s: "4", feel: "小重量更有感觉", done: true },
+    "2026-10-29#0": { w: "20kg", r: "12", s: "4", feel: "这个强度合适", done: true },
+    "2026-10-29#1": { w: "25kg", r: "12", s: "4", feel: "这个强度合适", done: true },
+    "2026-10-29#2": { w: "单只10kg", r: "12", s: "4", feel: "提升了重量，增加了组间休息", done: true },
+    "2026-10-29#3": { w: "单只7.5kg", r: "12", s: "4", feel: "", done: true },
+    "2026-10-29#4": { w: "15kg", r: "12", s: "4", feel: "替代哑铃坐姿臂屈伸", done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12","2026-10-19","2026-10-26","2026-11-02"],
@@ -533,7 +538,7 @@ export const DEFAULT_BACKUP = {
       // ── W44 ─────────────────────────────────────────────────────
       {
         week: 44,
-        note: "10/28肩日：哑铃上举/开合飞鸟7.5kg×12×4降重护肩；器械推肩25kg；反向飞鸟20kg+面拉15kg超级组。倒蹬维持120kg，争取不用手扶；弓步走单只10kg、每边12步；腿弯举试50kg；周六小肌群测试",
+        note: "10/28肩日降重护肩已记。10/29手臂：直杆20kg、窄距25kg、坐姿弯举单只10kg；俯身臂屈伸单只7.5kg+绳索臂屈伸15kg（替坐姿臂屈伸）。倒蹬维持120kg，争取不用手扶；弓步走单只10kg、每边12步；腿弯举试50kg；周六小肌群测试",
         days: [
           {
             theme: "背",
@@ -570,12 +575,11 @@ export const DEFAULT_BACKUP = {
             theme: "手臂",
             kind: "normal",
             exercises: [
-              { name: "直杆绳索弯举", w: "15kg", r: "12", s: "4", feel: "夹肘", ss: 1, done: false },
-              { name: "杠铃窄距弯举", w: "20kg", r: "12", s: "4", feel: "夹肘", ss: 1, done: false },
-              { name: "哑铃坐姿臂屈伸", w: "单只10kg", r: "12", s: "4", feel: "核心稳定", ss: 2, done: false },
-              { name: "俯身哑铃臂屈伸", w: "单只5kg", r: "12", s: "4", feel: "", ss: 2, done: false },
-              { name: "杠铃宽距弯举", w: "17.5kg", r: "12", s: "4", feel: "肩后伸", ss: 3, done: false },
-              { name: "哑铃坐姿弯举", w: "单只8kg", r: "12", s: "4", feel: "练完爬楼机20分钟；组间休50秒。", ss: 3, done: false }
+              { name: "直杆绳索弯举", w: "20kg", r: "12", s: "4", feel: "这个强度合适", ss: 1, done: true },
+              { name: "杠铃窄距弯举", w: "25kg", r: "12", s: "4", feel: "这个强度合适", ss: 1, done: true },
+              { name: "哑铃坐姿弯举", w: "单只10kg", r: "12", s: "4", feel: "提升了重量，增加了组间休息", done: true },
+              { name: "俯身哑铃臂屈伸", w: "单只7.5kg", r: "12", s: "4", feel: "", ss: 2, done: true },
+              { name: "绳索臂屈伸", w: "15kg", r: "12", s: "4", feel: "替代哑铃坐姿臂屈伸", ss: 2, done: true }
             ]
           },
           {
@@ -606,7 +610,7 @@ export const DEFAULT_BACKUP = {
       // ── W45 ─────────────────────────────────────────────────────
       {
         week: 45,
-        note: "倒蹬：若W44不用手扶完成再加重量，否则维持120kg；卧推50kg×12×4，坐姿推胸50kg冲12个；肩日维持10/28重量（哑铃7.5kg、器械推肩25kg、面拉15kg×12×4），动作做标准；周六小肌群测试",
+        note: "倒蹬：若W44不用手扶完成再加重量，否则维持120kg；卧推50kg×12×4，坐姿推胸50kg冲12个；肩日维持10/28重量×12×4；手臂维持10/29重量×12×4，绳索臂屈伸替代坐姿臂屈伸；周六小肌群测试",
         days: [
           {
             theme: "背",
@@ -643,12 +647,12 @@ export const DEFAULT_BACKUP = {
             theme: "手臂",
             kind: "normal",
             exercises: [
-              { name: "直杆绳索弯举", w: "15kg", r: "12", s: "4", feel: "夹肘", ss: 1, done: false },
-              { name: "杠铃窄距弯举", w: "20kg", r: "12", s: "4", feel: "夹肘", ss: 1, done: false },
-              { name: "哑铃坐姿臂屈伸", w: "单只10kg", r: "12", s: "4", feel: "核心稳定", ss: 2, done: false },
-              { name: "俯身哑铃臂屈伸", w: "单只5kg", r: "12", s: "4", feel: "", ss: 2, done: false },
+              { name: "直杆绳索弯举", w: "20kg", r: "12", s: "4", feel: "保持10/29重量，这个强度合适", ss: 1, done: false },
+              { name: "杠铃窄距弯举", w: "25kg", r: "12", s: "4", feel: "保持10/29重量，这个强度合适", ss: 1, done: false },
+              { name: "绳索臂屈伸", w: "15kg", r: "12", s: "4", feel: "替代哑铃坐姿臂屈伸", ss: 2, done: false },
+              { name: "俯身哑铃臂屈伸", w: "单只7.5kg", r: "12", s: "4", feel: "保持10/29重量", ss: 2, done: false },
               { name: "杠铃宽距弯举", w: "17.5kg", r: "12", s: "4", feel: "肩后伸", ss: 3, done: false },
-              { name: "哑铃坐姿弯举", w: "单只8kg", r: "12", s: "4", feel: "练完爬楼机20分钟；组间休50秒。", ss: 3, done: false }
+              { name: "哑铃坐姿弯举", w: "单只10kg", r: "12", s: "4", feel: "提升后保持；增加组间休息", ss: 3, done: false }
             ]
           },
           {
