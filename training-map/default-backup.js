@@ -649,8 +649,8 @@ export const DEFAULT_BACKUP = {
             exercises: [
               { name: "直杆绳索弯举", w: "20kg", r: "12", s: "4", feel: "保持10/29重量，这个强度合适", ss: 1, done: false },
               { name: "杠铃窄距弯举", w: "25kg", r: "12", s: "4", feel: "保持10/29重量，这个强度合适", ss: 1, done: false },
-              { name: "绳索臂屈伸", w: "15kg", r: "12", s: "4", feel: "替代哑铃坐姿臂屈伸", ss: 2, done: false },
-              { name: "俯身哑铃臂屈伸", w: "单只7.5kg", r: "12", s: "4", feel: "保持10/29重量", ss: 2, done: false },
+              { name: "绳索臂屈伸", w: "20kg", r: "12", s: "4", feel: "替代哑铃坐姿臂屈伸", ss: 2, done: false },
+              { name: "俯身哑铃臂屈伸", w: "单只10kg", r: "12", s: "4", feel: "保持10/29重量", ss: 2, done: false },
               { name: "杠铃宽距弯举", w: "17.5kg", r: "12", s: "4", feel: "肩后伸", ss: 3, done: false },
               { name: "哑铃坐姿弯举", w: "单只10kg", r: "12", s: "4", feel: "提升后保持；增加组间休息", ss: 3, done: false }
             ]
