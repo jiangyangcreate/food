@@ -1142,8 +1142,8 @@
             <div class="selector-group full-row">
                 <label for="adjustSlider">🎯 热量调整</label>
                 <div class="adjust-slider-row">
-                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-10" />
-                    <span class="adjust-value" id="adjustValueLabel">−10% 缺口（减脂）</span>
+                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-15" />
+                    <span class="adjust-value" id="adjustValueLabel">−15% 缺口（减脂）</span>
                 </div>
                 <div class="hint">左移为热量缺口（减脂），右移为热量盈余（增肌），0 为维持</div>
             </div>
@@ -1360,7 +1360,7 @@
 
             const DIET_SETTINGS_KEY = 'food-diet-settings';
             // 身体数据存档版本：升级后旧的体重/体脂/身高/热量调整会被忽略一次，改用页面默认值
-            const BODY_DEFAULTS_VERSION = 4;
+            const BODY_DEFAULTS_VERSION = 5;
 
             const calValue = document.getElementById('calValue');
             const calKjValue = document.getElementById('calKjValue');
