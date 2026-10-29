@@ -1118,12 +1118,12 @@
         <div class="body-card" id="bodyCard">
             <div class="body-item">
                 <span class="label">体重</span>
-                <input type="number" id="weightInput" min="30" max="150" step="0.1" value="78.1" />
+                <input type="number" id="weightInput" min="30" max="150" step="0.1" value="77.6" />
                 <span class="unit">kg</span>
             </div>
             <div class="body-item">
                 <span class="label">体脂</span>
-                <input type="number" id="fatInput" min="5" max="45" step="0.1" value="15.3" />
+                <input type="number" id="fatInput" min="5" max="45" step="0.1" value="14.9" />
                 <span class="unit">%</span>
             </div>
             <div class="body-item">
@@ -1142,8 +1142,8 @@
             <div class="selector-group full-row">
                 <label for="adjustSlider">🎯 热量调整</label>
                 <div class="adjust-slider-row">
-                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-5" />
-                    <span class="adjust-value" id="adjustValueLabel">−5% 缺口（减脂）</span>
+                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-10" />
+                    <span class="adjust-value" id="adjustValueLabel">−10% 缺口（减脂）</span>
                 </div>
                 <div class="hint">左移为热量缺口（减脂），右移为热量盈余（增肌），0 为维持</div>
             </div>
@@ -1359,8 +1359,8 @@
             const exerciseKcalInput = document.getElementById('exerciseKcalInput');
 
             const DIET_SETTINGS_KEY = 'food-diet-settings';
-            // 身体数据存档版本：升级后旧的体重/体脂/身高会被忽略一次，改用页面默认值
-            const BODY_DEFAULTS_VERSION = 3;
+            // 身体数据存档版本：升级后旧的体重/体脂/身高/热量调整会被忽略一次，改用页面默认值
+            const BODY_DEFAULTS_VERSION = 4;
 
             const calValue = document.getElementById('calValue');
             const calKjValue = document.getElementById('calKjValue');
@@ -1594,8 +1594,8 @@
             }
 
             function updateMain() {
-                const weight = parseFloat(weightInput.value) || 78;
-                const bodyfat = parseFloat(fatInput.value) || 15.3;
+                const weight = parseFloat(weightInput.value) || 77.6;
+                const bodyfat = parseFloat(fatInput.value) || 14.9;
                 const palKey = palSelect.value;
                 const exerciseKcal = getExerciseKcal();
                 const adjustValue = parseInt(adjustSlider.value, 10) || 0;
@@ -2184,8 +2184,8 @@
                         if (s.weight != null) weightInput.value = s.weight;
                         if (s.bodyfat != null) fatInput.value = s.bodyfat;
                         if (s.height != null) heightInput.value = s.height;
+                        if (s.adjust != null) adjustSlider.value = s.adjust;
                     }
-                    if (s.adjust != null) adjustSlider.value = s.adjust;
                     if (s.pal != null) {
                         const palNorm = normalizePalKey(s.pal);
                         if (palSelect.querySelector(`option[value="${palNorm}"]`)) {
