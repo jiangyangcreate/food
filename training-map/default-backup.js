@@ -628,8 +628,7 @@ export const DEFAULT_BACKUP = {
             exercises: [
               { name: "杠铃卧推", w: "50kg", r: "12", s: "4", feel: "第一组冲12，后三组按余力做，别硬凑；组间休2-3分钟", done: false },
               { name: "固定坐姿推胸", w: "50kg", r: "12", s: "4", feel: "排在卧推后，争取12个×4；做不到就先稳8-10个", done: false },
-              { name: "站姿龙门架夹胸", w: "10kg", r: "12", s: "4", feel: "保持", done: false },
-              { name: "哑铃上斜推胸", w: "单只15kg", r: "8", s: "4", feel: "保持", done: false }
+              { name: "站姿龙门架夹胸", w: "10kg", r: "12", s: "4", feel: "保持", done: false }
             ]
           },
           {
