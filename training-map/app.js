@@ -16,8 +16,8 @@ const PLAN_KEY  = "training-plan-v1";
 
 // ── Target body stats ─────────────────────────────────────────────
 const GOAL = {
-  heightCm: 186, weightKg: 85.5, bfPct: 15, lbmKg: 72.7,
-  ffmi: 21, label: "2029-12-30 · 186cm · 85.5kg · 体脂 15% · FFMI 21 古典健美"
+  heightCm: 186, weightKg: 76, bfPct: 14, lbmKg: 65.4,
+  ffmi: 18.9, label: "2029-12-30 · 186cm · 76kg · 体脂 14% · FFMI 18.9 古典健美"
 };
 
 // ── Score color map ────────────────────────────────────────────────
@@ -265,7 +265,7 @@ const GROUPS = [
   { id:"quads", name:"股四头肌", region:"下肢",
     match:{ nameAny:["Quadriceps Femoris","Rectus Femoris","Vastus Lateralis","Vastus Medialis","Vastus Intermedius"] },
     evidence:{ ratio:.82, sessions:6 },
-    why:"2026-10-23 倒蹬配重 120kg×12，e1RM 168kg，参照 318kg，达到 53%。",
+    why:"2026-10-30 倒蹬配重 120kg×12，e1RM 168kg，参照 289kg，达到 58%。哑铃深蹲单只35kg×12，e1RM 49kg，参照单只50kg，达到 98%。",
     exercises:[{name:"坐式蹬腿",have:true},{name:"倒蹬机",have:true},{name:"坐姿腿伸展",have:true},{name:"深蹲",have:true},{name:"史密斯深蹲",have:true},{name:"哑铃深蹲",have:true},{name:"哑铃弓步走",have:true}]
   },
   { id:"sartorius", name:"缝匠肌", region:"下肢",
@@ -277,13 +277,13 @@ const GROUPS = [
   { id:"add", name:"内收肌群", region:"下肢",
     match:{ nameAny:["Adductor Magnus","Adductor Longus","Adductor Brevis","Gracilis","Pectineus"] },
     evidence:{ ratio:.70, sessions:6 },
-    why:"2026-10-23 倒蹬配重 120kg×12，e1RM 168kg，参照 318kg，达到 53%。内收机 40kg×15 为 46%。",
+    why:"2026-10-30 倒蹬配重 120kg×12，e1RM 168kg，参照 289kg，达到 58%。",
     exercises:[{name:"大腿内收",have:true},{name:"腿举宽站",have:true},{name:"深蹲",have:true},{name:"史密斯深蹲",have:true},{name:"哑铃深蹲",have:true},{name:"哑铃弓步走",have:true}]
   },
   { id:"gmax", name:"臀大肌", region:"下肢",
     match:{ nameAny:["Gluteus Maximus"] },
     evidence:{ ratio:.75, sessions:5 },
-    why:"2026-10-23 倒蹬配重 120kg×12，e1RM 168kg，参照 318kg，达到 53%。",
+    why:"2026-10-30 倒蹬配重 120kg×12，e1RM 168kg，参照 289kg，达到 58%。哑铃弓步走单只10kg×每边12步，相对参照单只24kg×12步达到 42%。",
     exercises:[{name:"坐式蹬腿",have:true},{name:"倒蹬机",have:true},{name:"罗马尼亚硬拉",have:true},{name:"臀推",have:true},{name:"史密斯深蹲",have:true},{name:"哑铃深蹲",have:true},{name:"哑铃弓步走",have:true}]
   },
   { id:"gmed", name:"臀中/小肌", region:"下肢",
@@ -295,13 +295,13 @@ const GROUPS = [
   { id:"semi", name:"半腱/半膜肌", region:"下肢",
     match:{ nameAny:["Semimembranosus","Semitendinosus"] },
     evidence:{ ratio:.72, sessions:5 },
-    why:"2026-09-28 坐姿腿弯举 50kg×12，e1RM 70kg，参照 111kg，达到 63%。",
+    why:"2026-10-30 坐姿腿弯举 50kg×12，e1RM 70kg，参照 101kg，达到 69%。",
     exercises:[{name:"坐姿腿弯举",have:true},{name:"罗马尼亚硬拉",have:true}]
   },
   { id:"bf", name:"股二头肌", region:"下肢",
     match:{ nameAny:["Biceps Femoris","Long Head Of Biceps Femoris","Short Head Of Biceps Femoris"] },
     evidence:{ ratio:.7, sessions:5 },
-    why:"2026-09-28 坐姿腿弯举 50kg×12，e1RM 70kg，参照 111kg，达到 63%。",
+    why:"2026-10-30 坐姿腿弯举 50kg×12，e1RM 70kg，参照 101kg，达到 69%。",
     exercises:[{name:"坐姿腿弯举",have:true},{name:"罗马尼亚硬拉",have:true},{name:"北欧腘绳肌弯举",have:false}]
   },
   { id:"gastroc_m", name:"腓肠肌内侧头", region:"下肢",
@@ -358,7 +358,7 @@ function esc(s) {
 
 // ── Score storage ─────────────────────────────────────────────────
 let scores = {};
-const SCORES_VERSION = 7;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
+const SCORES_VERSION = 8;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
 
 function applyDefaultScores(target) {
   const defaults = DEFAULT_BACKUP.scores || {};
