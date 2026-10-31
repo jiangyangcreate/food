@@ -84,7 +84,7 @@ const GROUPS = [
     match:{ name:"Pectoralis Major", detail:"Sternocostal" },
     evidence:{ ratio:.82, sessions:6 },
     why:"2026-10-27 固定坐姿推胸 50kg×8，e1RM 63kg，参照 123kg，达到 51%。卧推 50kg×9 为 49%。",
-    exercises:[{name:"平板卧推",have:true},{name:"器械推胸",have:true},{name:"绳索夹胸",have:true},{name:"史密斯推胸",have:true},{name:"固定坐姿推胸",have:true},{name:"站姿龙门架夹胸",have:true}]
+    exercises:[{name:"平板卧推",have:true},{name:"器械推胸",have:true},{name:"绳索夹胸",have:true},{name:"史密斯推胸",have:true},{name:"固定坐姿推胸",have:true},{name:"站姿龙门架夹胸",have:true},{name:"俯卧撑",have:true}]
   },
   { id:"pec_l", name:"胸大肌腹头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Abdominal" },
@@ -227,7 +227,7 @@ const GROUPS = [
   { id:"ql", name:"腰方肌", region:"核心",
     match:{ nameAny:["Quadratus Lumborum"] },
     evidence:{ ratio:.3, sessions:2, gap:true },
-    why:"腰方肌通过侧弯哑铃侧向屈曲脊柱直接激活；侧平板支撑的等长侧向支撑同样强烈刺激腰方肌。",
+    why:"2026-10-31 侧平板支撑 65秒，参照 120秒，达到 54%。",
     exercises:[{name:"侧弯哑铃",have:true},{name:"侧平板支撑",have:true},{name:"单侧负重步行",have:false}]
   },
   { id:"abs", name:"腹直肌", region:"核心",
@@ -239,19 +239,19 @@ const GROUPS = [
   { id:"obl", name:"腹外斜肌", region:"核心",
     match:{ nameAny:["Abdominal External Oblique","External Abdominal Oblique"] },
     evidence:{ ratio:.4, sessions:3 },
-    why:"有氧核心日有练；俄式转体的旋转动作专项激活腹外斜肌；侧平板支撑对腹斜肌的静态等长刺激显著。",
+    why:"2026-10-31 侧平板支撑 65秒，参照 120秒，达到 54%。",
     exercises:[{name:"俄式转体",have:true},{name:"侧平板支撑",have:true},{name:"斜向卷腹",have:false}]
   },
   { id:"obl_int", name:"腹内斜肌", region:"核心",
     match:{ nameAny:["Abdominal Internal Oblique","Internal Abdominal Oblique"] },
     evidence:{ ratio:.35, sessions:2, gap:true },
-    why:"内斜肌与外斜肌协同旋转；俄式转体同步激活腹内斜肌。",
-    exercises:[{name:"俄式转体",have:true},{name:"反向旋转卷腹",have:false},{name:"斜板仰卧起坐",have:false}]
+    why:"2026-10-31 侧平板支撑 65秒，参照 120秒，达到 54%。",
+    exercises:[{name:"侧平板支撑",have:true},{name:"俄式转体",have:true},{name:"反向旋转卷腹",have:false},{name:"斜板仰卧起坐",have:false}]
   },
   { id:"tva", name:"腹横肌", region:"核心",
     match:{ nameAny:["Transverse Abdominal","Transversus Abdominis"] },
     evidence:{ ratio:.2, sessions:1, gap:true },
-    why:"2026-09-24 平板支撑 75秒，参照 180秒，达到 42%。",
+    why:"2026-10-31 平板支撑 100秒，参照 180秒，达到 56%。",
     exercises:[{name:"平板支撑",have:true},{name:"侧平板支撑",have:true},{name:"腹式呼吸练习",have:false}]
   },
 
@@ -358,7 +358,7 @@ function esc(s) {
 
 // ── Score storage ─────────────────────────────────────────────────
 let scores = {};
-const SCORES_VERSION = 8;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
+const SCORES_VERSION = 9;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
 
 function applyDefaultScores(target) {
   const defaults = DEFAULT_BACKUP.scores || {};
@@ -1105,6 +1105,9 @@ const EXERCISE_MUSCLE = {
   "坐姿腿弯举":   { bf:1, semi:1, gastroc_m:.3, gastroc_l:.3 },
   "哑铃弓步走":   { quads:.8, gmax:.8, gmed:.6, add:.4, abs:.3 },
   "哑铃深蹲":     { quads:.8, gmax:.6, erector:.3, abs:.3 },
+  "平板支撑":     { tva:1, abs:.6, obl:.4, erector:.4 },
+  "侧平板支撑":   { ql:1, obl:1, obl_int:.8, gmed:.5 },
+  "俯卧撑":       { pec_s:1, pec_l:.6, pec_u:.4, ant_delt:.4, tri_lat:.5, tri_med:.5, tri_long:.3 },
 };
 
 // 单周各肌群的当周训练组数（加权）
