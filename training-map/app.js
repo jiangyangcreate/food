@@ -59,7 +59,7 @@ const GROUPS = [
   { id:"ant_delt", name:"肩前束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Clavicular" },
     evidence:{ ratio:.68, sessions:6 },
-    why:"2026-10-28 固定坐姿器械推肩 25kg×12，e1RM 35kg，参照 97kg，达到 36%。哑铃双臂上举 7.5kg×12 为护肩降重。",
+    why:"2026-10-28 固定坐姿器械推肩 25kg×12，e1RM 35kg，参照 85kg，达到 41%。哑铃双臂上举 7.5kg×12 为护肩降重。",
     exercises:[{name:"哑铃肩推",have:true},{name:"哑铃双臂上举",have:true},{name:"颈前推",have:true},{name:"肩推",have:true},{name:"史密斯推胸",have:true},{name:"固定坐姿推胸",have:true},{name:"哑铃上斜推胸",have:true},{name:"哑铃坐姿推肩",have:true},{name:"固定坐姿器械推肩",have:true},{name:"阿诺德推",have:false}]
   },
   { id:"mid_delt", name:"肩中束", region:"胸与肩",
@@ -71,7 +71,7 @@ const GROUPS = [
   { id:"rear_delt", name:"肩后束", region:"胸与肩",
     match:{ name:"Deltoid", detail:"Scapular" },
     evidence:{ ratio:.38, sessions:4 },
-    why:"2026-10-28 蝴蝶机反向飞鸟 20kg×12，e1RM 28kg，参照 49kg，达到 57%。面拉 15kg×12 小重量更有感觉。",
+    why:"2026-10-28 蝴蝶机反向飞鸟 20kg×12，e1RM 28kg，参照 43kg，达到 65%。面拉 15kg×12 小重量更有感觉。",
     exercises:[{name:"面拉",have:true},{name:"绳索面拉",have:true},{name:"蝴蝶机反向飞鸟",have:true},{name:"俯身飞鸟",have:false},{name:"绳索后束拉",have:false}]
   },
   { id:"pec_u", name:"胸大肌锁骨头", region:"胸与肩",
@@ -151,19 +151,19 @@ const GROUPS = [
   { id:"tri_long", name:"肱三头肌长头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Long Head" },
     evidence:{ ratio:.6, sessions:6 },
-    why:"2026-10-29 俯身哑铃臂屈伸 单只7.5kg×12，e1RM 10.5kg，参照单只 27kg，达到 39%。",
+    why:"2026-10-29 俯身哑铃臂屈伸 单只7.5kg×12，e1RM 10.5kg，参照单只 23kg，达到 46%。",
     exercises:[{name:"绳索下压",have:true},{name:"过头臂屈伸",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"哑铃过头臂屈伸",have:false}]
   },
   { id:"tri_lat", name:"肱三头肌外侧头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Lateral Head" },
     evidence:{ ratio:.62, sessions:6 },
-    why:"2026-10-29 绳索臂屈伸 15kg×12，e1RM 21kg，参照 57kg，达到 37%。",
+    why:"2026-10-29 绳索臂屈伸 15kg×12，e1RM 21kg，参照 50kg，达到 42%。",
     exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"俯身臂屈伸",have:false}]
   },
   { id:"tri_med", name:"肱三头肌内侧头", region:"手臂",
     match:{ name:"Triceps Brachii", detail:"Medial Head" },
     evidence:{ ratio:.55, sessions:5 },
-    why:"2026-10-29 绳索臂屈伸 15kg×12，e1RM 21kg，参照 57kg，达到 37%。",
+    why:"2026-10-29 绳索臂屈伸 15kg×12，e1RM 21kg，参照 50kg，达到 42%。",
     exercises:[{name:"绳索下压",have:true},{name:"绳索臂屈伸",have:true},{name:"窄距俯卧撑",have:true},{name:"哑铃坐姿臂屈伸",have:true},{name:"俯身哑铃臂屈伸",have:true},{name:"双杠臂屈伸",have:false}]
   },
   { id:"fore_flex", name:"前臂屈肌群", region:"手臂",
@@ -189,7 +189,7 @@ const GROUPS = [
   { id:"trap_m", name:"斜方肌中束", region:"背",
     match:{ name:"Trapezius", detail:"Transverse" },
     evidence:{ ratio:.72, sessions:5 },
-    why:"2026-10-26 坐姿划船 40kg×12，e1RM 56kg，参照 99kg，达到 57%。",
+    why:"2026-10-26 坐姿划船 40kg×12，e1RM 56kg，参照 86kg，达到 65%。",
     exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"固定器械划船",have:true},{name:"T杠划船",have:true},{name:"面拉",have:true},{name:"绳索面拉",have:true}]
   },
   { id:"trap_l", name:"斜方肌下束", region:"背",
@@ -207,7 +207,7 @@ const GROUPS = [
   { id:"rhomb", name:"菱形肌", region:"背",
     match:{ nameAny:["Rhomboid Major","Rhomboid Minor"] },
     evidence:{ ratio:.72, sessions:4 },
-    why:"2026-10-26 坐姿划船 40kg×12，e1RM 56kg，参照 99kg，达到 57%。",
+    why:"2026-10-26 坐姿划船 40kg×12，e1RM 56kg，参照 86kg，达到 65%。",
     exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"固定器械划船",have:true},{name:"面拉",have:true},{name:"绳索面拉",have:true}]
   },
   { id:"lev_scap", name:"肩胛提肌", region:"背",
@@ -358,7 +358,7 @@ function esc(s) {
 
 // ── Score storage ─────────────────────────────────────────────────
 let scores = {};
-const SCORES_VERSION = 9;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
+const SCORES_VERSION = 10;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
 
 function applyDefaultScores(target) {
   const defaults = DEFAULT_BACKUP.scores || {};

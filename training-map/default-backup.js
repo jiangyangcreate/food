@@ -15,14 +15,14 @@ export const DEFAULT_BACKUP = {
     label: "2029-12-30 · 186cm · 76kg · 体脂 14% · FFMI 18.9 古典健美"
   },
   scores: {
-    ant_delt: 1, mid_delt: 2, rear_delt: 2,
+    ant_delt: 2, mid_delt: 2, rear_delt: 3,
     pec_u: 2, pec_s: 2, pec_l: 2, pec_min: 2,
     serr: 2, supra: 2, infra: 2, teres_min: 2,
     teres_maj: 3, subscap: 1, bi: 2, brachialis: 3,
-    tri_long: 1, tri_lat: 1, tri_med: 1,
+    tri_long: 2, tri_lat: 2, tri_med: 2,
     fore_flex: 2, fore_ext: 2,
-    trap_u: 3, trap_m: 2, trap_l: 2,
-    lats: 3, rhomb: 2, lev_scap: 2,
+    trap_u: 3, trap_m: 3, trap_l: 2,
+    lats: 3, rhomb: 3, lev_scap: 2,
     erector: 2, ql: 2, abs: 3, obl: 2, obl_int: 2, tva: 2,
     hip: 2, quads: 4, sartorius: 1, add: 2,
     gmax: 2, gmed: 3, semi: 3, bf: 3,
