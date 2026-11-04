@@ -626,7 +626,7 @@ export const DEFAULT_BACKUP = {
               { name: "对握宽手下拉", w: "50kg", r: "12", s: "4", feel: "身体中立位", done: false },
               { name: "坐姿窄距下拉", w: "40kg", r: "12", s: "4", feel: "换更窄的工具", done: false },
               { name: "高位下拉", w: "40kg", r: "12", s: "4", feel: "手肘向下回旋", done: false },
-              { name: "固定器械划船", w: "40kg", r: "12", s: "4", feel: "全周伸；练完爬楼机20分钟；组间休50秒。", done: false }
+              { name: "固定器械划船", w: "40kg", r: "12", s: "4", feel: "", done: false }
             ]
           },
           {
@@ -641,14 +641,10 @@ export const DEFAULT_BACKUP = {
             ]
           },
           {
-            theme: "肩",
+            theme: "有氧",
             kind: "normal",
             exercises: [
-              { name: "哑铃双臂上举", w: "7.5kg", r: "12", s: "4", feel: "保持10/28重量，动作做标准", ss: 1, done: false },
-              { name: "哑铃开合飞鸟", w: "7.5kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂；保持10/28重量，动作做标准", ss: 1, done: false },
-              { name: "固定坐姿器械推肩", w: "25kg", r: "12", s: "4", feel: "肘内收", ss: 2, done: false },
-              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "开肘", ss: 2, done: false },
-              { name: "绳索面拉", w: "15kg", r: "12", s: "4", feel: "开肘；小重量更有感觉；练完爬楼机20分钟；组间休50秒。", ss: 2, done: false }
+              { name: "跑步机", w: "—", r: "30分钟 / 坡度 9 / 速度 6", s: "1", feel: "全周伸；组间休50秒。", done: false }
             ]
           },
           {
@@ -674,7 +670,7 @@ export const DEFAULT_BACKUP = {
             ]
           },
           {
-            theme: "小肌群",
+            theme: "小肌群 / 肩",
             kind: "normal",
             exercises: [
               { name: "平板支撑", w: "自重", r: "110秒", s: "3", feel: "对照10/31最长100秒", done: false },
@@ -682,7 +678,13 @@ export const DEFAULT_BACKUP = {
               { name: "侧卧哑铃外旋", w: "单只2kg", r: "12", s: "3", feel: "测试冈下、小圆；肘贴身，没有2kg就用最轻的哑铃", done: false },
               { name: "Y字哑铃上举", w: "3kg", r: "15", s: "3", feel: "斜方下束；肩不适即停", done: false },
               { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "胫骨前肌", done: false },
-              { name: "屈膝提踵", w: "自重", r: "15", s: "3", feel: "测试比目鱼肌；膝盖弯曲，慢起，顶峰停2秒", done: false }
+              { name: "屈膝提踵", w: "自重", r: "15", s: "3", feel: "测试比目鱼肌；膝盖弯曲，慢起，顶峰停2秒", done: false },
+              { name: "哑铃双臂上举", w: "7.5kg", r: "12", s: "4", feel: "保持10/28重量，动作做标准", ss: 1, done: false },
+              { name: "哑铃开合飞鸟", w: "7.5kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂；保持10/28重量，动作做标准", ss: 1, done: false },
+              { name: "固定坐姿器械推肩", w: "25kg", r: "12", s: "4", feel: "肘内收", ss: 2, done: false },
+              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "开肘", ss: 2, done: false },
+              { name: "绳索面拉", w: "15kg", r: "12", s: "4", feel: "开肘；小重量更有感觉", ss: 2, done: false },
+              { name: "跑步机", w: "—", r: "30分钟 / 坡度 9 / 速度 6", s: "1", feel: "全周伸；组间休50秒。", done: false }
             ]
           },
           { theme: "—", kind: "rest", exercises: [] }
