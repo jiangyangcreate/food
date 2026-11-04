@@ -644,7 +644,7 @@ export const DEFAULT_BACKUP = {
             theme: "有氧",
             kind: "normal",
             exercises: [
-              { name: "爬楼机", w: "—", r: "30分钟 / 坡度 9 / 速度 6", s: "1", feel: "全周伸；组间休50秒。", done: false }
+              { name: "跑步机", w: "—", r: "30分钟 / 坡度 9 / 速度 6", s: "1", feel: "全周伸；组间休50秒。", done: false }
             ]
           },
           {
@@ -683,7 +683,8 @@ export const DEFAULT_BACKUP = {
               { name: "哑铃开合飞鸟", w: "7.5kg", r: "12", s: "4", feel: "稳定核心，小臂低于大臂；保持10/28重量，动作做标准", ss: 1, done: false },
               { name: "固定坐姿器械推肩", w: "25kg", r: "12", s: "4", feel: "肘内收", ss: 2, done: false },
               { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "开肘", ss: 2, done: false },
-              { name: "绳索面拉", w: "15kg", r: "12", s: "4", feel: "开肘；小重量更有感觉；全周伸；练完爬楼机30分钟 / 坡度 9 / 速度 6；组间休50秒。", ss: 2, done: false }
+              { name: "绳索面拉", w: "15kg", r: "12", s: "4", feel: "开肘；小重量更有感觉", ss: 2, done: false },
+              { name: "跑步机", w: "—", r: "30分钟 / 坡度 9 / 速度 6", s: "1", feel: "全周伸；组间休50秒。", done: false }
             ]
           },
           { theme: "—", kind: "rest", exercises: [] }
