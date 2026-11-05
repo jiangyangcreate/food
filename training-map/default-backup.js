@@ -101,7 +101,10 @@ export const DEFAULT_BACKUP = {
     "2026-10-30#3": { w: "单只10kg", r: "每边12步", s: "4", feel: "维持10kg；4组", done: true },
     "2026-10-31#0": { w: "自重", r: "100秒", s: "3", feel: "最长100秒", done: true },
     "2026-10-31#1": { w: "自重", r: "每边65秒", s: "2", feel: "最长65秒", done: true },
-    "2026-10-31#5": { w: "自重", r: "30", s: "1", feel: "约40秒；接近力竭但未到，自认做不到40个", done: true }
+    "2026-10-31#5": { w: "自重", r: "30", s: "1", feel: "约40秒；接近力竭但未到，自认做不到40个", done: true },
+    "2026-11-05#0": { w: "120kg", r: "12", s: "4", feel: "右手拇指受伤，避免抓握，和周五手臂对调。维持120；自重53kg合计约173kg", done: true },
+    "2026-11-05#2": { w: "52.5kg", r: "12", s: "4", feel: "比上次有提高，下周维持 52.5kg", done: true },
+    "2026-11-05#4": { w: "57/64kg", r: "12", s: "3+1", feel: "比上次有提高，下周维持 64kg", done: true }
   },
   plan: {
     weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12","2026-10-19","2026-10-26","2026-11-02"],
@@ -648,6 +651,18 @@ export const DEFAULT_BACKUP = {
             ]
           },
           {
+            theme: "腿",
+            kind: "normal",
+            note: "右手拇指受伤，避免抓握，和周五手臂对调",
+            exercises: [
+              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "右手拇指受伤，避免抓握，和周五手臂对调。维持120；自重53kg合计约173kg", done: true },
+              { name: "哑铃深蹲", w: "单只40kg", r: "12", s: "4", feel: "挑战；史密斯已并入哑铃深蹲", done: false },
+              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "比上次有提高，下周维持 52.5kg", done: true },
+              { name: "哑铃弓步走", w: "单只10kg", r: "每边12步", s: "4", feel: "维持10kg；4组", done: false },
+              { name: "臀外展", w: "57/64kg", r: "12", s: "3+1", feel: "比上次有提高，下周维持 64kg", done: true }
+            ]
+          },
+          {
             theme: "手臂",
             kind: "normal",
             exercises: [
@@ -657,16 +672,6 @@ export const DEFAULT_BACKUP = {
               { name: "俯身哑铃臂屈伸", w: "单只10kg", r: "12", s: "4", feel: "保持10/29重量", ss: 2, done: false },
               { name: "杠铃宽距弯举", w: "17.5kg", r: "12", s: "4", feel: "肩后伸", ss: 3, done: false },
               { name: "哑铃坐姿弯举", w: "单只10kg", r: "12", s: "4", feel: "提升后保持；增加组间休息", ss: 3, done: false }
-            ]
-          },
-          {
-            theme: "腿",
-            kind: "normal",
-            exercises: [
-              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "维持120；自重53kg合计约173kg", done: false },
-              { name: "哑铃深蹲", w: "单只40kg", r: "12", s: "4", feel: "挑战；史密斯已并入哑铃深蹲", done: false },
-              { name: "坐姿腿弯举", w: "55kg", r: "12", s: "4", feel: "上次50kg，本次试55kg", done: false },
-              { name: "哑铃弓步走", w: "单只10kg", r: "每边12步", s: "4", feel: "维持10kg；4组", done: false }
             ]
           },
           {
