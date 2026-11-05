@@ -310,39 +310,6 @@
             padding-left: 4px;
         }
 
-        .exercise-kcal-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 4px;
-        }
-
-        .exercise-kcal-row input[type="number"] {
-            flex: 1;
-            min-width: 0;
-            padding: 10px 12px;
-            border-radius: var(--radius-sm);
-            border: 2px solid var(--border);
-            background: var(--card);
-            color: var(--text-primary);
-            font-size: 15px;
-            font-weight: 600;
-            outline: none;
-            transition: var(--transition);
-        }
-
-        .exercise-kcal-row input[type="number"]:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.10);
-        }
-
-        .exercise-kcal-row .unit {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-muted);
-            flex-shrink: 0;
-        }
-
         .adjust-slider-row {
             display: flex;
             align-items: center;
@@ -1142,33 +1109,19 @@
             <div class="selector-group full-row">
                 <label for="adjustSlider">🎯 热量调整</label>
                 <div class="adjust-slider-row">
-                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-15" />
-                    <span class="adjust-value" id="adjustValueLabel">−15% 缺口（减脂）</span>
+                    <input type="range" id="adjustSlider" min="-20" max="20" step="1" value="-10" />
+                    <span class="adjust-value" id="adjustValueLabel">−10% 缺口（减脂）</span>
                 </div>
                 <div class="hint">左移为热量缺口（减脂），右移为热量盈余（增肌），0 为维持</div>
             </div>
             <div class="selector-group">
                 <label for="palSelect">💼 日常活动量</label>
-                <select id="palSelect"> 
-                    <option value="home" selected>🏠 居家/办公 PAL 1.2</option>
-                    <option value="outdoor">🚶 外出 PAL 1.3</option>
+                <select id="palSelect">
+                    <option value="home">1.2 居家办公</option>
+                    <option value="base" selected>1.3 日常基础训练（默认）</option>
+                    <option value="strength">1.4 大肌群力量训练+跑步</option>
                 </select>
                 <div class="hint">高强度运动（如跑步、跳绳）会产生较多步数，需避免重复计算可摘下运动手表</div>
-            </div>
-            <div class="selector-group">
-                <label for="exerciseSelect">🏋️ 训练（额外热量）</label>
-                <select id="exerciseSelect">
-                    <option value="rest" selected>😴 休息（无额外运动）+0 kcal</option>
-                    <option value="run30">🏃 慢跑 30 分钟 +250 kcal</option>
-                    <option value="strength60">🏋️ 力量训练 60 分钟 +300 kcal</option>
-                    <option value="strength90">🏋️ 力量训练 90 分钟 +450 kcal</option>
-                    <option value="custom">✏️ 手动输入</option>
-                </select>
-                <div class="exercise-kcal-row">
-                    <input type="number" id="exerciseKcalInput" min="0" max="3000" step="1" value="0" aria-label="训练额外热量" />
-                    <span class="unit">kcal</span>
-                </div>
-                <div class="hint">快捷选项会填入下方数值，也可直接输入自定义热量；在 TDEE 基础上额外叠加</div>
             </div>
         </div>
 
@@ -1229,8 +1182,8 @@
                 </div>
                 <div class="formula-item">
                     <span class="tag">TDEE</span>
-                    <span class="expr">BMR × PAL + 训练额外热量</span>
-                    <span class="note">(根据日常活动量和训练消耗计算)</span>
+                    <span class="expr">BMR × PAL</span>
+                    <span class="note">(根据日常活动量计算)</span>
                 </div>
                 <div class="formula-item">
                     <span class="tag">目标调整</span>
@@ -1267,7 +1220,7 @@
                 </div>
             </div>
             <div class="footnote">
-                ⚠️ PAL 为日常活动量系数（根据日常活动量计算），训练消耗在 TDEE 基础上单独叠加。 <br/>
+                ⚠️ PAL 为日常活动量系数，TDEE = BMR × PAL。 <br/>
                 💡 热量盈亏按 TDEE 百分比计算：负号为热量缺口（减脂），正号为热量盈余（增肌），幅度 0~20%。
             </div>
         </div>
@@ -1355,8 +1308,7 @@
             const adjustSlider = document.getElementById('adjustSlider');
             const adjustValueLabel = document.getElementById('adjustValueLabel');
             const palSelect = document.getElementById('palSelect');
-            const exerciseSelect = document.getElementById('exerciseSelect');
-            const exerciseKcalInput = document.getElementById('exerciseKcalInput');
+            const DEFAULT_ADJUST_PERCENT = -10;
 
             const DIET_SETTINGS_KEY = 'food-diet-settings';
             // 身体数据存档版本：升级后旧的体重/体脂/身高/热量调整会被忽略一次，改用页面默认值
@@ -1387,12 +1339,9 @@
 
             // ---------- 初始食物数据（与 食物清单.json 一致，文件加载失败时使用） ----------
             const defaultFoods = [
-                { id: '1792745902629_qdff91sx', name: '鸡胸', weight: 300, servings: 1,
+                { id: '1792745902629_qdff91sx', name: '鸡胸', weight: 300, servings: 0,
                     proteinPer100: 24, carbsPer100: 1, fatPer100: 2,
                     caloriesPer100gKJ: 549, price: 8.9 },
-                { id: 'egg', name: '鸡蛋', weight: 50, servings: 6,
-                    proteinPer100: 13.1, carbsPer100: 2.4, fatPer100: 8.6,
-                    caloriesPer100gKJ: 581.6, price: 1 },
                 { id: 'soft_tofu', name: '嫩豆腐', weight: 350, servings: 0,
                     proteinPer100: 3.8, carbsPer100: 2.9, fatPer100: 1.9,
                     caloriesPer100gKJ: 189, price: 2.39 },
@@ -1402,22 +1351,13 @@
                 { id: 'maodou', name: '毛豆粒', weight: 200, servings: 0,
                     proteinPer100: 10, carbsPer100: 10, fatPer100: 5,
                     caloriesPer100gKJ: 523, price: 5.9 },
-                { id: '1792733582299_7t3oq1xi', name: '干米', weight: 10, servings: 20,
-                    proteinPer100: 7.7, carbsPer100: 80, fatPer100: 0.9,
-                    caloriesPer100gKJ: 1530, price: 0.24 },
-                { id: '1792733010896_5mjdlm1x', name: '希腊酸奶', weight: 820, servings: 0,
-                    proteinPer100: 10.2, carbsPer100: 4.5, fatPer100: 0,
-                    caloriesPer100gKJ: 250, price: 31.5 },
-                { id: 'frozen_shrimp', name: '冻虾仁', weight: 150, servings: 0,
-                    proteinPer100: 17.4, carbsPer100: 0, fatPer100: 0,
-                    caloriesPer100gKJ: 290.1, price: 9.9 },
                 { id: 'basafish', name: '巴沙鱼', weight: 250, servings: 0,
                     proteinPer100: 9.6, carbsPer100: 1.8, fatPer100: 4.2,
                     caloriesPer100gKJ: 349.8, price: 9.8 },
                 { id: 'chicken_dumpling', name: '鸡肉蒸饺', weight: 20, servings: 0,
                     proteinPer100: 6.6, carbsPer100: 17, fatPer100: 1.9,
                     caloriesPer100gKJ: 427, price: 0.59 },
-                { id: 'fresh_shrimp', name: '鲜虾仁', weight: 180, servings: 1,
+                { id: 'fresh_shrimp', name: '鲜虾仁', weight: 180, servings: 0,
                     proteinPer100: 12.7, carbsPer100: 0, fatPer100: 0.6,
                     caloriesPer100gKJ: 238, price: 17.5 },
                 { id: 'corn', name: '玉米粒', weight: 60, servings: 0,
@@ -1426,21 +1366,33 @@
                 { id: 'coriander', name: '香菜', weight: 100, servings: 0,
                     proteinPer100: 2.1, carbsPer100: 3.7, fatPer100: 0.5,
                     caloriesPer100gKJ: 96.2, price: 0 },
-                { id: 'leafy_green', name: '时蔬·叶菜', weight: 100, servings: 5,
-                    proteinPer100: 2, carbsPer100: 3, fatPer100: 0.3,
-                    caloriesPer100gKJ: 90, price: 2 },
-                { id: 'mushroom', name: '时蔬·菌菇', weight: 100, servings: 0,
-                    proteinPer100: 2.5, carbsPer100: 4, fatPer100: 0.5,
-                    caloriesPer100gKJ: 120, price: 0 },
-                { id: 'sprout', name: '时蔬·芽苗', weight: 100, servings: 0,
-                    proteinPer100: 3, carbsPer100: 4, fatPer100: 0.2,
-                    caloriesPer100gKJ: 120, price: 0 },
                 { id: '1792734061739_119f66os', name: '水', weight: 100, servings: 0,
                     proteinPer100: 0, carbsPer100: 0, fatPer100: 0,
                     caloriesPer100gKJ: 0, price: 0 },
-                { id: '1792748164950_86lrxfrp', name: '藤椒', weight: 50, servings: 0.5,
+                { id: '1792748164950_86lrxfrp', name: '藤椒', weight: 50, servings: 0,
                     proteinPer100: 0, carbsPer100: 0, fatPer100: 0,
                     caloriesPer100gKJ: 0, price: 2.9 },
+                { id: 'sprout', name: '时蔬·芽苗', weight: 100, servings: 0,
+                    proteinPer100: 3, carbsPer100: 4, fatPer100: 0.2,
+                    caloriesPer100gKJ: 120, price: 1 },
+                { id: 'mushroom', name: '时蔬·菌菇', weight: 100, servings: 0,
+                    proteinPer100: 2.5, carbsPer100: 4, fatPer100: 0.5,
+                    caloriesPer100gKJ: 120, price: 1 },
+                { id: 'leafy_green', name: '时蔬·叶菜', weight: 100, servings: 5,
+                    proteinPer100: 2, carbsPer100: 3, fatPer100: 0.3,
+                    caloriesPer100gKJ: 90, price: 2 },
+                { id: '1793847145844_kxyincqi', name: '鸡里脊', weight: 300, servings: 1,
+                    proteinPer100: 19.5, carbsPer100: 4.2, fatPer100: 1.5,
+                    caloriesPer100gKJ: 458, price: 14.9 },
+                { id: 'frozen_shrimp', name: '冻虾仁', weight: 150, servings: 2,
+                    proteinPer100: 17.4, carbsPer100: 0, fatPer100: 0,
+                    caloriesPer100gKJ: 290.1, price: 9.9 },
+                { id: 'egg', name: '鸡蛋', weight: 50, servings: 5,
+                    proteinPer100: 13.1, carbsPer100: 2.4, fatPer100: 8.6,
+                    caloriesPer100gKJ: 581.6, price: 1 },
+                { id: '1792733582299_7t3oq1xi', name: '干米', weight: 10, servings: 17,
+                    proteinPer100: 7.7, carbsPer100: 80, fatPer100: 0.9,
+                    caloriesPer100gKJ: 1530, price: 0.24 },
             ];
 
             // 当前食物数组
@@ -1470,20 +1422,16 @@
             }
 
             // ---------- 计算函数 ----------
-            const PAL_TIERS = { home: 1.2, outdoor: 1.3 };
+            const PAL_TIERS = { home: 1.2, base: 1.3, strength: 1.4 };
+            const DEFAULT_PAL_KEY = 'base';
             const LEGACY_PAL_KEY = {
                 bedrest: 'home',
                 sedentary: 'home',
                 light: 'home',
                 office: 'home',
-                moderate: 'outdoor',
-                active: 'outdoor',
-            };
-            const EXERCISE_PRESETS = {
-                rest: 0,
-                run30: 250,
-                strength60: 300,
-                strength90: 450,
+                outdoor: 'base',
+                moderate: 'base',
+                active: 'base',
             };
 
             function normalizePalKey(palKey) {
@@ -1494,40 +1442,19 @@
                     const closest = Object.entries(PAL_TIERS).reduce((best, [key, val]) => {
                         const d = Math.abs(val - n);
                         return d < best.d ? { key, d } : best;
-                    }, { key: 'home', d: Infinity });
+                    }, { key: DEFAULT_PAL_KEY, d: Infinity });
                     return closest.key;
                 }
-                return 'home';
+                return DEFAULT_PAL_KEY;
             }
 
             function getPAL(palKey) {
                 return PAL_TIERS[normalizePalKey(palKey)];
             }
 
-            function parseExerciseKcal(raw) {
-                const n = parseInt(raw, 10);
-                if (isNaN(n) || n < 0) return 0;
-                const max = parseInt(exerciseKcalInput.max, 10);
-                if (!isNaN(max) && n > max) return max;
-                return n;
-            }
-
-            function getExerciseKcal() {
-                return parseExerciseKcal(exerciseKcalInput.value);
-            }
-
-            function syncExerciseSelectFromKcal() {
-                const kcal = getExerciseKcal();
-                const match = Object.entries(EXERCISE_PRESETS).find(([, v]) => v === kcal);
-                exerciseSelect.value = match ? match[0] : 'custom';
-            }
-
-            function applyExercisePreset(key) {
-                if (key === 'custom') return;
-                const preset = EXERCISE_PRESETS[key];
-                if (preset !== undefined) {
-                    exerciseKcalInput.value = String(preset);
-                }
+            function readAdjustPercent() {
+                const parsed = parseInt(adjustSlider.value, 10);
+                return Number.isNaN(parsed) ? DEFAULT_ADJUST_PERCENT : parsed;
             }
 
             function getFatRatio(goal) {
@@ -1538,12 +1465,11 @@
                 return goal === 'bulk' ? 2.2 : 2.6;
             }
 
-            function compute(weight, bodyfat, adjustValue, palKey, exerciseKcal) {
+            function compute(weight, bodyfat, adjustValue, palKey) {
                 const ffm = weight * (1 - bodyfat / 100);
                 const bmr = (52.6 * weight + 828 + 1960) / 4.184; // 新加坡华人公式 (Camps 2016)，男性
                 const pal = getPAL(palKey);
-                const exercise = parseExerciseKcal(exerciseKcal);
-                const tdee = bmr * pal + exercise;
+                const tdee = bmr * pal;
 
                 const goal = adjustValue < 0 ? 'cut' : 'bulk';
                 const proteinCoeff = getProteinCoeff(goal);
@@ -1580,14 +1506,13 @@
                     fatRatio,
                     ffm: Math.round(ffm * 10) / 10,
                     pal,
-                    exercise,
                     goal,
                 };
             }
 
             // ---------- 更新主结果 ----------
             function updateAdjustLabel() {
-                const v = parseInt(adjustSlider.value, 10) || 0;
+                const v = readAdjustPercent();
                 if (v < 0) adjustValueLabel.textContent = `−${Math.abs(v)}% 缺口（减脂）`;
                 else if (v > 0) adjustValueLabel.textContent = `+${v}% 盈余（增肌）`;
                 else adjustValueLabel.textContent = `0% 维持`;
@@ -1597,10 +1522,9 @@
                 const weight = parseFloat(weightInput.value) || 77.9;
                 const bodyfat = parseFloat(fatInput.value) || 13.5;
                 const palKey = palSelect.value;
-                const exerciseKcal = getExerciseKcal();
-                const adjustValue = parseInt(adjustSlider.value, 10) || 0;
+                const adjustValue = readAdjustPercent();
 
-                const result = compute(weight, bodyfat, adjustValue, palKey, exerciseKcal);
+                const result = compute(weight, bodyfat, adjustValue, palKey);
 
                 ffmDisplay.textContent = result.ffm.toFixed(1);
 
@@ -1620,19 +1544,13 @@
                 fatValue.textContent = result.fat.toFixed(1);
 
                 const goalLabel = adjustValue < 0 ? '🔥 减脂期' : (adjustValue > 0 ? '💪 增肌期' : '⚖️ 维持期');
-                const palMap = { home: '居家/办公', outdoor: '外出' };
-                const palLabel = palMap[normalizePalKey(palKey)] || '居家/办公';
-                const exerciseKey = exerciseSelect.value;
-                const exerciseMap = {
-                    rest: '休息',
-                    run30: '慢跑30分',
-                    strength60: '力量60分',
-                    strength90: '力量90分',
-                    custom: '手动训练',
+                const palMap = {
+                    home: '居家办公',
+                    base: '日常基础训练',
+                    strength: '大肌群力量训练+跑步',
                 };
-                const exLabel = exerciseMap[exerciseKey] || '训练';
-                const exText = result.exercise > 0 ? ` +${result.exercise}kcal` : '';
-                calSub.textContent = `${goalLabel} · ${palLabel} PAL ${result.pal.toFixed(2)} · ${exLabel}${exText}`;
+                const palLabel = palMap[normalizePalKey(palKey)] || '日常基础训练';
+                calSub.textContent = `${goalLabel} · ${palLabel} PAL ${result.pal.toFixed(2)}`;
                 proteinSub.textContent = `${result.proteinCoeff}g/kg FFM · 基于去脂体重`;
                 carboSub.textContent = `剩余热量 · ${Math.round(result.cRatio)}%`;
                 fatSub.textContent = `${Math.round(result.fatRatio * 100)}% 总热量`;
@@ -2192,16 +2110,6 @@
                             palSelect.value = palNorm;
                         }
                     }
-                    if (s.exerciseKcal != null) {
-                        exerciseKcalInput.value = String(parseExerciseKcal(s.exerciseKcal));
-                    } else if (s.exerciseKey != null) {
-                        applyExercisePreset(normalizeExerciseKey(s.exerciseKey));
-                    }
-                    if (s.exerciseKey === 'custom') {
-                        exerciseSelect.value = 'custom';
-                    } else {
-                        syncExerciseSelectFromKcal();
-                    }
                 } catch (_) { /* ignore corrupt settings */ }
             }
 
@@ -2214,15 +2122,8 @@
                         height: heightInput.value,
                         adjust: adjustSlider.value,
                         pal: palSelect.value,
-                        exerciseKey: exerciseSelect.value,
-                        exerciseKcal: getExerciseKcal(),
                     }));
                 } catch (_) { /* quota / private mode */ }
-            }
-
-            function normalizeExerciseKey(key) {
-                if (key in EXERCISE_PRESETS || key === 'custom') return key;
-                return 'rest';
             }
 
             // ---------- 绑定事件 ----------
@@ -2251,19 +2152,6 @@
                 updateMain();
             });
             palSelect.addEventListener('change', updateMain);
-            exerciseSelect.addEventListener('change', function() {
-                applyExercisePreset(exerciseSelect.value);
-                updateMain();
-            });
-            exerciseKcalInput.addEventListener('input', function() {
-                syncExerciseSelectFromKcal();
-                updateMain();
-            });
-            exerciseKcalInput.addEventListener('change', function() {
-                this.value = String(getExerciseKcal());
-                syncExerciseSelectFromKcal();
-                updateMain();
-            });
 
             clearServingsBtn.addEventListener('click', clearAllServings);
             addFoodBtn.addEventListener('click', addFood);
