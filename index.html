@@ -1133,7 +1133,7 @@
             </div>
             <div class="body-note">
                 去脂体重 (FFM) = <strong id="ffmDisplay">0.0</strong> kg · FFMI = <strong id="ffmiDisplay">0.0</strong>
-                <span id="ffmiHint"></span> · BMR 采用 Katch‑McArdle 公式（基于 FFM）
+                <span id="ffmiHint"></span> · BMR 采用新加坡华人公式 (Camps 2016, 按体重和性别)
             </div>
         </div>
 
@@ -1207,7 +1207,7 @@
 
             <div class="extra-info">
                 <div class="info-item">
-                    <span>🧬 BMR（Katch‑McArdle）</span>
+                    <span>🧬 BMR（新加坡华人公式 (Camps 2016, 按体重和性别)）</span>
                     <strong id="bmrDisplay">0</strong><span> kcal</span>
                 </div>
                 <div class="info-item">
@@ -1224,8 +1224,8 @@
             <div class="formula-grid">
                 <div class="formula-item">
                     <span class="tag">BMR</span>
-                    <span class="expr">370 + 21.6 × FFM</span>
-                    <span class="note">(Katch‑McArdle，基于去脂体重)</span>
+                    <span class="expr">(52.6 × 体重 + 828 + 1960) ÷ 4.184</span>
+                    <span class="note">(新加坡华人公式 (Camps 2016, 按体重和性别))</span>
                 </div>
                 <div class="formula-item">
                     <span class="tag">TDEE</span>
@@ -1540,7 +1540,7 @@
 
             function compute(weight, bodyfat, adjustValue, palKey, exerciseKcal) {
                 const ffm = weight * (1 - bodyfat / 100);
-                const bmr = 370 + 21.6 * ffm; // Katch-McArdle
+                const bmr = (52.6 * weight + 828 + 1960) / 4.184; // 新加坡华人公式 (Camps 2016)，男性
                 const pal = getPAL(palKey);
                 const exercise = parseExerciseKcal(exerciseKcal);
                 const tdee = bmr * pal + exercise;
