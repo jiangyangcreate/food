@@ -5,23 +5,12 @@
       "id": "1792745902629_qdff91sx",
       "name": "鸡胸",
       "weight": 300,
-      "servings": 1,
+      "servings": 0,
       "proteinPer100": 24,
       "carbsPer100": 1,
       "fatPer100": 2,
       "caloriesPer100gKJ": 549,
       "price": 8.9
-    },
-    {
-      "id": "egg",
-      "name": "鸡蛋",
-      "weight": 50,
-      "servings": 6,
-      "proteinPer100": 13.1,
-      "carbsPer100": 2.4,
-      "fatPer100": 8.6,
-      "caloriesPer100gKJ": 581.6,
-      "price": 1
     },
     {
       "id": "soft_tofu",
@@ -57,39 +46,6 @@
       "price": 5.9
     },
     {
-      "id": "1792733582299_7t3oq1xi",
-      "name": "干米",
-      "weight": 10,
-      "servings": 20,
-      "proteinPer100": 7.7,
-      "carbsPer100": 80,
-      "fatPer100": 0.9,
-      "caloriesPer100gKJ": 1530,
-      "price": 0.24
-    },
-    {
-      "id": "1792733010896_5mjdlm1x",
-      "name": "希腊酸奶",
-      "weight": 820,
-      "servings": 0,
-      "proteinPer100": 10.2,
-      "carbsPer100": 4.5,
-      "fatPer100": 0,
-      "caloriesPer100gKJ": 250,
-      "price": 31.5
-    },
-    {
-      "id": "frozen_shrimp",
-      "name": "冻虾仁",
-      "weight": 150,
-      "servings": 0,
-      "proteinPer100": 17.4,
-      "carbsPer100": 0,
-      "fatPer100": 0,
-      "caloriesPer100gKJ": 290.1,
-      "price": 9.9
-    },
-    {
       "id": "basafish",
       "name": "巴沙鱼",
       "weight": 250,
@@ -115,7 +71,7 @@
       "id": "fresh_shrimp",
       "name": "鲜虾仁",
       "weight": 180,
-      "servings": 1,
+      "servings": 0,
       "proteinPer100": 12.7,
       "carbsPer100": 0,
       "fatPer100": 0.6,
@@ -145,39 +101,6 @@
       "price": 0
     },
     {
-      "id": "leafy_green",
-      "name": "时蔬·叶菜",
-      "weight": 100,
-      "servings": 5,
-      "proteinPer100": 2,
-      "carbsPer100": 3,
-      "fatPer100": 0.3,
-      "caloriesPer100gKJ": 90,
-      "price": 2
-    },
-    {
-      "id": "mushroom",
-      "name": "时蔬·菌菇",
-      "weight": 100,
-      "servings": 0,
-      "proteinPer100": 2.5,
-      "carbsPer100": 4,
-      "fatPer100": 0.5,
-      "caloriesPer100gKJ": 120,
-      "price": 0
-    },
-    {
-      "id": "sprout",
-      "name": "时蔬·芽苗",
-      "weight": 100,
-      "servings": 0,
-      "proteinPer100": 3,
-      "carbsPer100": 4,
-      "fatPer100": 0.2,
-      "caloriesPer100gKJ": 120,
-      "price": 0
-    },
-    {
       "id": "1792734061739_119f66os",
       "name": "水",
       "weight": 100,
@@ -192,12 +115,89 @@
       "id": "1792748164950_86lrxfrp",
       "name": "藤椒",
       "weight": 50,
-      "servings": 0.5,
+      "servings": 0,
       "proteinPer100": 0,
       "carbsPer100": 0,
       "fatPer100": 0,
       "caloriesPer100gKJ": 0,
       "price": 2.9
+    },
+    {
+      "id": "sprout",
+      "name": "时蔬·芽苗",
+      "weight": 100,
+      "servings": 0,
+      "proteinPer100": 3,
+      "carbsPer100": 4,
+      "fatPer100": 0.2,
+      "caloriesPer100gKJ": 120,
+      "price": 1
+    },
+    {
+      "id": "mushroom",
+      "name": "时蔬·菌菇",
+      "weight": 100,
+      "servings": 0,
+      "proteinPer100": 2.5,
+      "carbsPer100": 4,
+      "fatPer100": 0.5,
+      "caloriesPer100gKJ": 120,
+      "price": 1
+    },
+    {
+      "id": "leafy_green",
+      "name": "时蔬·叶菜",
+      "weight": 100,
+      "servings": 5,
+      "proteinPer100": 2,
+      "carbsPer100": 3,
+      "fatPer100": 0.3,
+      "caloriesPer100gKJ": 90,
+      "price": 2
+    },
+    {
+      "id": "1793847145844_kxyincqi",
+      "name": "鸡里脊",
+      "weight": 300,
+      "servings": 1,
+      "proteinPer100": 19.5,
+      "carbsPer100": 4.2,
+      "fatPer100": 1.5,
+      "caloriesPer100gKJ": 458,
+      "price": 14.9
+    },
+    {
+      "id": "frozen_shrimp",
+      "name": "冻虾仁",
+      "weight": 150,
+      "servings": 2,
+      "proteinPer100": 17.4,
+      "carbsPer100": 0,
+      "fatPer100": 0,
+      "caloriesPer100gKJ": 290.1,
+      "price": 9.9
+    },
+    {
+      "id": "egg",
+      "name": "鸡蛋",
+      "weight": 50,
+      "servings": 5,
+      "proteinPer100": 13.1,
+      "carbsPer100": 2.4,
+      "fatPer100": 8.6,
+      "caloriesPer100gKJ": 581.6,
+      "price": 1
+    },
+    {
+      "id": "1792733582299_7t3oq1xi",
+      "name": "干米",
+      "weight": 10,
+      "servings": 17,
+      "proteinPer100": 7.7,
+      "carbsPer100": 80,
+      "fatPer100": 0.9,
+      "caloriesPer100gKJ": 1530,
+      "price": 0.24
     }
   ]
 }
