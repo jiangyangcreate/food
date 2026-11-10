@@ -83,7 +83,7 @@ const GROUPS = [
   { id:"pec_s", name:"胸大肌胸肋头", region:"胸与肩",
     match:{ name:"Pectoralis Major", detail:"Sternocostal" },
     evidence:{ ratio:.82, sessions:6 },
-    why:"2026-10-27 固定坐姿推胸 50kg×8，e1RM 63kg，参照 123kg，达到 51%。卧推 50kg×9 为 49%。",
+    why:"2026-11-10 固定坐姿推胸 55kg×8，e1RM 70kg，参照 107kg，达到 65%。杠铃卧推 60kg×2，e1RM 64kg，参照 117kg，达到 55%。",
     exercises:[{name:"平板卧推",have:true},{name:"器械推胸",have:true},{name:"绳索夹胸",have:true},{name:"史密斯推胸",have:true},{name:"固定坐姿推胸",have:true},{name:"站姿龙门架夹胸",have:true},{name:"俯卧撑",have:true}]
   },
   { id:"pec_l", name:"胸大肌腹头", region:"胸与肩",
@@ -358,7 +358,7 @@ function esc(s) {
 
 // ── Score storage ─────────────────────────────────────────────────
 let scores = {};
-const SCORES_VERSION = 10;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
+const SCORES_VERSION = 11;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
 
 function applyDefaultScores(target) {
   const defaults = DEFAULT_BACKUP.scores || {};
