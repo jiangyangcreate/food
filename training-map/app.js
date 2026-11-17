@@ -13,6 +13,7 @@ import { DEFAULT_BACKUP } from "./default-backup.js";
 const SCORE_KEY = "muscle-scores-goal-v2";
 const LOG_KEY   = "training-log-edits-v1";
 const PLAN_KEY  = "training-plan-v1";
+const PLAN_VERSION = 2;   // 内置课表更新后 +1。旧存档里第 46 周及以后会套用一次新课表，更早的周不动。
 
 // ── Target body stats ─────────────────────────────────────────────
 const GOAL = {
@@ -189,7 +190,7 @@ const GROUPS = [
   { id:"trap_m", name:"斜方肌中束", region:"背",
     match:{ name:"Trapezius", detail:"Transverse" },
     evidence:{ ratio:.72, sessions:5 },
-    why:"2026-10-26 坐姿划船 40kg×12，e1RM 56kg，参照 86kg，达到 65%。",
+    why:"2026-11-09 坐姿划船 50kg×12，e1RM 70kg，参照 86kg，达到 81%。",
     exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"固定器械划船",have:true},{name:"T杠划船",have:true},{name:"面拉",have:true},{name:"绳索面拉",have:true}]
   },
   { id:"trap_l", name:"斜方肌下束", region:"背",
@@ -207,7 +208,7 @@ const GROUPS = [
   { id:"rhomb", name:"菱形肌", region:"背",
     match:{ nameAny:["Rhomboid Major","Rhomboid Minor"] },
     evidence:{ ratio:.72, sessions:4 },
-    why:"2026-10-26 坐姿划船 40kg×12，e1RM 56kg，参照 86kg，达到 65%。",
+    why:"2026-11-09 坐姿划船 50kg×12，e1RM 70kg，参照 86kg，达到 81%。",
     exercises:[{name:"坐姿绳索划船",have:true},{name:"坐姿划船",have:true},{name:"固定器械划船",have:true},{name:"面拉",have:true},{name:"绳索面拉",have:true}]
   },
   { id:"lev_scap", name:"肩胛提肌", region:"背",
@@ -251,7 +252,7 @@ const GROUPS = [
   { id:"tva", name:"腹横肌", region:"核心",
     match:{ nameAny:["Transverse Abdominal","Transversus Abdominis"] },
     evidence:{ ratio:.2, sessions:1, gap:true },
-    why:"2026-10-31 平板支撑 100秒，参照 180秒，达到 56%。",
+    why:"2026-11-15 平板支撑 115秒，参照 180秒，达到 64%。",
     exercises:[{name:"平板支撑",have:true},{name:"侧平板支撑",have:true},{name:"腹式呼吸练习",have:false}]
   },
 
@@ -265,7 +266,7 @@ const GROUPS = [
   { id:"quads", name:"股四头肌", region:"下肢",
     match:{ nameAny:["Quadriceps Femoris","Rectus Femoris","Vastus Lateralis","Vastus Medialis","Vastus Intermedius"] },
     evidence:{ ratio:.82, sessions:6 },
-    why:"2026-10-30 倒蹬配重 120kg×12，e1RM 168kg，参照 289kg，达到 58%。哑铃深蹲单只35kg×12，e1RM 49kg，参照单只50kg，达到 98%。",
+    why:"2026-11-05 倒蹬配重 120kg×12，e1RM 168kg，参照 289kg，达到 58%。",
     exercises:[{name:"坐式蹬腿",have:true},{name:"倒蹬机",have:true},{name:"坐姿腿伸展",have:true},{name:"深蹲",have:true},{name:"史密斯深蹲",have:true},{name:"哑铃深蹲",have:true},{name:"哑铃弓步走",have:true}]
   },
   { id:"sartorius", name:"缝匠肌", region:"下肢",
@@ -358,7 +359,7 @@ function esc(s) {
 
 // ── Score storage ─────────────────────────────────────────────────
 let scores = {};
-const SCORES_VERSION = 11;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
+const SCORES_VERSION = 12;   // 更新内置评分后 +1，旧存档会一次性套用新默认值。分数按 ./评分规则.md 写死，不要在页面里自动计算
 
 function applyDefaultScores(target) {
   const defaults = DEFAULT_BACKUP.scores || {};
@@ -448,11 +449,25 @@ function fillEmptySaturdays(plan) {
   return changed;
 }
 
+// 已打开过页面的浏览器不会自动改写已有周。课表版本落后时，只把第 46 周及以后换成当前备份。
+function upgradeStoredPlan(stored) {
+  if (!stored || (stored.planVersion || 0) >= PLAN_VERSION) return false;
+  const backupWeeks = (DEFAULT_BACKUP.plan && DEFAULT_BACKUP.plan.weeks) || [];
+  const byWeek = new Map((stored.weeks || []).map(w => [w.week, w]));
+  backupWeeks.forEach(w => {
+    if (w.week >= 46) byWeek.set(w.week, JSON.parse(JSON.stringify(w)));
+  });
+  stored.weeks = [...byWeek.values()].sort((a, b) => a.week - b.week);
+  stored.planVersion = PLAN_VERSION;
+  return true;
+}
+
 function loadPlan() {
   try {
     const raw = localStorage.getItem(PLAN_KEY);
     if (raw) {
       const stored = JSON.parse(raw);
+      const upgraded = upgradeStoredPlan(stored);
       const beforeCount = (stored.weeks || []).length;
       const beforeDays = (stored.weeks || []).reduce((n, w) => n + ((w.days || []).length), 0);
       const beforeSat = (stored.weeks || []).reduce((n, w) => n + (((w.days || [])[5] && w.days[5].exercises) ? w.days[5].exercises.length : 0), 0);
@@ -460,7 +475,7 @@ function loadPlan() {
       const afterCount = activePlan.weeks.length;
       const afterDays = activePlan.weeks.reduce((n, w) => n + w.days.length, 0);
       const afterSat = activePlan.weeks.reduce((n, w) => n + ((w.days[5] && w.days[5].exercises) ? w.days[5].exercises.length : 0), 0);
-      if (beforeCount !== afterCount || beforeDays !== afterDays || beforeSat !== afterSat) savePlan(activePlan);
+      if (upgraded || beforeCount !== afterCount || beforeDays !== afterDays || beforeSat !== afterSat) savePlan(activePlan);
       return;
     }
   } catch {}

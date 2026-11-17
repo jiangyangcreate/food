@@ -146,3 +146,35 @@ test('empty saturdays receive the small-muscle test and logged saturdays stay', 
   assert.equal(context.fillEmptySaturdays(logged), false);
   assert.equal(logged.weeks[0].days[5].exercises[0].name, '已有动作');
 });
+
+test('an older saved plan adopts weeks 46 and later once, and leaves earlier weeks', () => {
+  const code = source.slice(source.indexOf('function upgradeStoredPlan'), source.indexOf('function loadPlan'));
+  const context = vm.createContext({
+    PLAN_VERSION: 2,
+    DEFAULT_BACKUP: {
+      plan: {
+        weeks: [
+          { week: 45, days: [{ theme: '新' }] },
+          { week: 46, days: [{ theme: '背' }] },
+          { week: 48, days: [{ theme: '背' }] },
+        ],
+      },
+    },
+  });
+  vm.runInContext(code, context);
+  const stored = {
+    weeks: [
+      { week: 45, days: [{ theme: '旧' }] },
+      { week: 46, days: [{ theme: '旧背' }] },
+    ],
+  };
+  assert.equal(context.upgradeStoredPlan(stored), true);
+  assert.equal(stored.weeks.find(w => w.week === 45).days[0].theme, '旧');
+  assert.equal(stored.weeks.find(w => w.week === 46).days[0].theme, '背');
+  assert.equal(stored.weeks.find(w => w.week === 48).days[0].theme, '背');
+  assert.equal(stored.planVersion, 2);
+  assert.equal(context.upgradeStoredPlan(stored), false);
+  stored.weeks[1].days[0].theme = '手改';
+  assert.equal(context.upgradeStoredPlan(stored), false);
+  assert.equal(stored.weeks[1].days[0].theme, '手改');
+});
