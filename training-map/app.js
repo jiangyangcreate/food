@@ -13,7 +13,7 @@ import { DEFAULT_BACKUP } from "./default-backup.js";
 const SCORE_KEY = "muscle-scores-goal-v2";
 const LOG_KEY   = "training-log-edits-v1";
 const PLAN_KEY  = "training-plan-v1";
-const PLAN_VERSION = 3;   // 内置课表更新后 +1。旧存档里第 46 周及以后会套用一次新课表，更早的周不动。
+const PLAN_VERSION = 2;   // 内置课表更新后 +1。旧存档里第 46 周及以后会套用一次新课表，更早的周不动。
 
 // ── Target body stats ─────────────────────────────────────────────
 const GOAL = {
