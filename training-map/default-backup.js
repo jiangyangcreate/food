@@ -139,7 +139,13 @@ export const DEFAULT_BACKUP = {
     "2026-11-17#2": { w: "7.5kg", r: "12", s: "4", feel: "肩部和背部经过三个动作后力量明显下滑，尤其这几天提升重量后。", done: true },
     "2026-11-18#0": { w: "57kg", r: "8", s: "4", feel: "", done: true },
     "2026-11-18#1": { w: "57kg", r: "8", s: "4", feel: "", done: true },
-    "2026-11-18#2": { w: "减重/辅助21kg", r: "8", s: "2", feel: "辅助减重，不是加重。肩部和背部经过三个动作后力量明显下滑，尤其这几天提升重量后。", done: true }
+    "2026-11-18#2": { w: "减重/辅助21kg", r: "8", s: "2", feel: "辅助减重，不是加重。肩部和背部经过三个动作后力量明显下滑，尤其这几天提升重量后。", done: true },
+    "2026-11-19#rest": { w: "—", r: "—", s: "—", feel: "太累，未练", done: false },
+    "2026-11-20#rest": { w: "—", r: "—", s: "—", feel: "周五没练", done: false },
+    "2026-11-21#0": { w: "20kg", r: "8", s: "4", feel: "膝盖微微内扣，不要让腰受力，直杆顺着胫骨上下；20kg拉完大腿后侧很舒服", done: true },
+    "2026-11-21#1": { w: "65kg", r: "8", s: "4", feel: "用户记为大腿外展。", done: true },
+    "2026-11-21#2": { w: "自重", r: "10", s: "4", feel: "", done: true },
+    "2026-11-21#3": { w: "—", r: "20分钟 / 坡度 0 / 速度 9", s: "1", feel: "今天主要是提高体能以及大腿的后侧部分，让前后更加均衡", done: true }
   },
   plan: {
     planVersion: 2,
@@ -826,38 +832,26 @@ export const DEFAULT_BACKUP = {
             ]
           },
           {
-            theme: "胸+肩B",
-            kind: "normal",
-            exercises: [
-              { name: "低位绳索飞鸟", w: "每边5kg", r: "12", s: "4", feel: "", done: false },
-              { name: "哑铃仰卧上拉", w: "10kg", r: "12", s: "3", feel: "", done: false },
-              { name: "哑铃开合飞鸟", w: "7.5kg", r: "12", s: "4", feel: "", ss: 1, done: false },
-              { name: "侧卧哑铃外旋", w: "单只2kg", r: "12", s: "4", feel: "", ss: 1, done: false },
-              { name: "蝴蝶机反向飞鸟", w: "20kg", r: "12", s: "4", feel: "", ss: 2, done: false },
-              { name: "绳索面拉", w: "15kg", r: "12", s: "4", feel: "", ss: 2, done: false },
-              { name: "俯卧Y字抬臂", w: "自重", r: "12", s: "4", feel: "", done: false }
-            ]
+            theme: "周四未练",
+            kind: "rest",
+            note: "太累，未练",
+            exercises: []
           },
           {
-            theme: "腿",
-            kind: "normal",
-            exercises: [
-              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "停顿慢速；配重，器械自重 53kg 不计入", done: false },
-              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "", done: false },
-              { name: "臀外展", w: "64kg", r: "12", s: "4", feel: "", done: false },
-              { name: "自重弓步走", w: "自重", r: "每边12步", s: "4", feel: "右手拇指未愈，不拿哑铃", done: false },
-              { name: "屈膝提踵", w: "自重", r: "15", s: "3", feel: "顶峰停 2 秒", done: false }
-            ]
+            theme: "周五未练",
+            kind: "rest",
+            note: "周五没练",
+            exercises: []
           },
           {
-            theme: "核心",
+            theme: "腿 / 有氧",
             kind: "normal",
+            note: "今天主要是提高体能以及大腿的后侧部分，让前后更加均衡",
             exercises: [
-              { name: "平板支撑", w: "自重", r: "115秒", s: "3", feel: "", done: false },
-              { name: "侧平板支撑", w: "自重", r: "每边70秒", s: "2", feel: "", done: false },
-              { name: "死虫", w: "自重", r: "每边10", s: "3", feel: "", done: false },
-              { name: "山羊挺身", w: "自重", r: "15", s: "3", feel: "", done: false },
-              { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "", done: false }
+              { name: "硬拉", w: "20kg", r: "8", s: "4", feel: "膝盖微微内扣，不要让腰受力，直杆顺着胫骨上下；20kg拉完大腿后侧很舒服", done: true },
+              { name: "臀外展", w: "65kg", r: "8", s: "4", feel: "用户记为大腿外展。", done: true },
+              { name: "悬垂举腿", w: "自重", r: "10", s: "4", feel: "", done: true },
+              { name: "跑步机", w: "—", r: "20分钟 / 坡度 0 / 速度 9", s: "1", feel: "今天主要是提高体能以及大腿的后侧部分，让前后更加均衡", done: true }
             ]
           },
           { theme: "—", kind: "rest", exercises: [] }
