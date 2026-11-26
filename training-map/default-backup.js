@@ -8,11 +8,11 @@ export const DEFAULT_BACKUP = {
   exportedAt: "2026-11-17T03:00:00.000Z",
   goal: {
     heightCm: 186,
-    weightKg: 76,
-    bfPct: 14,
-    lbmKg: 65.4,
-    ffmi: 18.9,
-    label: "2029-12-30 · 186cm · 76kg · 体脂 14% · FFMI 18.9 古典健美"
+    weightKg: 75,
+    bfPct: 10,
+    lbmKg: 67.5,
+    ffmi: 19.5,
+    label: "2026-12-27 减脂 · 186cm · 75kg · 体脂 10% · LBM 67.5kg · FFMI 19.5；长期 2029-12-30 古典健美仍保留"
   },
   scores: {
     ant_delt: 2, mid_delt: 2, rear_delt: 3,
@@ -157,8 +157,8 @@ export const DEFAULT_BACKUP = {
   },
   plan: {
     planVersion: 2,
-    weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12","2026-10-19","2026-10-26","2026-11-02","2026-11-09","2026-11-16","2026-11-23","2026-11-30"],
-    weekNos: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49],
+    weekMondays: ["2026-08-31","2026-09-07","2026-09-14","2026-09-21","2026-09-28","2026-10-05","2026-10-12","2026-10-19","2026-10-26","2026-11-02","2026-11-09","2026-11-16","2026-11-23","2026-11-30","2026-12-07","2026-12-14","2026-12-21"],
+    weekNos: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52],
     weeks: [
       // ── W36 ─────────────────────────────────────────────────────
       {
@@ -939,7 +939,7 @@ export const DEFAULT_BACKUP = {
       // ── W49 ─────────────────────────────────────────────────────
       {
         week: 49,
-        note: "",
+        note: "减脂至 2026-12-27：75kg / 体脂 10% / LBM 67.5kg / FFMI 19.5。重量维持，不按增肌加码。每次约 1 小时。不上斜。周三跑步机 25 分钟（坡度 9 / 速度 6）。周六练完可选轻松走 15–20 分钟，不是必做。",
         days: [
           {
             theme: "背",
@@ -966,7 +966,220 @@ export const DEFAULT_BACKUP = {
             theme: "有氧",
             kind: "normal",
             exercises: [
-              { name: "跑步机", w: "—", r: "40分钟 / 坡度 9 / 速度 6", s: "1", feel: "", done: false }
+              { name: "跑步机", w: "—", r: "25分钟 / 坡度 9 / 速度 6", s: "1", feel: "减脂期过渡 25 分钟，不跳到 40 分钟。坡度 9 / 速度 6。", done: false }
+            ]
+          },
+          {
+            theme: "胸+肩B",
+            kind: "normal",
+            exercises: [
+              { name: "低位绳索飞鸟", w: "每边下一档", r: "12", s: "4", feel: "相对每边 5kg 加一档", done: false },
+              { name: "哑铃仰卧上拉", w: "12kg", r: "12", s: "4", feel: "", done: false },
+              { name: "哑铃开合飞鸟", w: "7.5kg", r: "15", s: "4", feel: "", ss: 1, done: false },
+              { name: "侧卧哑铃外旋", w: "单只3kg", r: "12", s: "4", feel: "", ss: 1, done: false },
+              { name: "蝴蝶机反向飞鸟", w: "22.5kg", r: "12", s: "4", feel: "", ss: 2, done: false },
+              { name: "绳索面拉", w: "17.5kg", r: "12", s: "4", feel: "", ss: 2, done: false },
+              { name: "俯卧Y字抬臂", w: "自重", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "腿",
+            kind: "normal",
+            exercises: [
+              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "停顿慢速；配重，器械自重 53kg 不计入", done: false },
+              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "", done: false },
+              { name: "臀外展", w: "64kg", r: "12", s: "4", feel: "", done: false },
+              { name: "自重弓步走", w: "自重", r: "每边12步", s: "4", feel: "右手拇指未愈，不拿哑铃", done: false },
+              { name: "屈膝提踵", w: "自重", r: "15", s: "3", feel: "顶峰停 2 秒", done: false }
+            ]
+          },
+          {
+            theme: "核心",
+            kind: "normal",
+            exercises: [
+              { name: "平板支撑", w: "自重", r: "125秒", s: "3", feel: "", done: false },
+              { name: "侧平板支撑", w: "自重", r: "每边80秒", s: "2", feel: "", done: false },
+              { name: "死虫", w: "自重", r: "每边10", s: "3", feel: "", done: false },
+              { name: "山羊挺身", w: "自重", r: "15", s: "3", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "", done: false }
+            ]
+          },
+          { theme: "—", kind: "rest", exercises: [] }
+        ]
+      },
+      // ── W50 ─────────────────────────────────────────────────────
+      {
+        week: 50,
+        note: "减脂维持，重量同 W49。每次约 1 小时。不上斜。周三跑步机 30 分钟（坡度 9 / 速度 6）。周六练完可选轻松走 15–20 分钟，不是必做。",
+        days: [
+          {
+            theme: "背",
+            kind: "normal",
+            exercises: [
+              { name: "高位下拉", w: "50kg", r: "12", s: "4", feel: "", done: false },
+              { name: "双臂下拉", w: "65kg", r: "12", s: "4", feel: "动作做标准。计划 65kg×12×4，状态好再试 69kg。", done: false },
+              { name: "坐姿划船", w: "50kg", r: "12", s: "4", feel: "保持 50kg，争取从 11/16 的 8 次回到 12 次。", done: false },
+              { name: "窄距高位下拉", w: "48kg", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "胸+肩A",
+            kind: "normal",
+            exercises: [
+              { name: "墙天使", w: "自重", r: "12", s: "4", feel: "热身", done: false },
+              { name: "杠铃卧推", w: "50kg", r: "10", s: "4", feel: "平卧。状态好可先测 60kg×2–3", done: false },
+              { name: "固定坐姿推胸", w: "55kg", r: "12", s: "4", feel: "座椅略高，推向下胸", done: false },
+              { name: "站姿龙门架夹胸", w: "12.5kg", r: "12", s: "4", feel: "高位往下；两侧合计", done: false },
+              { name: "固定坐姿器械推肩", w: "27.5kg", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "有氧",
+            kind: "normal",
+            exercises: [
+              { name: "跑步机", w: "—", r: "30分钟 / 坡度 9 / 速度 6", s: "1", feel: "较 W49 加约 5 分钟。坡度 9 / 速度 6。", done: false }
+            ]
+          },
+          {
+            theme: "胸+肩B",
+            kind: "normal",
+            exercises: [
+              { name: "低位绳索飞鸟", w: "每边下一档", r: "12", s: "4", feel: "相对每边 5kg 加一档", done: false },
+              { name: "哑铃仰卧上拉", w: "12kg", r: "12", s: "4", feel: "", done: false },
+              { name: "哑铃开合飞鸟", w: "7.5kg", r: "15", s: "4", feel: "", ss: 1, done: false },
+              { name: "侧卧哑铃外旋", w: "单只3kg", r: "12", s: "4", feel: "", ss: 1, done: false },
+              { name: "蝴蝶机反向飞鸟", w: "22.5kg", r: "12", s: "4", feel: "", ss: 2, done: false },
+              { name: "绳索面拉", w: "17.5kg", r: "12", s: "4", feel: "", ss: 2, done: false },
+              { name: "俯卧Y字抬臂", w: "自重", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "腿",
+            kind: "normal",
+            exercises: [
+              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "停顿慢速；配重，器械自重 53kg 不计入", done: false },
+              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "", done: false },
+              { name: "臀外展", w: "64kg", r: "12", s: "4", feel: "", done: false },
+              { name: "自重弓步走", w: "自重", r: "每边12步", s: "4", feel: "右手拇指未愈，不拿哑铃", done: false },
+              { name: "屈膝提踵", w: "自重", r: "15", s: "3", feel: "顶峰停 2 秒", done: false }
+            ]
+          },
+          {
+            theme: "核心",
+            kind: "normal",
+            exercises: [
+              { name: "平板支撑", w: "自重", r: "125秒", s: "3", feel: "", done: false },
+              { name: "侧平板支撑", w: "自重", r: "每边80秒", s: "2", feel: "", done: false },
+              { name: "死虫", w: "自重", r: "每边10", s: "3", feel: "", done: false },
+              { name: "山羊挺身", w: "自重", r: "15", s: "3", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "", done: false }
+            ]
+          },
+          { theme: "—", kind: "rest", exercises: [] }
+        ]
+      },
+      // ── W51 ─────────────────────────────────────────────────────
+      {
+        week: 51,
+        note: "减脂维持，重量同 W49。每次约 1 小时。不上斜。周三跑步机 35 分钟（坡度 9 / 速度 6）。周六练完可选轻松走 15–20 分钟，不是必做。",
+        days: [
+          {
+            theme: "背",
+            kind: "normal",
+            exercises: [
+              { name: "高位下拉", w: "50kg", r: "12", s: "4", feel: "", done: false },
+              { name: "双臂下拉", w: "65kg", r: "12", s: "4", feel: "动作做标准。计划 65kg×12×4，状态好再试 69kg。", done: false },
+              { name: "坐姿划船", w: "50kg", r: "12", s: "4", feel: "保持 50kg，争取从 11/16 的 8 次回到 12 次。", done: false },
+              { name: "窄距高位下拉", w: "48kg", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "胸+肩A",
+            kind: "normal",
+            exercises: [
+              { name: "墙天使", w: "自重", r: "12", s: "4", feel: "热身", done: false },
+              { name: "杠铃卧推", w: "50kg", r: "10", s: "4", feel: "平卧。状态好可先测 60kg×2–3", done: false },
+              { name: "固定坐姿推胸", w: "55kg", r: "12", s: "4", feel: "座椅略高，推向下胸", done: false },
+              { name: "站姿龙门架夹胸", w: "12.5kg", r: "12", s: "4", feel: "高位往下；两侧合计", done: false },
+              { name: "固定坐姿器械推肩", w: "27.5kg", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "有氧",
+            kind: "normal",
+            exercises: [
+              { name: "跑步机", w: "—", r: "35分钟 / 坡度 9 / 速度 6", s: "1", feel: "较 W50 加约 5 分钟。坡度 9 / 速度 6。", done: false }
+            ]
+          },
+          {
+            theme: "胸+肩B",
+            kind: "normal",
+            exercises: [
+              { name: "低位绳索飞鸟", w: "每边下一档", r: "12", s: "4", feel: "相对每边 5kg 加一档", done: false },
+              { name: "哑铃仰卧上拉", w: "12kg", r: "12", s: "4", feel: "", done: false },
+              { name: "哑铃开合飞鸟", w: "7.5kg", r: "15", s: "4", feel: "", ss: 1, done: false },
+              { name: "侧卧哑铃外旋", w: "单只3kg", r: "12", s: "4", feel: "", ss: 1, done: false },
+              { name: "蝴蝶机反向飞鸟", w: "22.5kg", r: "12", s: "4", feel: "", ss: 2, done: false },
+              { name: "绳索面拉", w: "17.5kg", r: "12", s: "4", feel: "", ss: 2, done: false },
+              { name: "俯卧Y字抬臂", w: "自重", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "腿",
+            kind: "normal",
+            exercises: [
+              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "停顿慢速；配重，器械自重 53kg 不计入", done: false },
+              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "", done: false },
+              { name: "臀外展", w: "64kg", r: "12", s: "4", feel: "", done: false },
+              { name: "自重弓步走", w: "自重", r: "每边12步", s: "4", feel: "右手拇指未愈，不拿哑铃", done: false },
+              { name: "屈膝提踵", w: "自重", r: "15", s: "3", feel: "顶峰停 2 秒", done: false }
+            ]
+          },
+          {
+            theme: "核心",
+            kind: "normal",
+            exercises: [
+              { name: "平板支撑", w: "自重", r: "125秒", s: "3", feel: "", done: false },
+              { name: "侧平板支撑", w: "自重", r: "每边80秒", s: "2", feel: "", done: false },
+              { name: "死虫", w: "自重", r: "每边10", s: "3", feel: "", done: false },
+              { name: "山羊挺身", w: "自重", r: "15", s: "3", feel: "", done: false },
+              { name: "脚尖勾起练习", w: "自重", r: "20", s: "3", feel: "", done: false }
+            ]
+          },
+          { theme: "—", kind: "rest", exercises: [] }
+        ]
+      },
+      // ── W52 ─────────────────────────────────────────────────────
+      {
+        week: 52,
+        note: "减脂维持至 2026-12-27，重量同 W49。每次约 1 小时。不上斜。周三跑步机 40 分钟（坡度 9 / 速度 6）。周六练完可选轻松走 15–20 分钟，不是必做。",
+        days: [
+          {
+            theme: "背",
+            kind: "normal",
+            exercises: [
+              { name: "高位下拉", w: "50kg", r: "12", s: "4", feel: "", done: false },
+              { name: "双臂下拉", w: "65kg", r: "12", s: "4", feel: "动作做标准。计划 65kg×12×4，状态好再试 69kg。", done: false },
+              { name: "坐姿划船", w: "50kg", r: "12", s: "4", feel: "保持 50kg，争取从 11/16 的 8 次回到 12 次。", done: false },
+              { name: "窄距高位下拉", w: "48kg", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "胸+肩A",
+            kind: "normal",
+            exercises: [
+              { name: "墙天使", w: "自重", r: "12", s: "4", feel: "热身", done: false },
+              { name: "杠铃卧推", w: "50kg", r: "10", s: "4", feel: "平卧。状态好可先测 60kg×2–3", done: false },
+              { name: "固定坐姿推胸", w: "55kg", r: "12", s: "4", feel: "座椅略高，推向下胸", done: false },
+              { name: "站姿龙门架夹胸", w: "12.5kg", r: "12", s: "4", feel: "高位往下；两侧合计", done: false },
+              { name: "固定坐姿器械推肩", w: "27.5kg", r: "12", s: "4", feel: "", done: false }
+            ]
+          },
+          {
+            theme: "有氧",
+            kind: "normal",
+            exercises: [
+              { name: "跑步机", w: "—", r: "40分钟 / 坡度 9 / 速度 6", s: "1", feel: "较 W51 加约 5 分钟。坡度 9 / 速度 6。", done: false }
             ]
           },
           {
