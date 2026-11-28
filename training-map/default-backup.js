@@ -154,7 +154,10 @@ export const DEFAULT_BACKUP = {
     "2026-11-24#2": { w: "15kg", r: "12", s: "4", feel: "11/17 为 20kg×10×4，本次 15kg×12×4。用户感受有进步，这是个人感受，不是本次重量高于上次。", done: true },
     "2026-11-24#3": { w: "单手5kg", r: "8", s: "4", feel: "", done: true },
     "2026-11-24#4": { w: "22.5kg", r: "12", s: "4", feel: "用户感受：肩部的各个动作相比之前同动作都有所上升，虽然重量不大，但考虑到是肩部，算是正常的进步。此为个人感受，不是各重量都加重。", done: true },
-    "2026-11-25#0": { w: "—", r: "20分钟 / 平均配速 6:22/公里", s: "1", feel: "今天是有氧。机器显示 228千卡、平均步速 06:22 分钟/公里。坡度未记录。由配速换算约 9.4km/h。", done: true }
+    "2026-11-25#0": { w: "—", r: "20分钟 / 平均配速 6:22/公里", s: "1", feel: "今天是有氧。机器显示 228千卡、平均步速 06:22 分钟/公里。坡度未记录。由配速换算约 9.4km/h。", done: true },
+    "2026-11-27#0": { w: "50kg", r: "8", s: "2", feel: "", done: true },
+    "2026-11-27#1": { w: "120kg", r: "12", s: "2", feel: "", done: true },
+    "2026-11-27#2": { w: "70kg", r: "12", s: "3", feel: "", done: true }
   },
   plan: {
     planVersion: 2,
@@ -913,14 +916,12 @@ export const DEFAULT_BACKUP = {
             ]
           },
           {
-            theme: "腿",
+            theme: "练腿",
             kind: "normal",
             exercises: [
-              { name: "倒蹬机", w: "120kg", r: "12", s: "4", feel: "停顿慢速；配重，器械自重 53kg 不计入", done: false },
-              { name: "坐姿腿弯举", w: "52.5kg", r: "12", s: "4", feel: "", done: false },
-              { name: "臀外展", w: "64kg", r: "12", s: "4", feel: "", done: false },
-              { name: "自重弓步走", w: "自重", r: "每边12步", s: "4", feel: "右手拇指未愈，不拿哑铃", done: false },
-              { name: "屈膝提踵", w: "自重", r: "15", s: "3", feel: "顶峰停 2 秒", done: false }
+              { name: "硬拉", w: "50kg", r: "8", s: "2", feel: "", done: true },
+              { name: "蹬腿", w: "120kg", r: "12", s: "2", feel: "", done: true },
+              { name: "坐姿髋外展", w: "70kg", r: "12", s: "3", feel: "", done: true }
             ]
           },
           {
